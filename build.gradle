@@ -35,7 +35,7 @@ ext {
     compileSdkVersion = 26
     targetSdkVersion = compileSdkVersion
     buildToolsVersion = '26.0.2'
-    designVersion = '26.1.0'
+    designVersion = '27.1.0'
 
     supportLibVersion = '26.0.2'
     versionName = '0.0.1'
@@ -46,4 +46,6 @@ ext {
 
     bmobSdkVersion = '3.5.5'
     bmobPushVersion = '0.8'
+
+    butterKnifeVersion = '8.8.1'
 }

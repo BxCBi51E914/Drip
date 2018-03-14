@@ -1,11 +1,15 @@
 package org.rg.drip.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Author : Tank
@@ -14,7 +18,7 @@ import android.view.ViewGroup;
 
 public abstract class BaseFragment extends Fragment {
 
-//	private Unbinder unbinder;
+	private Unbinder unbinder;
 
 	/**
 	 * 获取布局ID
@@ -24,13 +28,14 @@ public abstract class BaseFragment extends Fragment {
 	/**
 	 * 界面初始化
 	 */
-	protected abstract void init();
+	protected abstract void initView();
 
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-			                                                                                 Bundle savedInstanceState) {
-		if(getContentViewLayoutID() != 0) {
+	public View onCreateView(@NonNull LayoutInflater inflater,
+	                         @Nullable ViewGroup container,
+	                         @Nullable Bundle savedInstanceState) {
+		if (getContentViewLayoutID() != 0) {
 			return inflater.inflate(getContentViewLayoutID(), container, false);
 		} else {
 			return super.onCreateView(inflater, container, savedInstanceState);
@@ -38,15 +43,15 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-//		unbinder = ButterKnife.bind(this, view);
-		init();
+		unbinder = ButterKnife.bind(this, view);
+		initView();
 	}
 
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-//		unbinder.unbind();
+		unbinder.unbind();
 	}
 }

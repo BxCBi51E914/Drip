@@ -3,8 +3,12 @@ package org.rg.drip.base;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -12,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.rg.drip.R;
+
+import butterknife.ButterKnife;
 
 /**
  * Activity基类
@@ -37,6 +43,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 	}
 
 	/**
+	 * 显示 Fragment
+	 *
+	 * @param containerViewId   要替换的控件 id
+	 * @param fragment          要显示的 fragment
+	 */
+	public void showFragment(@IdRes int containerViewId, @Nullable Fragment fragment) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.replace(containerViewId, fragment);
+		transaction.commit();
+	}
+
+	/**
 	 * 初始化布局以及View控件
 	 */
 	protected abstract void initView(Bundle savedInstanceState);
@@ -44,7 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 	@Override
 	public void setContentView(@LayoutRes int layoutResID) {
 		super.setContentView(layoutResID);
-//		ButterKnife.bind(this);
+		ButterKnife.bind(this);
 	}
 
 	@Override
@@ -62,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 	 * 子类可以重写决定是否使用透明状态栏
 	 */
 	protected boolean translucentStatusBar() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -88,19 +107,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 	/**
 	 * 子类可以重写改变状态栏颜色
 	 */
-
 	protected int setStatusBarColor() {
 		return R.color.blue;
-	}
-
-	private Toast mToast;
-
-	protected void showToast(String desc) {
-		if(mToast == null) {
-			mToast = Toast.makeText(this.getApplicationContext(), desc, Toast.LENGTH_SHORT);
-		} else {
-			mToast.setText(desc);
-		}
-		mToast.show();
 	}
 }
