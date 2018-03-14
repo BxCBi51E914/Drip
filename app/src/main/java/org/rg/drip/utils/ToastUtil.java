@@ -2,14 +2,19 @@ package org.rg.drip.utils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Looper;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.rg.drip.R;
+
+import java.util.logging.Logger;
 
 /**
  * Created by TankGq
@@ -32,13 +37,11 @@ public class ToastUtil {
 	 */
 	public static ToastUtil makeToast(Context context) {
 		int contextHashCode = context.hashCode();
-		if (mToast == null || contextHashCode != mContextHashCode) {
+		if(mToast == null || contextHashCode != mContextHashCode) {
 			mToast = Toast.makeText(context, "ToastUtil", Toast.LENGTH_SHORT);
 			mContextHashCode = contextHashCode;
-		} else {
-			mToast.cancel();
 		}
-		if (mInstance == null) {
+		if(mInstance == null) {
 			mInstance = new ToastUtil();
 		}
 		return mInstance;
@@ -96,7 +99,7 @@ public class ToastUtil {
 	 */
 	public ToastUtil setMessageColor(@ColorInt int color) {
 		View view = mToast.getView();
-		if (view == null) {
+		if(view == null) {
 			return mInstance;
 		}
 		TextView message = view.findViewById(android.R.id.message);
@@ -112,7 +115,7 @@ public class ToastUtil {
 	 */
 	public ToastUtil setBackgroundColor(@ColorInt int color) {
 		View view = mToast.getView();
-		if (view == null) {
+		if(view == null) {
 			return mInstance;
 		}
 		TextView message = view.findViewById(android.R.id.message);
@@ -128,7 +131,7 @@ public class ToastUtil {
 	 */
 	public ToastUtil setBackground(@DrawableRes int resId) {
 		View view = mToast.getView();
-		if (view == null) {
+		if(view == null) {
 			return mInstance;
 		}
 		TextView message = view.findViewById(android.R.id.message);
@@ -144,18 +147,20 @@ public class ToastUtil {
 	}
 
 	/**
-	 * 隐藏吐司
+	 * 显示自定义的 Toast
+	 *
+	 * @param context 上下文
+	 * @param message 消息
+	 * @return
 	 */
-	public void cancle() {
-		mToast.cancel();
-	}
-
 	public static Toast showColorfulToast(Context context, String message) {
-		makeToast(context).setDuration(Toast.LENGTH_LONG)
+		makeToast(context).setView(LayoutInflater.from(context)
+		                                         .inflate(R.layout.toast_layout, null))
+		                  .setDuration(Toast.LENGTH_SHORT)
 		                  .setMessage(message)
 		                  .setMessageColor(Color.WHITE)
-	                      .setBackground(R.drawable.toast_radius)
-	                      .show();
+		                  .setBackground(R.drawable.toast_radius)
+		                  .show();
 		return mToast;
 	}
 }

@@ -1,7 +1,7 @@
 package org.rg.drip;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,48 +9,63 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import org.rg.drip.base.BaseActivity;
-import org.rg.drip.utils.ToastUtil;
+import org.rg.drip.utils.LoggerUtil;
+
+import butterknife.BindView;
+import hugo.weaving.DebugLog;
+import hugo.weaving.internal.Hugo;
 
 public class DripActivity extends BaseActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
+
+	@BindView(R.id.toolbar)
+	Toolbar mToolbar;
+
+	@BindView(R.id.drawer_layout)
+	DrawerLayout mDrawerLayout;
+
+	@BindView(R.id.sidebar_view)
+	NavigationView mNavigationView;
 
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.activity_drip;
 	}
 
+	@DebugLog
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
-		                                                         toolbar,
+		Logger.d("initView");
+		setSupportActionBar(mToolbar);
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+		                                                         mDrawerLayout,
+		                                                         mToolbar,
 		                                                         R.string.navigation_drawer_open,
 		                                                         R.string.navigation_drawer_close);
-		drawer.addDrawerListener(toggle);
+		mDrawerLayout.addDrawerListener(toggle);
 		toggle.syncState();
-
-		NavigationView navigationView = findViewById(R.id.sidebar_view);
-		navigationView.setNavigationItemSelectedListener(this);
-		ToastUtil.showColorfulToast(DripActivity.this, "Test");
+		mNavigationView.setNavigationItemSelectedListener(this);
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		initSomething();
 		super.onCreate(savedInstanceState);
+	}
+
+	private void initSomething() {
+		LoggerUtil.init();
 	}
 
 	@Override
 	public void onBackPressed() {
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		if (drawer.isDrawerOpen(GravityCompat.START)) {
-			drawer.closeDrawer(GravityCompat.START);
+		if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+			mDrawerLayout.closeDrawer(GravityCompat.START);
 		} else {
 			super.onBackPressed();
 		}
@@ -71,7 +86,7 @@ public class DripActivity extends BaseActivity
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
+		if(id == R.id.action_settings) {
 			return true;
 		}
 
@@ -80,26 +95,17 @@ public class DripActivity extends BaseActivity
 
 	@SuppressWarnings("StatementWithEmptyBody")
 	@Override
-	public boolean onNavigationItemSelected(MenuItem item) {
-		// Handle navigation view item clicks here.
+	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 		int id = item.getItemId();
 
-		if (id == R.id.nav_camera) {
-			// Handle the camera action
-		} else if (id == R.id.nav_gallery) {
-			ToastUtil.showColorfulToast(DripActivity.this, "nav_gallery");
-		} else if (id == R.id.nav_slideshow) {
-			ToastUtil.showColorfulToast(DripActivity.this, "nav_slideshow");
-		} else if (id == R.id.nav_manage) {
-			ToastUtil.showColorfulToast(DripActivity.this, "nav_manage");
-		} else if (id == R.id.nav_share) {
-			ToastUtil.showColorfulToast(DripActivity.this, "nav_share");
-		} else if (id == R.id.nav_send) {
-			ToastUtil.showColorfulToast(DripActivity.this, "nav_send");
+		if(id == R.id.nav_camera) {
+		} else if(id == R.id.nav_gallery) {
+		} else if(id == R.id.nav_slideshow) {
+		} else if(id == R.id.nav_manage) {
+		} else if(id == R.id.nav_share) {
+		} else if(id == R.id.nav_send) {
 		}
-
-		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		drawer.closeDrawer(GravityCompat.START);
+		mDrawerLayout.closeDrawer(GravityCompat.START);
 		return true;
 	}
 }
