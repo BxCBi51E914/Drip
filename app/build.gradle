@@ -54,4 +54,12 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
 
     compile "com.orhanobut:logger:$rootProject.ext.loggerVersion"
+
+    compile "me.yokeyword:fragmentation:$rootProject.ext.fragmentationVersion"
+    // Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
+    compile "me.yokeyword:fragmentation-swipeback:1.3.2"
+    // To simplify the communication between Fragments.
+    compile "me.yokeyword:eventbus-activity-scope:1.1.0"
+    // Your EventBus's version
+    compile "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
 }

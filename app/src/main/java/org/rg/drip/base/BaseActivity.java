@@ -1,7 +1,6 @@
 package org.rg.drip.base;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -9,15 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import org.rg.drip.R;
 
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Activity基类
@@ -26,7 +24,7 @@ import butterknife.ButterKnife;
  * Time : 08/03/2018
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends SupportActivity {
 
 	/**
 	 * 获取布局ID
@@ -40,19 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 	 */
 	protected void beforeInit() {
 
-	}
-
-	/**
-	 * 显示 Fragment
-	 *
-	 * @param containerViewId   要替换的控件 id
-	 * @param fragment          要显示的 fragment
-	 */
-	public void showFragment(@IdRes int containerViewId, @Nullable Fragment fragment) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.replace(containerViewId, fragment);
-		transaction.commit();
 	}
 
 	/**

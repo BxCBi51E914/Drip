@@ -63,7 +63,7 @@ public class DripActivity extends BaseActivity
 	}
 
 	@Override
-	public void onBackPressed() {
+	public void onBackPressedSupport() {
 		if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 			mDrawerLayout.closeDrawer(GravityCompat.START);
 		} else {

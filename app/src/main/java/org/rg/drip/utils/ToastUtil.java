@@ -151,7 +151,7 @@ public class ToastUtil {
 	 *
 	 * @param context 上下文
 	 * @param message 消息
-	 * @return
+	 * @return Toast 对象
 	 */
 	public static Toast showColorfulToast(Context context, String message) {
 		makeToast(context).setView(LayoutInflater.from(context)
