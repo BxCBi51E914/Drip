@@ -11,9 +11,6 @@ import io.reactivex.Observable;
 
 public interface WordContract {
 	
-	Observable<Word>
-	
-	
 	public interface Local {
 	
 	}

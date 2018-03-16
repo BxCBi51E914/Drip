@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.orhanobut.logger.Logger;
 
 import org.rg.drip.base.BaseActivity;
+import org.rg.drip.constant.WordConstant;
 import org.rg.drip.data.model.bmob.Word;
 import org.rg.drip.data.source.contract.WordContract;
 import org.rg.drip.utils.BmobUtil;
@@ -74,7 +75,7 @@ public class DripActivity extends BaseActivity implements NavigationView.OnNavig
 					public void subscribe(final ObservableEmitter<List<Word>> emitter) throws
 					                                                                   Exception {
 						BmobQuery<Word> query = new BmobQuery<Word>();
-						query.addWhereEndsWith(WordContract.WORD, "word")
+						query.addWhereEndsWith(WordConstant.WORD, "word")
 						     .findObjects(new FindListener<Word>() {
 							     @Override
 							     public void done(List<Word> list, BmobException e) {
