@@ -1,12 +1,12 @@
-package org.rg.drip.data.model;
+package org.rg.drip.data.model.bmob;
+
+import cn.bmob.v3.BmobObject;
 
 /**
- * 单词 (简略的)
- *
- * Author : Tank
- * Time : 08/03/2018
+ * Created by TankGq
+ * on 2018/3/16.
  */
-public class Word {
+public class Word extends BmobObject {
 
 	private Integer id;         // 单词 id
 	private String word;        // 单词
