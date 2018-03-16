@@ -1,12 +1,12 @@
-package org.rg.drip.data.model;
+package org.rg.drip.data.model.realm;
+
+import io.realm.RealmObject;
 
 /**
- * 单词 (简略的)
- *
  * Author : Tank
- * Time : 08/03/2018
+ * Time : 17/03/2018
  */
-public class Word {
+public class WordL extends RealmObject {
 
 	private Integer id;         // 单词 id
 	private String word;        // 单词

@@ -6,7 +6,7 @@ import cn.bmob.v3.BmobObject;
  * Created by TankGq
  * on 2018/3/16.
  */
-public class User extends BmobObject {
+public class UserR extends BmobObject {
 
 	public Integer id;              // 用户 id
 	public String username;         // 用户名

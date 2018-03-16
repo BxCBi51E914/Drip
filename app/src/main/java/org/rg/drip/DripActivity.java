@@ -14,23 +14,14 @@ import android.view.MenuItem;
 import com.orhanobut.logger.Logger;
 
 import org.rg.drip.base.BaseActivity;
-import org.rg.drip.constant.WordConstant;
-import org.rg.drip.data.model.bmob.Word;
-import org.rg.drip.data.source.contract.WordContract;
+import org.rg.drip.data.model.realm.WordL;
 import org.rg.drip.utils.BmobUtil;
 import org.rg.drip.utils.LoggerUtil;
-
-import java.util.List;
+import org.rg.drip.utils.RealmUtil;
 
 import butterknife.BindView;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
 import hugo.weaving.DebugLog;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import io.realm.Realm;
 
 public class DripActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 	
@@ -68,36 +59,34 @@ public class DripActivity extends BaseActivity implements NavigationView.OnNavig
 		initTools(DripActivity.this);
 		
 		
-		Observable<List<Word>>
-				observable =
-				Observable.create(new ObservableOnSubscribe<List<Word>>() {
-					@Override
-					public void subscribe(final ObservableEmitter<List<Word>> emitter) throws
-					                                                                   Exception {
-						BmobQuery<Word> query = new BmobQuery<Word>();
-						query.addWhereEndsWith(WordConstant.WORD, "word")
-						     .findObjects(new FindListener<Word>() {
-							     @Override
-							     public void done(List<Word> list, BmobException e) {
-								     if (e == null) {
-								        emitter.onNext(list);
-								        emitter.onComplete();
-								        return;
-								     }
-								     emitter.onError(e);
-							     }
-						     });
-					}
-				});
-		Word word = new Word();
+//		Observable<List<WordL>>
+//				observable =
+//				Observable.create(new ObservableOnSubscribe<List<WordL>>() {
+//					@Override
+//					public void subscribe(final ObservableEmitter<List<WordL>> emitter) throws
+//					                                                                   Exception {
+//						BmobQuery<WordL> query = new BmobQuery<WordL>();
+//						query.addWhereEndsWith(WordConstant.WORD, "word")
+//						     .findObjects(new FindListener<WordL>() {
+//							     @Override
+//							     public void done(List<WordL> list, BmobException e) {
+//								     if (e == null) {
+//								        emitter.onNext(list);
+//								        emitter.onComplete();
+//								        return;
+//								     }
+//								     emitter.onError(e);
+//							     }
+//						     });
+//					}
+//				});
+		Realm realm = RealmUtil.getInstance();
+		realm.beginTransaction();
+		WordL word = realm.createObject(WordL.class);
+		LoggerUtil.d(realm.getPath());
 		word.setId(1);
 		word.setWord("a");
-		word.save(new SaveListener<String>() {
-			@Override
-			public void done(String s, BmobException e) {
-			
-			}
-		});
+		realm.commitTransaction();
 	}
 	
 	/**
@@ -106,6 +95,7 @@ public class DripActivity extends BaseActivity implements NavigationView.OnNavig
 	private void initTools(Context context) {
 		LoggerUtil.init();
 		BmobUtil.initialize(context);
+		RealmUtil.initialize(context);
 	}
 	
 	@Override
