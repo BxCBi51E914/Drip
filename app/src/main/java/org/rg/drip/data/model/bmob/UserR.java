@@ -1,18 +1,22 @@
 package org.rg.drip.data.model.bmob;
 
+import org.rg.drip.base.ModelContract;
+import org.rg.drip.data.model.User;
+import org.rg.drip.data.model.Word;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * Created by TankGq
  * on 2018/3/16.
  */
-public class UserR extends BmobObject {
-
-	public Integer id;              // 用户 id
-	public String username;         // 用户名
-	public String password;         // 密码
-	public String email;            // 邮箱
-	public Boolean emailVerified;   // 邮箱是否验证
+public class UserR extends BmobObject implements ModelContract<User> {
+	
+	private Integer id;              // 用户 id
+	private String username;         // 用户名
+	private String password;         // 密码
+	private String email;            // 邮箱
+	private Boolean emailVerified;   // 邮箱是否验证
 
 	public Integer getId() {
 		return id;
@@ -52,5 +56,16 @@ public class UserR extends BmobObject {
 
 	public void setEmailVerified(Boolean emailVerified) {
 		this.emailVerified = emailVerified;
+	}
+	
+	@Override
+	public User toNormal() {
+		User user = new User();
+		user.setId(this.getId());
+		user.setUsername(this.getUsername());
+		user.setPassword(this.getPassword());
+		user.setEmail(this.getEmail());
+		user.setEmailVerified(this.getEmailVerified());
+		return user;
 	}
 }

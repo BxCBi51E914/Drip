@@ -15,7 +15,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class LoggerUtil {
 
-	private static final Boolean mIsDebug = false;
+	private static final Boolean mIsDebug = true;
 	private static final String TAG = "DRIP_LOG";
 
 	public static void init() {
