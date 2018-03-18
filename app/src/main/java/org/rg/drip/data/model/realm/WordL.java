@@ -1,6 +1,7 @@
 package org.rg.drip.data.model.realm;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 
 /**
  * Author : Tank
@@ -9,6 +10,7 @@ import io.realm.RealmObject;
 public class WordL extends RealmObject {
 
 	private Integer id;         // 单词 id
+	@Index
 	private String word;        // 单词
 
 	public int getId() {

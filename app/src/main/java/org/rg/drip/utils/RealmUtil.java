@@ -19,6 +19,8 @@ public class RealmUtil {
 	public static String mRealmName = DEFAULT_REAML_NAME;
 	public static RealmConfiguration mConfig = null;
 
+	private static Realm mRealm = null;
+
 	public static void initialize(Context context) {
 		Realm.init(context);
 	}
@@ -32,10 +34,24 @@ public class RealmUtil {
 					          .build();
 		}
 
-		return Realm.getInstance(mConfig);
+		if(null == mRealm || mRealm.isClosed()) {
+			mRealm = Realm.getInstance(mConfig);
+		}
+
+		return mRealm;
 	}
 
 	public static Realm getInstance() {
 		return getInstance(DEFAULT_REAML_NAME);
+	}
+
+	public static void closeRealm() {
+		if(mRealm == null) {
+			return;
+		}
+		if(! mRealm.isClosed()) {
+			mRealm.close();
+		}
+		mRealm = null;
 	}
 }
