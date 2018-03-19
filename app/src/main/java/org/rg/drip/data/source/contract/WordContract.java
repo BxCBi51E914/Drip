@@ -53,7 +53,7 @@ public interface WordContract {
 	 * @param id
 	 * @return
 	 */
-	Completable deleteWord(int id);
+	Completable deleteWord(int wordBookId, int id);
 	
 	/**
 	 *
@@ -61,16 +61,8 @@ public interface WordContract {
 	 * @param word
 	 * @return
 	 */
-	Completable deleteWord(@NonNull String word);
-	
-	/**
-	 *
-	 *
-	 * @param prefixWord
-	 * @return
-	 */
-	Completable deleteWords(@NonNull String prefixWord);
-	
+	Completable deleteWord(int wordBookId, @NonNull String word);
+
 	/**
 	 *
 	 *

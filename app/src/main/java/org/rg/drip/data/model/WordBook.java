@@ -8,13 +8,22 @@ package org.rg.drip.data.model;
  */
 public class WordBook {
 
-	public Integer id;                      // 单词本 id
+	public int id;              // 单词本 id
+	public int userId;          // 用户的 id
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

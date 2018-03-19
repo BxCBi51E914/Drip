@@ -36,6 +36,7 @@ public class RealmUtil {
 		}
 
 		if(null == mRealm || mRealm.isClosed()) {
+			LoggerUtil.d("Open realm at : " + TimeUtil.getCurrentTime());
 			mRealm = Realm.getInstance(mConfig);
 		}
 
@@ -51,7 +52,7 @@ public class RealmUtil {
 			return;
 		}
 		if(! mRealm.isClosed()) {
-//			LoggerUtil.d("Close realm at : " + Time.);
+			LoggerUtil.d("Close realm at : " + TimeUtil.getCurrentTime());
 			mRealm.close();
 		}
 		mRealm = null;
