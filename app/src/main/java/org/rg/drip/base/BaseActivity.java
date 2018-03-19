@@ -37,7 +37,6 @@ public abstract class BaseActivity extends SupportActivity {
 	 * 界面初始化前期准备
 	 */
 	protected void beforeInit() {
-
 	}
 
 	/**

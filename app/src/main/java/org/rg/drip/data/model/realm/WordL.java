@@ -1,19 +1,16 @@
 package org.rg.drip.data.model.realm;
 
-import org.rg.drip.base.ModelContract;
-import org.rg.drip.data.model.Word;
-
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Index;
 
 /**
  * Author : Tank
  * Time : 17/03/2018
  */
-public class WordL extends RealmObject implements ModelContract<Word> {
+public class WordL extends RealmObject {
 
-	@PrimaryKey
 	private Integer id;         // 单词 id
+	@Index
 	private String word;        // 单词
 
 	public int getId() {
@@ -30,13 +27,5 @@ public class WordL extends RealmObject implements ModelContract<Word> {
 
 	public void setWord(String word) {
 		this.word = word;
-	}
-	
-	@Override
-	public Word toNormal() {
-		Word word = new Word();
-		word.setId(this.getId());
-		word.setWord(this.getWord());
-		return word;
 	}
 }

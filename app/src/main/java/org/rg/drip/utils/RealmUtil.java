@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.Objects;
 
 import io.realm.Realm;
-import io.realm.RealmAsyncTask;
 import io.realm.RealmConfiguration;
 
 /**
@@ -15,35 +14,44 @@ import io.realm.RealmConfiguration;
 public class RealmUtil {
 	private static final String DEFAULT_REAML_NAME = "drip.realm";
 	// 需要 64 字节, 即 REALM_KEY.length = 64
-//	private static final byte[] REALM_KEY = { 0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70,
-//	                                          0x44, 0x72, 0x69, 0x70, 0x44, 0x72, 0x69, 0x70};
-	
+//	private static final byte[] REALM_KEY = { 0x44, 0x72, 0x69, 0x70 };
+
 	public static String mRealmName = DEFAULT_REAML_NAME;
 	public static RealmConfiguration mConfig = null;
-	
+
+	private static Realm mRealm = null;
+
 	public static void initialize(Context context) {
 		Realm.init(context);
 	}
-	
+
 	public static Realm getInstance(String realmName) {
-		if (null == mConfig || !Objects.equals(mRealmName, realmName)) {
+		if(null == mConfig || ! Objects.equals(mRealmName, realmName)) {
 			mRealmName = realmName;
-			mConfig = new RealmConfiguration.Builder().name(mRealmName)
-//			                                          .encryptionKey(REALM_KEY)
-                                                      .build();
+			mConfig = new RealmConfiguration.Builder()
+					          .name(mRealmName)
+//					          .encryptionKey(REALM_KEY)
+					          .build();
 		}
-		
-		return Realm.getInstance(mConfig);
+
+		if(null == mRealm || mRealm.isClosed()) {
+			mRealm = Realm.getInstance(mConfig);
+		}
+
+		return mRealm;
 	}
-	
+
 	public static Realm getInstance() {
 		return getInstance(DEFAULT_REAML_NAME);
 	}
-	
+
+	public static void closeRealm() {
+		if(mRealm == null) {
+			return;
+		}
+		if(! mRealm.isClosed()) {
+			mRealm.close();
+		}
+		mRealm = null;
+	}
 }
