@@ -80,13 +80,13 @@ public class DripActivity extends BaseActivity implements NavigationView.OnNavig
 //						     });
 //					}
 //				});
-		Realm realm = RealmUtil.getInstance();
-		realm.beginTransaction();
-		WordL word = realm.createObject(WordL.class);
-		LoggerUtil.d(realm.getPath());
-		word.setId(1);
-		word.setWord("a");
-		realm.commitTransaction();
+//		Realm realm = RealmUtil.getInstance();
+//		realm.beginTransaction();
+//		WordL word = realm.createObject(WordL.class);
+//		LoggerUtil.d(realm.getPath());
+//		word.setId(1);
+//		word.setWord("a");
+//		realm.commitTransaction();
 	}
 	
 	/**

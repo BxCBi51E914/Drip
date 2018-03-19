@@ -6,34 +6,49 @@ import org.rg.drip.data.model.realm.WordL;
 import org.rg.drip.data.source.contract.WordContract;
 import org.rg.drip.utils.RealmUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
-import io.realm.Realm;
-import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Author : Tank
  * Time : 08/03/2018
  */
 
-public class WordLocalSource implements WordContract.Local {
-
+public class WordLocalSource implements WordContract {
+	
 	@Override
 	public Flowable<Word> getWord(int id) {
-//		Realm realm = RealmUtil.getInstance();
-//		return realm.where(WordL.class)
-//		            .equalTo(WordConstant.ID, id)
-//		            .findFirstAsync()
-//		            .asFlowable()
-//		            .filter(wordL -> wordL.isLoaded())
-//					.map(wordL -> (WordL)(wordL));
-		return null;
+		return RealmUtil.getInstance()
+		                .where(WordL.class)
+		                .equalTo(WordConstant.ID, id)
+		                .findFirstAsync()
+		                .asFlowable()
+		                .filter(wordL -> wordL.isLoaded())
+		                .map(wordL -> ((WordL) wordL).convertToNormal());
 	}
-
+	
 	@Override
 	public Flowable<List<Word>> getWords(String word) {
-		return null;
+		return RealmUtil.getInstance()
+		                .where(WordL.class)
+		                .beginsWith(WordConstant.WORD, word)
+		                .findAllAsync()
+		                .asFlowable()
+		                .filter(RealmResults::isLoaded)
+		                .map(wordLs -> {
+			                List<Word> words = new ArrayList<>();
+			                int length = wordLs.size();
+			                for (int i = 0; i < length; ++i) {
+				                if (wordLs.get(i) == null) {
+					                continue;
+				                }
+				                //noinspection ConstantConditions
+				                words.add(wordLs.get(i).convertToNormal());
+			                }
+			                return words;
+		                });
 	}
 }

@@ -2,6 +2,7 @@ package org.rg.drip.utils;
 
 import android.content.Context;
 
+import java.sql.Time;
 import java.util.Objects;
 
 import io.realm.Realm;
@@ -50,6 +51,7 @@ public class RealmUtil {
 			return;
 		}
 		if(! mRealm.isClosed()) {
+//			LoggerUtil.d("Close realm at : " + Time.);
 			mRealm.close();
 		}
 		mRealm = null;

@@ -59,7 +59,7 @@ public class UserR extends BmobObject implements ModelContract<User> {
 	}
 	
 	@Override
-	public User toNormal() {
+	public User convertToNormal() {
 		User user = new User();
 		user.setId(this.getId());
 		user.setUsername(this.getUsername());
