@@ -51,10 +51,6 @@ public class WordR extends BmobObject implements ModelContract<Word> {
 	@Override
 	public Word convertToNormal() {
 		Word word = new Word();
-		word.setId(this.getId());
-		word.setWordBookId(this.getWordBookId());
-		word.setWord(this.getWord());
-		word.setState(this.getState());
 		return word;
 	}
 }

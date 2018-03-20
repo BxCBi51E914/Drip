@@ -16,6 +16,8 @@ import org.rg.drip.R;
 
 import java.util.logging.Logger;
 
+import hugo.weaving.DebugLog;
+
 /**
  * Created by TankGq
  * on 2018/3/14.
@@ -153,6 +155,7 @@ public class ToastUtil {
 	 * @param message 消息
 	 * @return Toast 对象
 	 */
+	@DebugLog
 	public static Toast showColorfulToast(Context context, String message) {
 		makeToast(context).setView(LayoutInflater.from(context)
 		                                         .inflate(R.layout.toast_layout, null))

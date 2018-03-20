@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,7 +15,19 @@ import android.view.MenuItem;
 import com.orhanobut.logger.Logger;
 
 import org.rg.drip.base.BaseActivity;
+import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.data.model.realm.WordL;
+import org.rg.drip.event.TabSelectedEvent;
+import org.rg.drip.ui.fragment.first.ZhihuFirstFragment;
+import org.rg.drip.ui.fragment.first.child.FirstHomeFragment;
+import org.rg.drip.ui.fragment.fourth.ZhihuFourthFragment;
+import org.rg.drip.ui.fragment.fourth.child.MeFragment;
+import org.rg.drip.ui.fragment.second.ZhihuSecondFragment;
+import org.rg.drip.ui.fragment.second.child.ViewPagerFragment;
+import org.rg.drip.ui.fragment.third.ZhihuThirdFragment;
+import org.rg.drip.ui.fragment.third.child.ShopFragment;
+import org.rg.drip.ui.view.BottomBar;
+import org.rg.drip.ui.view.BottomBarTab;
 import org.rg.drip.utils.BmobUtil;
 import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RealmUtil;
@@ -22,42 +35,100 @@ import org.rg.drip.utils.RealmUtil;
 import butterknife.BindView;
 import hugo.weaving.DebugLog;
 import io.realm.Realm;
+import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
+import me.yokeyword.fragmentation.SupportFragment;
 
-public class DripActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
+	public static final int FIRST = 0;
+	public static final int SECOND = 1;
+	public static final int THIRD = 2;
+	public static final int FOURTH = 3;
 	
-	@BindView(R.id.toolbar) Toolbar mToolbar;
+	private SupportFragment[] mFragments = new SupportFragment[4];
 	
-	@BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
-	
-	@BindView(R.id.sidebar_view) NavigationView mNavigationView;
+	private BottomBar mBottomBar;
 	
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.activity_drip;
+		return R.layout.zhihu_activity_main;
 	}
 	
 	@DebugLog
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		Logger.d("initView");
-		setSupportActionBar(mToolbar);
-		ActionBarDrawerToggle
-				toggle =
-				new ActionBarDrawerToggle(this,
-				                          mDrawerLayout,
-				                          mToolbar,
-				                          R.string.navigation_drawer_open,
-				                          R.string.navigation_drawer_close);
-		mDrawerLayout.addDrawerListener(toggle);
-		toggle.syncState();
-		mNavigationView.setNavigationItemSelectedListener(this);
+		SupportFragment firstFragment = findFragment(ZhihuFirstFragment.class);
+		if (firstFragment == null) {
+			mFragments[FIRST] = ZhihuFirstFragment.newInstance();
+			mFragments[SECOND] = ZhihuSecondFragment.newInstance();
+			mFragments[THIRD] = ZhihuThirdFragment.newInstance();
+			mFragments[FOURTH] = ZhihuFourthFragment.newInstance();
+			
+			loadMultipleRootFragment(R.id.fl_container, FIRST,
+			                         mFragments[FIRST],
+			                         mFragments[SECOND],
+			                         mFragments[THIRD],
+			                         mFragments[FOURTH]);
+		} else {
+			// 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
+			
+			// 这里我们需要拿到mFragments的引用
+			mFragments[FIRST] = firstFragment;
+			mFragments[SECOND] = findFragment(ZhihuSecondFragment.class);
+			mFragments[THIRD] = findFragment(ZhihuThirdFragment.class);
+			mFragments[FOURTH] = findFragment(ZhihuFourthFragment.class);
+		}
+		
+		mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
+		
+		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_home_white_24dp))
+		          .addItem(new BottomBarTab(this, R.drawable.ic_discover_white_24dp))
+		          .addItem(new BottomBarTab(this, R.drawable.ic_message_white_24dp))
+		          .addItem(new BottomBarTab(this, R.drawable.ic_account_circle_white_24dp));
+		
+		mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(int position, int prePosition) {
+				showHideFragment(mFragments[position], mFragments[prePosition]);
+			}
+			
+			@Override
+			public void onTabUnselected(int position) {
+			
+			}
+			
+			@Override
+			public void onTabReselected(int position) {
+				final SupportFragment currentFragment = mFragments[position];
+				int count = currentFragment.getChildFragmentManager().getBackStackEntryCount();
+				
+				// 如果不在该类别Fragment的主页,则回到主页;
+				if (count > 1) {
+					if (currentFragment instanceof ZhihuFirstFragment) {
+						currentFragment.popToChild(FirstHomeFragment.class, false);
+					} else if (currentFragment instanceof ZhihuSecondFragment) {
+						currentFragment.popToChild(ViewPagerFragment.class, false);
+					} else if (currentFragment instanceof ZhihuThirdFragment) {
+						currentFragment.popToChild(ShopFragment.class, false);
+					} else if (currentFragment instanceof ZhihuFourthFragment) {
+						currentFragment.popToChild(MeFragment.class, false);
+					}
+					return;
+				}
+				
+				
+				// 这里推荐使用EventBus来实现 -> 解耦
+				if (count == 1) {
+					// 在FirstPagerFragment中接收, 因为是嵌套的孙子Fragment 所以用EventBus比较方便
+					// 主要为了交互: 重选tab 如果列表不在顶部则移动到顶部,如果已经在顶部,则刷新
+					EventBusActivityScope.getDefault(DripActivity.this).post(new TabSelectedEvent(position));
+				}
+			}
+		});
 	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initTools(DripActivity.this);
-		
 		
 //		Observable<List<WordL>>
 //				observable =
@@ -89,59 +160,17 @@ public class DripActivity extends BaseActivity implements NavigationView.OnNavig
 //		realm.commitTransaction();
 	}
 	
-	/**
-	 * 初始化工具
-	 */
-	private void initTools(Context context) {
-		LoggerUtil.init();
-		BmobUtil.initialize(context);
-		RealmUtil.initialize(context);
-	}
-	
 	@Override
 	public void onBackPressedSupport() {
-		if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-			mDrawerLayout.closeDrawer(GravityCompat.START);
+		if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+			pop();
 		} else {
-			super.onBackPressed();
+			ActivityCompat.finishAfterTransition(this);
 		}
 	}
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		
-		return super.onOptionsItemSelected(item);
-	}
-	
-	@SuppressWarnings("StatementWithEmptyBody")
-	@Override
-	public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-		int id = item.getItemId();
-		
-		if (id == R.id.nav_camera) {
-		} else if (id == R.id.nav_gallery) {
-		} else if (id == R.id.nav_slideshow) {
-		} else if (id == R.id.nav_manage) {
-		} else if (id == R.id.nav_share) {
-		} else if (id == R.id.nav_send) {
-		}
-		mDrawerLayout.closeDrawer(GravityCompat.START);
-		return true;
+	public void onBackToFirstFragment() {
+		mBottomBar.setCurrentItem(0);
 	}
 }

@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
+        android:name=".DripApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,6 +25,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DripActivity"
+            android:launchMode="singleTask"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

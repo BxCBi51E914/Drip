@@ -60,4 +60,6 @@ dependencies {
     compile 'me.yokeyword:eventbus-activity-scope:1.1.0'
     // Your EventBus's version
     compile "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
+    compile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
+    compile "com.uphyca:stetho_realm:$rootProject.ext.stethoRealmVersion"
 }

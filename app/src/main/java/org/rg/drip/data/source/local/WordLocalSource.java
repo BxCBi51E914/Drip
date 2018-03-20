@@ -19,36 +19,36 @@ import io.realm.RealmResults;
 
 public class WordLocalSource implements WordContract {
 	
-	@Override
-	public Flowable<Word> getWord(int id) {
-		return RealmUtil.getInstance()
-		                .where(WordL.class)
-		                .equalTo(WordConstant.ID, id)
-		                .findFirstAsync()
-		                .asFlowable()
-		                .filter(wordL -> wordL.isLoaded())
-		                .map(wordL -> ((WordL) wordL).convertToNormal());
-	}
-	
-	@Override
-	public Flowable<List<Word>> getWords(String word) {
-		return RealmUtil.getInstance()
-		                .where(WordL.class)
-		                .beginsWith(WordConstant.WORD, word)
-		                .findAllAsync()
-		                .asFlowable()
-		                .filter(RealmResults::isLoaded)
-		                .map(wordLs -> {
-			                List<Word> words = new ArrayList<>();
-			                int length = wordLs.size();
-			                for (int i = 0; i < length; ++i) {
-				                if (wordLs.get(i) == null) {
-					                continue;
-				                }
-				                //noinspection ConstantConditions
-				                words.add(wordLs.get(i).convertToNormal());
-			                }
-			                return words;
-		                });
-	}
+//	@Override
+//	public Flowable<Word> getWord(int id) {
+//		return RealmUtil.getInstance()
+//		                .where(WordL.class)
+//		                .equalTo(WordConstant.ID, id)
+//		                .findFirstAsync()
+//		                .asFlowable()
+//		                .filter(wordL -> wordL.isLoaded())
+//		                .map(wordL -> ((WordL) wordL).convertToNormal());
+//	}
+//
+//	@Override
+//	public Flowable<List<Word>> getWords(String word) {
+//		return RealmUtil.getInstance()
+//		                .where(WordL.class)
+//		                .beginsWith(WordConstant.WORD, word)
+//		                .findAllAsync()
+//		                .asFlowable()
+//		                .filter(RealmResults::isLoaded)
+//		                .map(wordLs -> {
+//			                List<Word> words = new ArrayList<>();
+//			                int length = wordLs.size();
+//			                for (int i = 0; i < length; ++i) {
+//				                if (wordLs.get(i) == null) {
+//					                continue;
+//				                }
+//				                //noinspection ConstantConditions
+//				                words.add(wordLs.get(i).convertToNormal());
+//			                }
+//			                return words;
+//		                });
+//	}
 }
