@@ -11,7 +11,7 @@
         android:layout_marginBottom="@dimen/bottombar_height"
         android:layout_height="match_parent"/>
 
-    <me.yokeyword.sample.demo_zhihu.ui.view.BottomBar
+    <org.rg.drip.ui.view.BottomBar
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottombar_height"
@@ -22,5 +22,6 @@
         android:background="@drawable/actionbar_shadow_up"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/bottombar_height"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"/>
 </FrameLayout>

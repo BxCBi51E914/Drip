@@ -6,7 +6,7 @@ ext {
     compileSdkVersion = 26
     targetSdkVersion = compileSdkVersion
     buildToolsVersion = '26.0.2'
-    designVersion = '27.1.0'
+    v7Version = '27.1.0'
 
     supportLibVersion = '26.0.2'
     versionName = '0.0.1'
