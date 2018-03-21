@@ -1,22 +1,11 @@
-package org.rg.drip;
+package org.rg.drip.ui;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.orhanobut.logger.Logger;
-
+import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.data.model.realm.WordL;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.ui.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.ui.fragment.first.child.FirstHomeFragment;
@@ -28,21 +17,14 @@ import org.rg.drip.ui.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.ui.fragment.third.child.ShopFragment;
 import org.rg.drip.ui.view.BottomBar;
 import org.rg.drip.ui.view.BottomBarTab;
-import org.rg.drip.utils.BmobUtil;
-import org.rg.drip.utils.LoggerUtil;
-import org.rg.drip.utils.RealmUtil;
 
-import butterknife.BindView;
 import hugo.weaving.DebugLog;
-import io.realm.Realm;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
+import org.rg.drip.constant.FragmentConstant;
+
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
-	public static final int FIRST = 0;
-	public static final int SECOND = 1;
-	public static final int THIRD = 2;
-	public static final int FOURTH = 3;
 	
 	private SupportFragment[] mFragments = new SupportFragment[4];
 	
@@ -50,7 +32,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.zhihu_activity_main;
+		return R.layout.drip_activity_main;
 	}
 	
 	@DebugLog
@@ -58,24 +40,24 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	protected void initView(Bundle savedInstanceState) {
 		SupportFragment firstFragment = findFragment(ZhihuFirstFragment.class);
 		if (firstFragment == null) {
-			mFragments[FIRST] = ZhihuFirstFragment.newInstance();
-			mFragments[SECOND] = ZhihuSecondFragment.newInstance();
-			mFragments[THIRD] = ZhihuThirdFragment.newInstance();
-			mFragments[FOURTH] = ZhihuFourthFragment.newInstance();
+			mFragments[FragmentConstant.WORD_BOOK] = ZhihuFirstFragment.newInstance();
+			mFragments[FragmentConstant.READING] = ZhihuSecondFragment.newInstance();
+			mFragments[FragmentConstant.THIRD] = ZhihuThirdFragment.newInstance();
+			mFragments[FragmentConstant.SETTING] = ZhihuFourthFragment.newInstance();
 			
-			loadMultipleRootFragment(R.id.fl_container, FIRST,
-			                         mFragments[FIRST],
-			                         mFragments[SECOND],
-			                         mFragments[THIRD],
-			                         mFragments[FOURTH]);
+			loadMultipleRootFragment(R.id.fl_container, FragmentConstant.WORD_BOOK,
+			                         mFragments[FragmentConstant.WORD_BOOK],
+			                         mFragments[FragmentConstant.READING],
+			                         mFragments[FragmentConstant.THIRD],
+			                         mFragments[FragmentConstant.SETTING]);
 		} else {
 			// 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 			
 			// 这里我们需要拿到mFragments的引用
-			mFragments[FIRST] = firstFragment;
-			mFragments[SECOND] = findFragment(ZhihuSecondFragment.class);
-			mFragments[THIRD] = findFragment(ZhihuThirdFragment.class);
-			mFragments[FOURTH] = findFragment(ZhihuFourthFragment.class);
+			mFragments[FragmentConstant.WORD_BOOK] = firstFragment;
+			mFragments[FragmentConstant.READING] = findFragment(ZhihuSecondFragment.class);
+			mFragments[FragmentConstant.THIRD] = findFragment(ZhihuThirdFragment.class);
+			mFragments[FragmentConstant.SETTING] = findFragment(ZhihuFourthFragment.class);
 		}
 		
 		mBottomBar = (BottomBar) findViewById(R.id.bottomBar);

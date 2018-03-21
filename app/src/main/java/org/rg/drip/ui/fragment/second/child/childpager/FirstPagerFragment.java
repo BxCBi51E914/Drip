@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.rg.drip.DripActivity;
+import org.rg.drip.constant.FragmentConstant;
 import org.rg.drip.R;
 import org.rg.drip.adapter.HomeAdapter;
 import org.rg.drip.entity.Article;
@@ -121,7 +121,7 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
      */
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != DripActivity.SECOND) return;
+        if (event.position != FragmentConstant.READING) return;
 
         if (mAtTop) {
             mRefreshLayout.setRefreshing(true);

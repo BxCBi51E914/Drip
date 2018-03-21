@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.rg.drip.DripActivity;
+import org.rg.drip.constant.FragmentConstant;
 import org.rg.drip.R;
 import org.rg.drip.adapter.FirstHomeAdapter;
 import org.rg.drip.entity.Article;
@@ -30,7 +30,8 @@ import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Created by TankGq
+ * on 16/6/5.
  */
 public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
     private Toolbar mToolbar;
@@ -170,7 +171,7 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
      */
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != DripActivity.FIRST) return;
+        if (event.position != FragmentConstant.WORD_BOOK) return;
 
         if (mInAtTop) {
             mRefreshLayout.setRefreshing(true);
