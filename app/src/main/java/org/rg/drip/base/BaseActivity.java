@@ -73,19 +73,17 @@ public abstract class BaseActivity extends SupportActivity {
 	 */
 	protected void initSystemBarTint() {
 		Window window = getWindow();
-		if(translucentStatusBar()) {
-			window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			window.getDecorView()
-			      .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-			                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-			window.setStatusBarColor(Color.TRANSPARENT);
-			return;
-		}
 		// 沉浸式状态栏
 		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-		window.setStatusBarColor(setStatusBarColor());
+		if(translucentStatusBar()) {
+			window.getDecorView()
+			      .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+			                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+			window.setStatusBarColor(Color.TRANSPARENT);
+		} else {
+			window.setStatusBarColor(setStatusBarColor());
+		}
 	}
 
 	/**

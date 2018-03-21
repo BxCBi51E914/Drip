@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@android:color/transparent"
-             android:orientation="vertical">
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <FrameLayout
-        android:id="@+id/fl_container"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/bottombar_height"
-        android:layout_height="match_parent"/>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@android:color/transparent"
+                 android:fitsSystemWindows="true"
+                 android:orientation="vertical">
 
-    <org.rg.drip.ui.view.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottombar_height"
-        android:layout_gravity="bottom"/>
+        <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/bottombar_height"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:background="@drawable/actionbar_shadow_up"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/bottombar_height"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"/>
-</FrameLayout>
+        <org.rg.drip.ui.view.BottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottombar_height"
+            android:layout_gravity="bottom"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/bottombar_height"
+            android:background="@drawable/actionbar_shadow_up"
+            android:contentDescription="@string/app_name"/>
+    </FrameLayout>
+</android.support.v4.widget.DrawerLayout>
