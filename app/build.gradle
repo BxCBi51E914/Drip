@@ -64,5 +64,4 @@ dependencies {
     compile "org.greenrobot:eventbus:$rootProject.ext.eventBusVersion"
     compile "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
     compile "com.uphyca:stetho_realm:$rootProject.ext.stethoRealmVersion"
-    compile 'com.githang:status-bar-compat:latest.integration'
 }

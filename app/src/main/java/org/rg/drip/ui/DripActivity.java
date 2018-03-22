@@ -6,6 +6,7 @@ import android.support.v4.app.ActivityCompat;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
+import org.rg.drip.constant.FragmentConstant;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.ui.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.ui.fragment.first.child.FirstHomeFragment;
@@ -21,8 +22,6 @@ import org.rg.drip.ui.view.BottomBarTab;
 import hugo.weaving.DebugLog;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
-
-import org.rg.drip.constant.FragmentConstant;
 
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
 	

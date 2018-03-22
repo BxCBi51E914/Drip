@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Looper;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.Log;
@@ -99,7 +100,7 @@ public class ToastUtil {
 	 * @param color 颜色
 	 * @return ToastUtil 对象
 	 */
-	public ToastUtil setMessageColor(@ColorInt int color) {
+	public ToastUtil setMessageColor(@ColorRes int color) {
 		View view = mToast.getView();
 		if(view == null) {
 			return mInstance;
@@ -161,7 +162,7 @@ public class ToastUtil {
 		                                         .inflate(R.layout.toast_layout, null))
 		                  .setDuration(Toast.LENGTH_SHORT)
 		                  .setMessage(message)
-		                  .setMessageColor(Color.WHITE)
+		                  .setMessageColor(R.color.colorAccent)
 		                  .setBackground(R.drawable.toast_radius)
 		                  .show();
 		return mToast;
