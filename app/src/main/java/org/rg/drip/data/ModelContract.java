@@ -1,10 +1,9 @@
-package org.rg.drip.base;
+package org.rg.drip.data;
 
 /**
  * Created by TankGq
  * on 2018/3/17.
  */
-
 public interface ModelContract<T> {
 	
 	/**

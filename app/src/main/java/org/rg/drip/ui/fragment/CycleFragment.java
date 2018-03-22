@@ -13,7 +13,8 @@ import org.rg.drip.R;
 import org.rg.drip.base.BaseBackFragment;
 
 /**
- * Created by YoKeyword on 16/2/7.
+ * Created by TankGq
+ * on 16/2/7.
  */
 public class CycleFragment extends BaseBackFragment {
     private static final String ARG_NUMBER = "arg_number";

@@ -1,6 +1,6 @@
 package org.rg.drip.data.model.bmob;
 
-import org.rg.drip.base.ModelContract;
+import org.rg.drip.data.ModelContract;
 import org.rg.drip.data.model.Word;
 
 import cn.bmob.v3.BmobObject;
