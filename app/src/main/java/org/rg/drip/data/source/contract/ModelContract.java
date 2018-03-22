@@ -1,4 +1,4 @@
-package org.rg.drip.data;
+package org.rg.drip.data.source.contract;
 
 /**
  * Created by TankGq

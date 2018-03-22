@@ -1,6 +1,6 @@
 package org.rg.drip.data.model.realm;
 
-import org.rg.drip.data.ModelContract;
+import org.rg.drip.data.source.contract.ModelContract;
 import org.rg.drip.data.model.Word;
 
 import io.realm.RealmObject;
