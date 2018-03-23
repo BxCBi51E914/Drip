@@ -1,15 +1,15 @@
-package org.rg.drip.data.model.bmob;
+package org.rg.drip.data.model.local;
 
-import org.rg.drip.data.source.contract.ModelContract;
-import org.rg.drip.data.model.Word;
+import org.rg.drip.data.contract.ModelContract;
+import org.rg.drip.entity.Word;
 
-import cn.bmob.v3.BmobObject;
+import io.realm.RealmObject;
 
 /**
- * Created by TankGq
- * on 2018/3/16.
+ * Author : Tank
+ * Time : 17/03/2018
  */
-public class WordR extends BmobObject implements ModelContract<Word> {
+public class WordL extends RealmObject implements ModelContract.Cache<Word> {
 	
 	private Integer id;         // 单词 id
 	private Integer wordBookId; // 所属单词本 id
@@ -49,7 +49,7 @@ public class WordR extends BmobObject implements ModelContract<Word> {
 	}
 	
 	@Override
-	public Word convertToNormal() {
+	public Word convertToCache() {
 		Word word = new Word();
 		return word;
 	}

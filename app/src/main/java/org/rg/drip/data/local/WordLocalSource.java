@@ -1,16 +1,6 @@
-package org.rg.drip.data.source.local;
+package org.rg.drip.data.local;
 
-import org.rg.drip.constant.WordConstant;
-import org.rg.drip.data.model.Word;
-import org.rg.drip.data.model.realm.WordL;
-import org.rg.drip.data.source.contract.WordContract;
-import org.rg.drip.utils.RealmUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Flowable;
-import io.realm.RealmResults;
+import org.rg.drip.data.contract.WordContract;
 
 /**
  * Author : Tank

@@ -1,6 +1,6 @@
-package org.rg.drip.data.source.contract;
+package org.rg.drip.data.contract;
 
-import org.rg.drip.data.model.User;
+import org.rg.drip.entity.User;
 
 import io.reactivex.Flowable;
 
@@ -16,39 +16,54 @@ public interface UserContract {
 	interface Remote {
 
 		/**
-		 * 通过用户名查找用户
-		 */
-		Flowable<User> getUserByUsername(String username);
-
-		/**
 		 * 检查用户名是否存在
 		 */
 		Flowable<Boolean> checkUsernameExist(String username);
 
 		/**
-		 * 检查密码是否正确
+		 * 登录
 		 */
-		Flowable<Boolean> checkPassword(String username, String password);
+		Flowable<Boolean> signIn(String username, String password);
 
 		/**
-		 * 创建用户
+		 * 退出登录
 		 */
-		Flowable<Boolean> CreateUser(User user);
+		void signOut();
+
+		/**
+		 * 使用邮箱登录
+		 */
+		Flowable<Boolean> signInWithEmail(String email, String password);
+
+		/**
+		 * 注册
+		 */
+		Flowable<Boolean> signUp(User user);
 
 		/**
 		 * 修改用户密码
 		 */
-		Flowable<Boolean> changeUserPassword(String password);
+		Flowable<Boolean> changePassword(String oldPassword, String newPassword);
 
 		/**
-		 * 设置用户邮箱验证成功
+		 * 发送通过邮箱重置密码请求
+		 */
+		Flowable<Boolean> changePasswordByEmail(String email);
+
+		/**
+		 * 更新用户邮箱
+		 */
+		Flowable<Boolean> changeEmail(String email);
+
+		/**
+		 * 发送验证邮件进行邮箱验证
 		 */
 		Flowable<Boolean> verifyEmail();
 
 		/**
 		 * 检查用户邮箱是否验证过
 		 */
-		Flowable<Boolean> checkEmailVarified();
+		Flowable<Boolean> checkEmailVerified();
 	}
 
 	interface Repository {

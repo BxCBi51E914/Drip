@@ -100,7 +100,7 @@ public class ToastUtil {
 	 * @param color 颜色
 	 * @return ToastUtil 对象
 	 */
-	public ToastUtil setMessageColor(@ColorRes int color) {
+	public ToastUtil setMessageColor(@ColorInt int color) {
 		View view = mToast.getView();
 		if(view == null) {
 			return mInstance;
@@ -162,7 +162,6 @@ public class ToastUtil {
 		                                         .inflate(R.layout.toast_layout, null))
 		                  .setDuration(Toast.LENGTH_SHORT)
 		                  .setMessage(message)
-		                  .setMessageColor(R.color.colorAccent)
 		                  .setBackground(R.drawable.toast_radius)
 		                  .show();
 		return mToast;

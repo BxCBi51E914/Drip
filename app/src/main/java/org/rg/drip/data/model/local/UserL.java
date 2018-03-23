@@ -1,21 +1,22 @@
-package org.rg.drip.data.model.bmob;
+package org.rg.drip.data.model.local;
 
-import org.rg.drip.data.source.contract.ModelContract;
-import org.rg.drip.data.model.User;
+import org.rg.drip.data.contract.ModelContract;
+import org.rg.drip.entity.User;
 
-import cn.bmob.v3.BmobObject;
+import io.realm.RealmObject;
 
 /**
  * Created by TankGq
- * on 2018/3/16.
+ * on 2018/3/22.
  */
-public class UserR extends BmobObject implements ModelContract<User> {
-	
+public class UserL extends RealmObject implements ModelContract.Cache<User> {
+
 	private Integer id;              // 用户 id
-	private String username;         // 用户名
-	private String password;         // 密码
+	private String username;         // 账号
+	private String name;             // 用户名
 	private String email;            // 邮箱
 	private Boolean emailVerified;   // 邮箱是否验证
+	private String objectId;         // Bmob 数据的唯一标识符
 
 	public Integer getId() {
 		return id;
@@ -33,12 +34,12 @@ public class UserR extends BmobObject implements ModelContract<User> {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getName() {
+		return name;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmail() {
@@ -56,15 +57,24 @@ public class UserR extends BmobObject implements ModelContract<User> {
 	public void setEmailVerified(Boolean emailVerified) {
 		this.emailVerified = emailVerified;
 	}
-	
+
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+
 	@Override
-	public User convertToNormal() {
+	public User convertToCache() {
 		User user = new User();
 		user.setId(this.getId());
 		user.setUsername(this.getUsername());
-		user.setPassword(this.getPassword());
+		user.setName(this.getName());
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
+		user.setObjectId(this.getObjectId());
 		return user;
 	}
 }

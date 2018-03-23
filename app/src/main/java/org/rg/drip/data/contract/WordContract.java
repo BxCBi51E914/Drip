@@ -1,13 +1,4 @@
-package org.rg.drip.data.source.contract;
-
-import android.support.annotation.NonNull;
-
-import org.rg.drip.data.model.Word;
-
-import java.util.List;
-
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
+package org.rg.drip.data.contract;
 
 /**
  * Author : Tank

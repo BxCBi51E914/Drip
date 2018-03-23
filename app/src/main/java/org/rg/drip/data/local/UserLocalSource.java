@@ -1,6 +1,6 @@
-package org.rg.drip.data.source.local;
+package org.rg.drip.data.local;
 
-import org.rg.drip.data.source.contract.UserContract;
+import org.rg.drip.data.contract.UserContract;
 
 /**
  * Author : Tank

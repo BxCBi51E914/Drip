@@ -1,15 +1,14 @@
-package org.rg.drip.data.source.repository;
+package org.rg.drip.data.repository;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.rg.drip.data.model.User;
-import org.rg.drip.data.source.contract.UserContract;
-import org.rg.drip.data.source.local.UserLocalSource;
-import org.rg.drip.data.source.remote.UserRemoteSource;
+import org.rg.drip.entity.User;
+import org.rg.drip.data.contract.UserContract;
+import org.rg.drip.data.local.UserLocalSource;
+import org.rg.drip.data.remote.UserRemoteSource;
 import org.rg.drip.utils.CheckUtil;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 /**

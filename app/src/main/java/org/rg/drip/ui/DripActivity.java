@@ -7,8 +7,8 @@ import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.FragmentConstant;
-import org.rg.drip.data.model.User;
-import org.rg.drip.data.model.realm.UserL;
+import org.rg.drip.entity.User;
+import org.rg.drip.data.remote.UserRemoteSource;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.ui.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.ui.fragment.first.child.FirstHomeFragment;
@@ -20,9 +20,15 @@ import org.rg.drip.ui.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.ui.fragment.third.child.ShopFragment;
 import org.rg.drip.ui.view.BottomBar;
 import org.rg.drip.ui.view.BottomBarTab;
-import org.rg.drip.utils.RealmUtil;
+import org.rg.drip.utils.ToastUtil;
+import org.rg.drip.utils.schedulers.SchedulerProvider;
 
 import hugo.weaving.DebugLog;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.SchedulerSupport;
+import io.reactivex.internal.schedulers.SchedulerPoolFactory;
+import io.reactivex.schedulers.Schedulers;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -115,34 +121,24 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-//		Observable<List<WordL>>
-//				observable =
-//				Observable.create(new ObservableOnSubscribe<List<WordL>>() {
-//					@Override
-//					public void subscribe(final ObservableEmitter<List<WordL>> emitter) throws
-//					                                                                   Exception {
-//						BmobQuery<WordL> query = new BmobQuery<WordL>();
-//						query.addWhereEndsWith(WordConstant.WORD, "word")
-//						     .findObjects(new FindListener<WordL>() {
-//							     @Override
-//							     public void done(List<WordL> list, BmobException e) {
-//								     if (e == null) {
-//								        emitter.onNext(list);
-//								        emitter.onComplete();
-//								        return;
-//								     }
-//								     emitter.onError(e);
-//							     }
-//						     });
-//					}
-//				});
-//		Realm realm = RealmUtil.getInstance();
-//		realm.beginTransaction();
-//		WordL word = realm.createObject(WordL.class);
-//		LoggerUtil.d(realm.getPath());
-//		word.setId(1);
-//		word.setWord("a");
-//		realm.commitTransaction();
+		UserRemoteSource urs = UserRemoteSource.getInstance();
+		User user = new User();
+		user.setId(1);
+		user.setUsername("asdasdasd");
+		user.setPassword("aaaaaaaaaa1qwc");
+		user.setEmail("2384167200@qq.com");
+		user.setName("2384");
+		urs.signUp(user)
+	       .subscribeOn(Schedulers.io())
+	       .observeOn(AndroidSchedulers.mainThread())
+	       .subscribe(
+	       		result -> {
+			        ToastUtil.showColorfulToast(DripActivity.this, "登录成功");
+		        },
+	            throwable -> {
+		            ToastUtil.showColorfulToast(DripActivity.this, "失败");
+	            }
+	       );
 	}
 
 	@Override

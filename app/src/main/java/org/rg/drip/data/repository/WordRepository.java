@@ -1,4 +1,4 @@
-package org.rg.drip.data.source.repository;
+package org.rg.drip.data.repository;
 
 /**
  * Author : Tank

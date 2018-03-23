@@ -1,4 +1,4 @@
-package org.rg.drip.data.model;
+package org.rg.drip.entity;
 
 /**
  * 单词

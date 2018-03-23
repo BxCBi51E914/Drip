@@ -1,4 +1,4 @@
-package org.rg.drip.data.model;
+package org.rg.drip.entity;
 
 /**
  * 记录单词属于哪个单词本, 以及该单词的状态
