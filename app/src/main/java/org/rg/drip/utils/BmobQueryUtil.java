@@ -12,9 +12,6 @@ import cn.bmob.v3.BmobQuery;
  */
 public class BmobQueryUtil<T> {
 
-	public static int AND = 0;
-	public static int OR = 1;
-
 	private List<BmobQuery<T>> mQueryList = new ArrayList<>();
 
 	/**
@@ -24,30 +21,38 @@ public class BmobQueryUtil<T> {
 		mQueryList.add(query);
 		return this;
 	}
-
+	
 	/**
-	 * 加入一个组合查询
+	 * 加入一个与的组合查询
 	 */
-	public BmobQueryUtil<T> andCombine(int type, BmobQuery<T>... queries) {
+	public BmobQueryUtil<T> combineWithAnd(BmobQuery<T>... queries) {
 		List<BmobQuery<T>> queryList = new ArrayList<>();
 		Collections.addAll(queryList, queries);
-		if(type == AND) {
-			mQueryList.add(new BmobQuery<T>().and(queryList));
-		} else if(type == OR) {
-			mQueryList.add(new BmobQuery<T>().or(queryList));
-		}
+		mQueryList.add(new BmobQuery<T>().and(queryList));
+		return this;
+	}
+	
+	/**
+	 * 加入一个或的组合查询
+	 */
+	public BmobQueryUtil<T> combineWithOr(BmobQuery<T>... queries) {
+		List<BmobQuery<T>> queryList = new ArrayList<>();
+		Collections.addAll(queryList, queries);
+		mQueryList.add(new BmobQuery<T>().or(queryList));
 		return this;
 	}
 
 	/**
-	 *
+	 * 获得所有条件与的结果
 	 */
-	public BmobQuery<T> compile(int type) {
-		if(type == AND) {
-			return new BmobQuery<T>().and(mQueryList);
-		} else if(type == OR) {
-			return new BmobQuery<T>().or(mQueryList);
-		}
-		return new BmobQuery<>();
+	public BmobQuery<T> compileWithAnd() {
+		return new BmobQuery<T>().and(mQueryList);
+	}
+	
+	/**
+	 * 获得所有条件或的结果
+	 */
+	public BmobQuery<T> compileWithOr() {
+		return new BmobQuery<T>().or(mQueryList);
 	}
 }

@@ -4,8 +4,6 @@ import org.rg.drip.constant.UserConstant;
 import org.rg.drip.data.model.User;
 import org.rg.drip.data.model.bmob.UserR;
 import org.rg.drip.data.source.contract.UserContract;
-import org.rg.drip.utils.BmobQueryUtil;
-import org.rg.drip.utils.BmobUtil;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ import io.reactivex.Flowable;
  * Time : 22/03/2018
  */
 public class UserRemoteSource implements UserContract.Remote {
-
+	
 	@Override
 	public Flowable<User> getUserByUsername(String username) {
 		return Flowable.create(emitter -> {
@@ -34,13 +32,13 @@ public class UserRemoteSource implements UserContract.Remote {
 						     emitter.onComplete();
 						     return;
 					     }
-
+					
 					     emitter.onError(e);
 				     }
 			     });
 		}, BackpressureStrategy.BUFFER);
 	}
-
+	
 	@Override
 	public Flowable<Boolean> checkUsernameExist(String username) {
 		return Flowable.create(emitter -> {
@@ -54,29 +52,28 @@ public class UserRemoteSource implements UserContract.Remote {
 						     emitter.onComplete();
 						     return;
 					     }
-
+					
 					     emitter.onError(e);
 				     }
 			     });
 		}, BackpressureStrategy.BUFFER);
 	}
-
+	
 	@Override
 	public Flowable<Boolean> checkPassword(String username, String password) {
-//		return Flowable.create(emitter -emitter> {
+//		return Flowable.create(emitter -> {
 //			BmobQueryUtil<UserR> query = new BmobQueryUtil<>();
 //			query.add(new BmobQuery<UserR>().addWhereEqualTo(UserConstant.USERNAME, username))
 //			     .add(new BmobQuery<UserR>().addWhereEqualTo(UserConstant.PASSWORD, password))
-//			     .compile(BmobQueryUtil.AND)
+//			     .compileWithAnd()
 //			     .findObjects(new FindListener<UserR>() {
 //				     @Override
 //				     public void done(List<UserR> list, BmobException e) {
-//					     if(e == null) {
+//					     if (e == null) {
 //						     emitter.onNext(list.size() > 0);
 //						     emitter.onComplete();
 //						     return;
 //					     }
-//
 //					     emitter.onError(e);
 //				     }
 //			     });
@@ -92,28 +89,27 @@ public class UserRemoteSource implements UserContract.Remote {
 						     emitter.onComplete();
 						     return;
 					     }
-
 					     emitter.onError(e);
 				     }
 			     });
 		}, BackpressureStrategy.BUFFER);
 	}
-
+	
 	@Override
 	public Flowable<Boolean> CreateUser(User user) {
 		return null;
 	}
-
+	
 	@Override
 	public Flowable<Boolean> changeUserPassword(String password) {
 		return null;
 	}
-
+	
 	@Override
 	public Flowable<Boolean> verifyEmail() {
 		return null;
 	}
-
+	
 	@Override
 	public Flowable<Boolean> checkEmailVarified() {
 		return null;
