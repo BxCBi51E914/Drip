@@ -6,6 +6,7 @@ import org.rg.drip.constant.UserConstant;
 import org.rg.drip.data.contract.UserContract;
 import org.rg.drip.entity.User;
 import org.rg.drip.data.model.remote.UserR;
+import org.rg.drip.utils.BmobUtil;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -54,6 +55,7 @@ public class UserRemoteSource implements UserContract.Remote {
 	 * 获得当前登录的用户
 	 */
 	@Nullable
+	@Override
 	public User getCurrentUser() {
 		if(mUser == null) {
 			mUser = BmobUser.getCurrentUser(UserR.class);
@@ -73,16 +75,49 @@ public class UserRemoteSource implements UserContract.Remote {
 			                      .count(UserR.class, new CountListener() {
 				                      @Override
 				                      public void done(Integer integer, BmobException e) {
+					                      BmobUtil.logBmobErrorInfo(e);
 					                      emitter.onNext(null == e && integer > 0);
 					                      emitter.onComplete();
 				                      }
 			                      });
 		}, BackpressureStrategy.BUFFER);
 	}
-
+	
+	@Override
+	public Flowable<Boolean> checkNameExist(String name) {
+		return Flowable.create(emitter -> {
+			new BmobQuery<UserR>().addWhereEqualTo(UserConstant.NAME, name)
+		                          .count(UserR.class, new CountListener() {
+			                          @Override
+			                          public void done(Integer integer, BmobException e) {
+				                          BmobUtil.logBmobErrorInfo(e);
+				                          emitter.onNext(null == e && integer > 0);
+				                          emitter.onComplete();
+			                          }
+		                          });
+		}, BackpressureStrategy.BUFFER);
+	}
+	
 	@Override
 	public Flowable<Boolean> signIn(String username, String password) {
-		return null;
+		UserR userR = new UserR();
+		userR.setUsername(username);
+		userR.setPassword(password);
+		return Flowable.create(emitter -> {
+			BmobUser.loginByAccount(username, password, new LogInListener<UserR>() {
+				@Override
+				public void done(UserR userR, BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
+					if(null == e && userR != null) {
+						storeLoggedUser(userR);
+						emitter.onNext(true);
+					} else {
+						emitter.onNext(false);
+					}
+					emitter.onComplete();
+				}
+			});
+		}, BackpressureStrategy.BUFFER);
 	}
 
 	@Override
@@ -91,6 +126,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.loginByAccount(email, password, new LogInListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					if(null == e && userR != null) {
 						storeLoggedUser(userR);
 						emitter.onNext(true);
@@ -116,6 +152,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			userR.signUp(new SaveListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					if(null == e && userR != null) {
 						storeLoggedUser(userR);
 						emitter.onNext(true);
@@ -142,6 +179,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					if(e == null) {
 						// 修改完密码后退出登录, 清除缓存
 						signOut();
@@ -161,6 +199,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.resetPasswordByEmail(email, new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					emitter.onNext(e == null);
 					emitter.onComplete();
 				}
@@ -180,6 +219,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			user.update(mUser.getObjectId(), new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					if(e == null) {
 						// 修改完邮箱后退出登录, 清除缓存
 						signOut();
@@ -203,6 +243,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.requestEmailVerify(mUser.getEmail(), new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					emitter.onNext(null == e);
 					emitter.onComplete();
 				}
@@ -219,6 +260,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			new BmobQuery<UserR>().getObject(mUser.getObjectId(), new QueryListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
+					BmobUtil.logBmobErrorInfo(e);
 					emitter.onNext(null == e && userR.getEmailVerified());
 					emitter.onComplete();
 				}

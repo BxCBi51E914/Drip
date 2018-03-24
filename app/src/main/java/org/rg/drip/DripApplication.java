@@ -3,6 +3,7 @@ package org.rg.drip;
 import android.app.Application;
 import android.content.Context;
 
+import org.rg.drip.data.model.local.UserL;
 import org.rg.drip.utils.BmobUtil;
 import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RealmUtil;

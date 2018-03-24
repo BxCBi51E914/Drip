@@ -14,11 +14,21 @@ public interface UserContract {
 	}
 
 	interface Remote {
+		
+		/**
+		 * 获得当前登录的用户
+		 */
+		User getCurrentUser();
 
 		/**
 		 * 检查用户名是否存在
 		 */
 		Flowable<Boolean> checkUsernameExist(String username);
+		
+		/**
+		 * 检查名称是否已经存在了
+		 */
+		Flowable<Boolean> checkNameExist(String name);
 
 		/**
 		 * 登录
@@ -67,55 +77,65 @@ public interface UserContract {
 	}
 
 	interface Repository {
-
+		
+		/**
+		 * 获得当前登录的用户
+		 */
+		User getCurrentUser();
+		
 		/**
 		 * 检查用户名是否存在
 		 */
 		Flowable<Boolean> checkUsernameExist(String username);
-
+		
 		/**
-		 * 通过用户名查找用户
+		 * 检查名称是否已经存在了
 		 */
-		Flowable<User> getUserByUsername(String username);
-
+		Flowable<Boolean> checkNameExist(String name);
+		
 		/**
-		 * 检查密码是否合理
+		 * 登录
 		 */
-		Boolean checkPasswordFormat(String password);
-
+		Flowable<Boolean> signIn(String username, String password);
+		
 		/**
-		 * 检查密码是否正确
+		 * 退出登录
 		 */
-		Flowable<Boolean> chechkPassword(String username, String password);
-
+		void signOut();
+		
 		/**
-		 * 获取当前登录的用户
+		 * 使用邮箱登录
 		 */
-		Flowable<User> getLoggedInUser();
-
+		Flowable<Boolean> signInWithEmail(String email, String password);
+		
 		/**
-		 * 保存登录用户的信息
+		 * 注册
 		 */
-		Flowable<Boolean> saveUser(User user);
-
-		/**
-		 * 创建用户
-		 */
-		Flowable<Boolean> CreateUser(User user);
-
+		Flowable<Boolean> signUp(User user);
+		
 		/**
 		 * 修改用户密码
 		 */
-		Flowable<Boolean> changeUserPassword(String password);
-
+		Flowable<Boolean> changePassword(String oldPassword, String newPassword);
+		
 		/**
-		 * 设置用户邮箱验证成功
+		 * 发送通过邮箱重置密码请求
+		 */
+		Flowable<Boolean> changePasswordByEmail(String email);
+		
+		/**
+		 * 更新用户邮箱
+		 */
+		Flowable<Boolean> changeEmail(String email);
+		
+		/**
+		 * 发送验证邮件进行邮箱验证
 		 */
 		Flowable<Boolean> verifyEmail();
-
+		
 		/**
 		 * 检查用户邮箱是否验证过
 		 */
-		Flowable<Boolean> checkEmailVarified();
+		Flowable<Boolean> checkEmailVerified();
 	}
 }
