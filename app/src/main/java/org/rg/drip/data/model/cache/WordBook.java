@@ -1,4 +1,4 @@
-package org.rg.drip.entity;
+package org.rg.drip.data.model.cache;
 
 /**
  * 单词本

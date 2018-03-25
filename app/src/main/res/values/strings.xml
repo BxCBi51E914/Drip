@@ -6,10 +6,23 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="avatar">Avatar</string>
+    <string name="sign_in">SignIn</string>
+    <string name="sign_up">SignUp</string>
+
+    <string name="login">LOGIN</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">Forgot your password ?</string>
+    <string name="go">GO</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="next">NEXT</string>
+    <string name="register">REGISTER</string>
+
+
     <string name="home">Home</string>
     <string name="discover">Discover</string>
     <string name="shop">Shop</string>
-    <string name="login">Sign in</string>
     <string name="system">Account</string>
     <string name="swipe">SwipeBack</string>
     <string name="go_swipe_back">SwipeBackActivity+Fragment</string>
@@ -17,9 +30,6 @@
     <string name="recommend">Recommend</string>
     <string name="hot">Hot</string>
     <string name="favorite">Favorite</string>
-
-    <string name="password">Password</string>
-    <string name="register">Register</string>
 
     <string name="large_text">
         "Material is the metaphor.\n\n"

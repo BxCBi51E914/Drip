@@ -157,10 +157,28 @@ public class ToastUtil {
 	 * @return Toast 对象
 	 */
 	@DebugLog
-	public static Toast showColorfulToast(Context context, String message) {
+	public static Toast showCustumToast(Context context, String message) {
 		makeToast(context).setView(LayoutInflater.from(context)
 		                                         .inflate(R.layout.toast_layout, null))
 		                  .setDuration(Toast.LENGTH_SHORT)
+		                  .setMessage(message)
+		                  .setBackground(R.drawable.toast_radius)
+		                  .show();
+		return mToast;
+	}
+
+	/**
+	 * 显示自定义的 Toast
+	 *
+	 * @param context 上下文
+	 * @param message 消息
+	 * @return Toast 对象
+	 */
+	@DebugLog
+	public static Toast showCustumToastLong(Context context, String message) {
+		makeToast(context).setView(LayoutInflater.from(context)
+		                                         .inflate(R.layout.toast_layout, null))
+		                  .setDuration(Toast.LENGTH_LONG)
 		                  .setMessage(message)
 		                  .setBackground(R.drawable.toast_radius)
 		                  .show();

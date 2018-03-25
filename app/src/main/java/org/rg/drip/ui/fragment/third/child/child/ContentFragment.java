@@ -16,8 +16,10 @@ import org.rg.drip.ui.fragment.third.child.ShopFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
 /**
- * Created by YoKeyword on 16/2/9.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class ContentFragment extends SupportFragment {
     private static final String ARG_MENU = "arg_menu";

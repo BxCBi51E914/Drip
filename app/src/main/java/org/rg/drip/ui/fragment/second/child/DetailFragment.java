@@ -11,12 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseBackFragment;
+import org.rg.drip.base.BaseSubFragment;
 
 /**
- * Created by YoKeyword on 16/2/3.
+ * Created by TankGq
+ * on 2018/3/20.
  */
-public class DetailFragment extends BaseBackFragment {
+public class DetailFragment extends BaseSubFragment {
     public static final String TAG = DetailFragment.class.getSimpleName();
     private static final int REQ_MODIFY_FRAGMENT = 100;
     private static final String ARG_TITLE = "arg_title";
@@ -44,6 +45,16 @@ public class DetailFragment extends BaseBackFragment {
         if (bundle != null) {
             mTitle = bundle.getString(ARG_TITLE);
         }
+    }
+
+    @Override
+    protected int getContentViewLayoutID() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Nullable

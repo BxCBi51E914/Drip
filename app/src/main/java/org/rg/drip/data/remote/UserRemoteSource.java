@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import org.rg.drip.constant.UserConstant;
 import org.rg.drip.data.contract.UserContract;
-import org.rg.drip.entity.User;
+import org.rg.drip.data.model.cache.User;
 import org.rg.drip.data.model.remote.UserR;
 import org.rg.drip.utils.BmobUtil;
 

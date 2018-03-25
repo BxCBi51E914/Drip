@@ -1,4 +1,4 @@
-package org.rg.drip.ui.fragment.fourth.child;
+package org.rg.drip.ui.fragment.user.child;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,8 @@ import org.rg.drip.R;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by YoKeyword on 16/6/6.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class SettingsFragment extends SupportFragment {
     private Toolbar mToolbar;
@@ -30,7 +31,7 @@ public class SettingsFragment extends SupportFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
 		    Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_fourth_settings, container, false);
+        View view = inflater.inflate(R.layout.tab_user_fragment_settings, container, false);
         initView(view);
         return view;
     }

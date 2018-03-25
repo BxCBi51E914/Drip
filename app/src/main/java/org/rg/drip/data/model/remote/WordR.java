@@ -1,7 +1,7 @@
 package org.rg.drip.data.model.remote;
 
 import org.rg.drip.data.contract.ModelContract;
-import org.rg.drip.entity.Word;
+import org.rg.drip.data.model.cache.Word;
 
 import cn.bmob.v3.BmobObject;
 

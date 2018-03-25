@@ -1,4 +1,4 @@
-package org.rg.drip.entity;
+package org.rg.drip.data.model.cache;
 
 import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.remote.UserR;

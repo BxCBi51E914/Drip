@@ -1,4 +1,4 @@
-package org.rg.drip.ui.fragment.fourth.child;
+package org.rg.drip.ui.fragment.user.child;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.rg.drip.R;
-import org.rg.drip.ui.fragment.fourth.ZhihuFourthFragment;
+import org.rg.drip.ui.fragment.user.TabUserMainFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by YoKeyword on 16/6/6.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class MeFragment extends SupportFragment {
     private TextView mTvBtnSettings;
@@ -49,7 +50,7 @@ public class MeFragment extends SupportFragment {
     @Override
     public boolean onBackPressedSupport() {
         // 这里实际项目中推荐使用 EventBus接耦
-        ((ZhihuFourthFragment)getParentFragment()).onBackToFirstFragment();
+        ((TabUserMainFragment)getParentFragment()).onBackToFirstFragment();
         return true;
     }
 }

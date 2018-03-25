@@ -1,6 +1,7 @@
 package org.rg.drip.ui.fragment.third.child.child;
 
 import android.os.Bundle;
+
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +19,10 @@ import java.util.ArrayList;
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
 /**
  * Created by TankGq
- * on 16/2/9.
+ * on 2018/3/20.
  */
 public class MenuListFragment extends SupportFragment {
     private static final String ARG_MENUS = "arg_menus";

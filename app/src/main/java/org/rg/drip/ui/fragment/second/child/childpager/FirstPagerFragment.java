@@ -25,7 +25,8 @@ import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by YoKeyword on 16/6/3.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class FirstPagerFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecy;

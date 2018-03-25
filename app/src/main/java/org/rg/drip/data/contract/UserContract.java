@@ -1,6 +1,6 @@
 package org.rg.drip.data.contract;
 
-import org.rg.drip.entity.User;
+import org.rg.drip.data.model.cache.User;
 
 import io.reactivex.Flowable;
 

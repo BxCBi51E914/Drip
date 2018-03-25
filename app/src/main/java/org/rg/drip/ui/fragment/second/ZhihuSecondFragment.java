@@ -11,7 +11,8 @@ import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.ui.fragment.second.child.ViewPagerFragment;
 
 /**
- * Created by YoKeyword on 16/6/3.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class ZhihuSecondFragment extends BaseMainFragment {
 
@@ -22,6 +23,16 @@ public class ZhihuSecondFragment extends BaseMainFragment {
         ZhihuSecondFragment fragment = new ZhihuSecondFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected int getContentViewLayoutID() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Nullable

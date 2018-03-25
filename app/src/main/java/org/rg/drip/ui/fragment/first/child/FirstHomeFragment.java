@@ -31,7 +31,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by TankGq
- * on 16/6/5.
+ * on 2018/3/20.
  */
 public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
     private Toolbar mToolbar;

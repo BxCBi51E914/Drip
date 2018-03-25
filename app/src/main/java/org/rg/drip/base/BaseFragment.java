@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.rg.drip.ui.fragment.third.child.child.ContentFragment;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -15,7 +17,6 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Author : Tank
  * Time : 08/03/2018
  */
-
 public abstract class BaseFragment extends SupportFragment {
 
 	private Unbinder mUnbinder;

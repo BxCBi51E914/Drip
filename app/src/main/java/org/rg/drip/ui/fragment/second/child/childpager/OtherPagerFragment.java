@@ -12,7 +12,8 @@ import org.rg.drip.R;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class OtherPagerFragment extends SupportFragment {
     private static final String ARG_TYPE = "arg_type";

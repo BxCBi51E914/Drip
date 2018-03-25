@@ -1,7 +1,8 @@
 package org.rg.drip.event;
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class TabSelectedEvent {
     public int position;

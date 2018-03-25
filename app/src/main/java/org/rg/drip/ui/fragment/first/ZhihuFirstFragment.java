@@ -2,34 +2,37 @@ package org.rg.drip.ui.fragment.first;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.ui.fragment.first.child.FirstHomeFragment;
 
 /**
- * Created by YoKeyword on 16/6/3.
+ * Created by TankGq
+ * on 2018/3/20.
  */
 public class ZhihuFirstFragment extends BaseMainFragment {
 
     public static ZhihuFirstFragment newInstance() {
-
-        Bundle args = new Bundle();
-
         ZhihuFirstFragment fragment = new ZhihuFirstFragment();
+        Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-		    Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_first, container, false);
-        return view;
+    protected int getContentViewLayoutID() {
+        return R.layout.zhihu_fragment_first;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected boolean isFirstFragment() {
+        return true;
     }
 
     @Override

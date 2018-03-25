@@ -7,36 +7,33 @@ import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.FragmentConstant;
-import org.rg.drip.entity.User;
-import org.rg.drip.data.remote.UserRemoteSource;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.ui.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.ui.fragment.first.child.FirstHomeFragment;
-import org.rg.drip.ui.fragment.fourth.ZhihuFourthFragment;
-import org.rg.drip.ui.fragment.fourth.child.MeFragment;
+import org.rg.drip.ui.fragment.user.TabUserMainFragment;
+import org.rg.drip.ui.fragment.user.child.MeFragment;
 import org.rg.drip.ui.fragment.second.ZhihuSecondFragment;
 import org.rg.drip.ui.fragment.second.child.ViewPagerFragment;
 import org.rg.drip.ui.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.ui.fragment.third.child.ShopFragment;
 import org.rg.drip.ui.view.BottomBar;
 import org.rg.drip.ui.view.BottomBarTab;
-import org.rg.drip.utils.ToastUtil;
-import org.rg.drip.utils.schedulers.SchedulerProvider;
 
+import butterknife.BindView;
 import hugo.weaving.DebugLog;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.SchedulerSupport;
-import io.reactivex.internal.schedulers.SchedulerPoolFactory;
-import io.reactivex.schedulers.Schedulers;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
+/**
+ * Created by TankGq
+ * on 2018/3/20.
+ */
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
 
 	private SupportFragment[] mFragments = new SupportFragment[4];
 
-	private BottomBar mBottomBar;
+	@BindView(R.id.bottomBar)
+	BottomBar mBottomBar;
 
 	@Override
 	protected int getContentViewLayoutID() {
@@ -51,7 +48,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			mFragments[FragmentConstant.WORD_BOOK] = ZhihuFirstFragment.newInstance();
 			mFragments[FragmentConstant.READING] = ZhihuSecondFragment.newInstance();
 			mFragments[FragmentConstant.THIRD] = ZhihuThirdFragment.newInstance();
-			mFragments[FragmentConstant.SETTING] = ZhihuFourthFragment.newInstance();
+			mFragments[FragmentConstant.SETTING] = TabUserMainFragment.newInstance();
 
 			loadMultipleRootFragment(R.id.fl_container, FragmentConstant.WORD_BOOK,
 			                         mFragments[FragmentConstant.WORD_BOOK],
@@ -65,10 +62,8 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			mFragments[FragmentConstant.WORD_BOOK] = firstFragment;
 			mFragments[FragmentConstant.READING] = findFragment(ZhihuSecondFragment.class);
 			mFragments[FragmentConstant.THIRD] = findFragment(ZhihuThirdFragment.class);
-			mFragments[FragmentConstant.SETTING] = findFragment(ZhihuFourthFragment.class);
+			mFragments[FragmentConstant.SETTING] = findFragment(TabUserMainFragment.class);
 		}
-
-		mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
 		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_home_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_discover_white_24dp))
@@ -99,7 +94,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 						currentFragment.popToChild(ViewPagerFragment.class, false);
 					} else if(currentFragment instanceof ZhihuThirdFragment) {
 						currentFragment.popToChild(ShopFragment.class, false);
-					} else if(currentFragment instanceof ZhihuFourthFragment) {
+					} else if(currentFragment instanceof TabUserMainFragment) {
 						currentFragment.popToChild(MeFragment.class, false);
 					}
 					return;
@@ -121,24 +116,24 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		UserRemoteSource urs = UserRemoteSource.getInstance();
-		User user = new User();
-		user.setId(1);
-		user.setUsername("asdasdasd");
-		user.setPassword("aaaaaaaaaa1qwc");
-		user.setEmail("2384167200@qq.com");
-		user.setName("2384");
-		urs.signUp(user)
-	       .subscribeOn(Schedulers.io())
-	       .observeOn(AndroidSchedulers.mainThread())
-	       .subscribe(
-	       		result -> {
-			        ToastUtil.showColorfulToast(DripActivity.this, "登录成功");
-		        },
-	            throwable -> {
-		            ToastUtil.showColorfulToast(DripActivity.this, "失败");
-	            }
-	       );
+//		UserRemoteSource urs = UserRemoteSource.getInstance();
+//		User user = new User();
+//		user.setId(1);
+//		user.setUsername("asdasdasd");
+//		user.setPassword("aaaaaaaaaa1qwc");
+//		user.setEmail("2384167200@qq.com");
+//		user.setName("2384");
+//		urs.signUp(user)
+//	       .subscribeOn(Schedulers.io())
+//	       .observeOn(AndroidSchedulers.mainThread())
+//	       .subscribe(
+//	       		result -> {
+//			        ToastUtil.showColorfulToast(DripActivity.this, "登录成功");
+//		        },
+//	            throwable -> {
+//		            ToastUtil.showColorfulToast(DripActivity.this, "失败");
+//	            }
+//	       );
 	}
 
 	@Override

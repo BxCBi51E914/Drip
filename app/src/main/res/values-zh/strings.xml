@@ -5,11 +5,22 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">设置</string>
+    <string name="avatar">头像</string>
+    <string name="sign_in">登录</string>
+    <string name="sign_up">注册</string>
+
+    <string name="login">登录</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="forgot_your_password">忘记密码了?</string>
+    <string name="go">走起</string>
+    <string name="repeat_password">重复密码</string>
+    <string name="next">过</string>
+    <string name="register">注册</string>
 
     <string name="home">首页</string>
     <string name="discover">发现</string>
     <string name="shop">商店</string>
-    <string name="login">登录</string>
     <string name="system">账户</string>
     <string name="swipe">侧滑返回</string>
     <string name="go_swipe_back">SwipeBackActivity+Fragment</string>
@@ -17,9 +28,6 @@
     <string name="recommend">推荐</string>
     <string name="hot">热门</string>
     <string name="favorite">收藏</string>
-
-    <string name="password">密码</string>
-    <string name="register">注册</string>
 
 
     <string name="large_text">

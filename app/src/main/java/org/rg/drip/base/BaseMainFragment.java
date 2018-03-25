@@ -2,11 +2,11 @@ package org.rg.drip.base;
 
 import android.content.Context;
 
-import org.rg.drip.ui.fragment.first.ZhihuFirstFragment;
-
-import me.yokeyword.fragmentation.SupportFragment;
-
-public abstract class BaseMainFragment extends SupportFragment {
+/**
+ * Created by TankGq
+ * on 2018/3/20.
+ */
+public abstract class BaseMainFragment extends BaseFragment {
 	protected OnBackToFirstListener _mBackToFirstListener;
 
 	@Override
@@ -20,6 +20,13 @@ public abstract class BaseMainFragment extends SupportFragment {
 		}
 	}
 
+	/**
+	 * 标记当前 fragment 是不是第一个 fragment
+	 */
+	protected boolean isFirstFragment() {
+		return false;
+	}
+
 	@Override
 	public void onDetach() {
 		super.onDetach();
@@ -28,17 +35,17 @@ public abstract class BaseMainFragment extends SupportFragment {
 
 	/**
 	 * 处理回退事件
-	 *
-	 * @return
 	 */
 	@Override
 	public boolean onBackPressedSupport() {
 		if(getChildFragmentManager().getBackStackEntryCount() > 1) {
 			popChild();
 		} else {
-			if(this instanceof ZhihuFirstFragment) {   // 如果是 第一个Fragment 则退出app
+			// 如果当前 fragment 第一个Fragment 则退出app
+			if(isFirstFragment()) {
 				_mActivity.finish();
-			} else {                                    // 如果不是,则回到第一个Fragment
+			} else {
+				// 如果不是,则回到第一个Fragment
 				_mBackToFirstListener.onBackToFirstFragment();
 			}
 		}

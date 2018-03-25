@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseBackFragment;
+import org.rg.drip.base.BaseSubFragment;
 
 /**
  * Created by TankGq
- * on 16/2/7.
+ * on 2018/3/20.
  */
-public class CycleFragment extends BaseBackFragment {
+public class CycleFragment extends BaseSubFragment {
     private static final String ARG_NUMBER = "arg_number";
 
     private Toolbar mToolbar;
@@ -40,6 +40,16 @@ public class CycleFragment extends BaseBackFragment {
         if (args != null) {
             mNumber = args.getInt(ARG_NUMBER);
         }
+    }
+
+    @Override
+    protected int getContentViewLayoutID() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Nullable

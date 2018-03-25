@@ -11,14 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseBackFragment;
+import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.entity.Article;
 import org.rg.drip.ui.fragment.CycleFragment;
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Created by TankGq
+ * on 2018/3/20.
  */
-public class FirstDetailFragment extends BaseBackFragment {
+public class FirstDetailFragment extends BaseSubFragment {
     private static final String ARG_ITEM = "arg_item";
 
     private Article mArticle;
@@ -29,7 +30,6 @@ public class FirstDetailFragment extends BaseBackFragment {
     private FloatingActionButton mFab;
 
     public static FirstDetailFragment newInstance(Article article) {
-
         Bundle args = new Bundle();
         args.putParcelable(ARG_ITEM, article);
         FirstDetailFragment fragment = new FirstDetailFragment();
@@ -41,6 +41,16 @@ public class FirstDetailFragment extends BaseBackFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mArticle = getArguments().getParcelable(ARG_ITEM);
+    }
+
+    @Override
+    protected int getContentViewLayoutID() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Nullable

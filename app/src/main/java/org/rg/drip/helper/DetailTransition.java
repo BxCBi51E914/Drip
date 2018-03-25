@@ -9,6 +9,10 @@ import android.transition.ChangeTransform;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
 
+/**
+ * Created by TankGq
+ * on 2018/3/20.
+ */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class DetailTransition extends TransitionSet {
     public DetailTransition() {

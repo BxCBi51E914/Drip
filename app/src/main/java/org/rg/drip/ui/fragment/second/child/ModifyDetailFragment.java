@@ -11,14 +11,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseBackFragment;
+import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.ui.fragment.CycleFragment;
 
 
 /**
- * Created by YoKeyword on 16/2/7.
+ * Created by TankGq
+ * on 2018/3/20.
  */
-public class ModifyDetailFragment extends BaseBackFragment {
+public class ModifyDetailFragment extends BaseSubFragment {
     private static final String ARG_TITLE = "arg_title";
 
     private Toolbar mToolbar;
@@ -43,6 +44,16 @@ public class ModifyDetailFragment extends BaseBackFragment {
         if (args != null) {
             mTitle = args.getString(ARG_TITLE);
         }
+    }
+
+    @Override
+    protected int getContentViewLayoutID() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Nullable

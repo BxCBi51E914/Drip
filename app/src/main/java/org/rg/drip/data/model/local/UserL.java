@@ -1,7 +1,7 @@
 package org.rg.drip.data.model.local;
 
 import org.rg.drip.data.contract.ModelContract;
-import org.rg.drip.entity.User;
+import org.rg.drip.data.model.cache.User;
 
 import io.realm.RealmObject;
 
