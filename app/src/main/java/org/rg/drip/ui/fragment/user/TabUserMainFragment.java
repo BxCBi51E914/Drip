@@ -20,7 +20,6 @@ import butterknife.BindView;
  */
 public class TabUserMainFragment extends BaseMainFragment {
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    private View mView;
 
     public static TabUserMainFragment newInstance() {
 
@@ -33,20 +32,11 @@ public class TabUserMainFragment extends BaseMainFragment {
 
     @Override
     protected int getContentViewLayoutID() {
-        return 0;
+        return R.layout.tab_user_fragment_main;
     }
 
     @Override
     protected void initView() {
-
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-		    Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.tab_user_fragment_main, container, false);
-        return mView;
     }
 
     @Override
