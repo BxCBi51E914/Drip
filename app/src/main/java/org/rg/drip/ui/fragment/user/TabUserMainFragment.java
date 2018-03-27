@@ -3,14 +3,9 @@ package org.rg.drip.ui.fragment.user;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.ui.fragment.user.child.AvatarFragment;
-import org.rg.drip.ui.fragment.user.child.MeFragment;
 
 import butterknife.BindView;
 
@@ -42,7 +37,7 @@ public class TabUserMainFragment extends BaseMainFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        if (findChildFragment(SignInFragment.class) == null) {
+        if (findChildFragment(AvatarFragment.class) == null) {
             loadFragment();
         }
 
@@ -50,9 +45,8 @@ public class TabUserMainFragment extends BaseMainFragment {
     }
 
     private void loadFragment() {
-//        loadRootFragment(R.id.fragment_user_container_upper, AvatarFragment.newInstance());
-//        loadRootFragment(R.id.fragment_user_container_lower, MeFragment.newInstance());
-        loadRootFragment(R.id.fragment_user_container_all, SignInFragment.newInstance());
+        loadRootFragment(R.id.fragment_user_container_upper, AvatarFragment.newInstance());
+        loadRootFragment(R.id.fragment_user_container_lower, MeFragment.newInstance());
     }
 
     public void onBackToFirstFragment() {

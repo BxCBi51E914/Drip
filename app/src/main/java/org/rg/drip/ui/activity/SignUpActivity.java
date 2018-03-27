@@ -1,4 +1,4 @@
-package org.rg.drip.ui.fragment.user;
+package org.rg.drip.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,27 +12,19 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseSubFragment;
-import org.rg.drip.utils.ToastUtil;
+import org.rg.drip.base.BaseActivity;
 
 import butterknife.BindView;
 
 /**
- * Author : TankGq
- * Time : 25/03/2018
+ * Created by TankGq
+ * on 2018/3/27.
  */
-public class SignUpFragment extends BaseSubFragment {
+public class SignUpActivity extends BaseActivity {
 	
-	@BindView(R.id.fab) FloatingActionButton mFab;
+	@BindView(R.id.fab) FloatingActionButton mCloseBtn;
 	
 	@BindView(R.id.cv_add) CardView mCardView;
-	
-	public static SignUpFragment newInstance() {
-		SignUpFragment fragment = new SignUpFragment();
-		Bundle args = new Bundle();
-		fragment.setArguments(args);
-		return fragment;
-	}
 	
 	@Override
 	protected int getContentViewLayoutID() {
@@ -40,19 +32,15 @@ public class SignUpFragment extends BaseSubFragment {
 	}
 	
 	@Override
-	protected void initView() {
-		mFab.setOnClickListener(v -> animateRevealClose());
+	protected void initView(Bundle savedInstanceState) {
+		ShowEnterAnimation();
+		mCloseBtn.setOnClickListener(v -> animateRevealClose());
 	}
 	
-	@Override
-	protected void initViewOnCreateView() {
-		showEnterAnimation();
-	}
-	
-	private void showEnterAnimation() {
-		Transition transition = TransitionInflater.from(this.getContext())
+	private void ShowEnterAnimation() {
+		Transition transition = TransitionInflater.from(this)
 		                                          .inflateTransition(R.transition.fabtransition);
-		this.setSharedElementEnterTransition(transition);
+		getWindow().setSharedElementEnterTransition(transition);
 		
 		transition.addListener(new Transition.TransitionListener() {
 			@Override
@@ -80,14 +68,16 @@ public class SignUpFragment extends BaseSubFragment {
 			public void onTransitionResume(Transition transition) {
 			
 			}
+			
+			
 		});
 	}
 	
-	private void animateRevealShow() {
+	public void animateRevealShow() {
 		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mCardView,
-		                                                             mCardView.getWidth() >> 1,
+		                                                             mCardView.getWidth() / 2,
 		                                                             0,
-		                                                             mFab.getWidth() >> 1,
+		                                                             mCloseBtn.getWidth() / 2,
 		                                                             mCardView.getHeight());
 		mAnimator.setDuration(500);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
@@ -106,12 +96,12 @@ public class SignUpFragment extends BaseSubFragment {
 		mAnimator.start();
 	}
 	
-	private void animateRevealClose() {
+	public void animateRevealClose() {
 		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mCardView,
-		                                                             mCardView.getWidth() >> 1,
+		                                                             mCardView.getWidth() / 2,
 		                                                             0,
 		                                                             mCardView.getHeight(),
-		                                                             mFab.getWidth() >> 1);
+		                                                             mCloseBtn.getWidth() / 2);
 		mAnimator.setDuration(500);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
@@ -119,8 +109,8 @@ public class SignUpFragment extends BaseSubFragment {
 			public void onAnimationEnd(Animator animation) {
 				mCardView.setVisibility(View.INVISIBLE);
 				super.onAnimationEnd(animation);
-				mFab.setImageResource(R.drawable.ic_add);
-				SignUpFragment.super.onBackPressedSupport();
+				mCloseBtn.setImageResource(R.drawable.ic_clear);
+				SignUpActivity.super.onBackPressedSupport();
 			}
 			
 			@Override
@@ -132,9 +122,7 @@ public class SignUpFragment extends BaseSubFragment {
 	}
 	
 	@Override
-	public boolean onBackPressedSupport() {
-		ToastUtil.showCustumToast(getContext(), "OnBackPressed");
+	public void onBackPressedSupport() {
 		animateRevealClose();
-		return super.onBackPressedSupport();
 	}
 }

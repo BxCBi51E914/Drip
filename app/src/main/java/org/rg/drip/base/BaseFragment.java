@@ -30,17 +30,27 @@ public abstract class BaseFragment extends SupportFragment {
 	 * 界面初始化
 	 */
 	protected abstract void initView();
+	
+	/**
+	 * 在调用 onCreateView 时进行的初始化
+	 */
+	protected void initViewOnCreateView() {
+	}
 
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         @Nullable ViewGroup container,
 	                         @Nullable Bundle savedInstanceState) {
+		View view;
 		if (getContentViewLayoutID() != 0) {
-			return inflater.inflate(getContentViewLayoutID(), container, false);
+			view = inflater.inflate(getContentViewLayoutID(), container, false);
 		} else {
-			return super.onCreateView(inflater, container, savedInstanceState);
+			view = super.onCreateView(inflater, container, savedInstanceState);
 		}
+		
+		initViewOnCreateView();
+		return view;
 	}
 
 	@Override

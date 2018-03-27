@@ -1,4 +1,4 @@
-package org.rg.drip.ui.fragment.user.child;
+package org.rg.drip.ui.fragment.user;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.rg.drip.R;
-import org.rg.drip.ui.fragment.user.TabUserMainFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -39,12 +38,7 @@ public class MeFragment extends SupportFragment {
 
     private void initView(View view) {
         mTvBtnSettings = (TextView) view.findViewById(R.id.tv_btn_settings);
-        mTvBtnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(SettingsFragment.newInstance());
-            }
-        });
+        mTvBtnSettings.setOnClickListener(v -> start(SettingsFragment.newInstance()));
     }
 
     @Override

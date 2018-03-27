@@ -3,6 +3,7 @@ package org.rg.drip.ui.fragment.user;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
@@ -46,11 +47,12 @@ public class SignInFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_user_fragment_sign_in;
+		return R.layout.activity_sign_in;
 	}
 
 	@Override
 	protected void initView() {
+		ViewCompat.setTransitionName(getView(), signUpBtn.getTransitionName());
 		signUpBtn.setOnClickListener(
 				(View v) -> {
 					BaseSubFragment signUpFragment = findFragment(SignUpFragment.class);

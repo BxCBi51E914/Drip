@@ -15,21 +15,14 @@
         app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
 
     <FrameLayout
-        android:id="@+id/fragment_user_container_all"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
-
-    <FrameLayout
         android:id="@+id/fragment_user_container_upper"
         android:layout_width="match_parent"
-        android:layout_height="150dp"/>
+        android:layout_height="200dp"/>
 
     <FrameLayout
         android:id="@+id/fragment_user_container_lower"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="200dp"/>
 
 </FrameLayout>

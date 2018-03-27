@@ -1,4 +1,4 @@
-package org.rg.drip.ui.fragment.user.child;
+package org.rg.drip.ui.fragment.user;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
