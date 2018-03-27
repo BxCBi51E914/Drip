@@ -116,7 +116,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		ToastUtil.showCustumToast(DripActivity.this, "DripActivity.onCreate");
 //		UserRemoteSource urs = UserRemoteSource.getInstance();
 //		User user = new User();
 //		user.setId(1);
@@ -140,7 +140,6 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ToastUtil.showCustumToast(DripActivity.this, "DripActivity.onResume");
 	}
 	
 	@Override

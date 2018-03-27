@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:background="@color/blue"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="65dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cv"
         android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="6dp"
         app:cardElevation="3dp"
@@ -35,19 +36,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="25dp"
                     android:text="@string/login"
                     android:textColor="#FFCC00"
-                    android:textSize="18sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"/>
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="60dp"
                 android:orientation="horizontal"
-                android:paddingEnd="30dp"
-                android:paddingStart="50dp">
+                android:layout_marginTop="30dp"
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -71,10 +73,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="60dp"
                 android:orientation="horizontal"
-                android:paddingEnd="30dp"
-                android:paddingStart="50dp">
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -101,7 +103,7 @@
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/bt_shape"
                 android:stateListAnimator="@drawable/state_list_animator_z"
                 android:text="@string/go"
@@ -114,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
                 android:text="@string/forgot_your_password"
                 android:textColor="#9a9a9a"
                 android:textSize="12sp"/>
@@ -124,10 +127,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/cv"
-        android:layout_alignTop="@id/cv"
-        android:layout_marginEnd="-25dp"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
         android:src="@drawable/ic_add"
         android:transitionName="loginFab"
         app:fabSize="normal"/>
