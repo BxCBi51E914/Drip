@@ -51,9 +51,6 @@ public class UserRemoteSource implements UserContract.Remote {
 		mUser = user;
 	}
 
-	/**
-	 * 获得当前登录的用户
-	 */
 	@Nullable
 	@Override
 	public User getCurrentUser() {
@@ -75,29 +72,39 @@ public class UserRemoteSource implements UserContract.Remote {
 			                      .count(UserR.class, new CountListener() {
 				                      @Override
 				                      public void done(Integer integer, BmobException e) {
-					                      BmobUtil.logBmobErrorInfo(e);
-					                      emitter.onNext(null == e && integer > 0);
+					                      if(e != null) {
+						                      BmobUtil.logBmobErrorInfo(e);
+						                      emitter.onNext(false);
+						                      emitter.onError(e);
+						                      return;
+					                      }
+					                      emitter.onNext(integer > 0);
 					                      emitter.onComplete();
 				                      }
 			                      });
 		}, BackpressureStrategy.BUFFER);
 	}
-	
+
 	@Override
 	public Flowable<Boolean> checkNameExist(String name) {
 		return Flowable.create(emitter -> {
 			new BmobQuery<UserR>().addWhereEqualTo(UserConstant.NAME, name)
-		                          .count(UserR.class, new CountListener() {
-			                          @Override
-			                          public void done(Integer integer, BmobException e) {
-				                          BmobUtil.logBmobErrorInfo(e);
-				                          emitter.onNext(null == e && integer > 0);
-				                          emitter.onComplete();
-			                          }
-		                          });
+			                      .count(UserR.class, new CountListener() {
+				                      @Override
+				                      public void done(Integer integer, BmobException e) {
+					                      if(e != null) {
+						                      BmobUtil.logBmobErrorInfo(e);
+						                      emitter.onNext(false);
+						                      emitter.onError(e);
+						                      return;
+					                      }
+					                      emitter.onNext(integer > 0);
+					                      emitter.onComplete();
+				                      }
+			                      });
 		}, BackpressureStrategy.BUFFER);
 	}
-	
+
 	@Override
 	public Flowable<Boolean> signIn(String username, String password) {
 		UserR userR = new UserR();
@@ -107,8 +114,13 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.loginByAccount(username, password, new LogInListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					if(null == e && userR != null) {
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					if(userR != null) {
 						storeLoggedUser(userR);
 						emitter.onNext(true);
 					} else {
@@ -126,8 +138,13 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.loginByAccount(email, password, new LogInListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					if(null == e && userR != null) {
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					if(userR != null) {
 						storeLoggedUser(userR);
 						emitter.onNext(true);
 					} else {
@@ -152,8 +169,13 @@ public class UserRemoteSource implements UserContract.Remote {
 			userR.signUp(new SaveListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					if(null == e && userR != null) {
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					if(userR != null) {
 						storeLoggedUser(userR);
 						emitter.onNext(true);
 					} else {
@@ -179,14 +201,15 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					if(e == null) {
-						// 修改完密码后退出登录, 清除缓存
-						signOut();
-						emitter.onNext(true);
-					} else {
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
 						emitter.onNext(false);
+						emitter.onError(e);
+						return;
 					}
+					// 修改完密码后退出登录, 清除缓存
+					signOut();
+					emitter.onNext(true);
 					emitter.onComplete();
 				}
 			});
@@ -199,8 +222,13 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.resetPasswordByEmail(email, new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					emitter.onNext(e == null);
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					emitter.onNext(true);
 					emitter.onComplete();
 				}
 			});
@@ -219,14 +247,15 @@ public class UserRemoteSource implements UserContract.Remote {
 			user.update(mUser.getObjectId(), new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					if(e == null) {
-						// 修改完邮箱后退出登录, 清除缓存
-						signOut();
-						emitter.onNext(true);
-					} else {
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
 						emitter.onNext(false);
+						emitter.onError(e);
+						return;
 					}
+					// 修改完邮箱后退出登录, 清除缓存
+					signOut();
+					emitter.onNext(true);
 					emitter.onComplete();
 				}
 			});
@@ -243,8 +272,13 @@ public class UserRemoteSource implements UserContract.Remote {
 			BmobUser.requestEmailVerify(mUser.getEmail(), new UpdateListener() {
 				@Override
 				public void done(BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					emitter.onNext(null == e);
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					emitter.onNext(true);
 					emitter.onComplete();
 				}
 			});
@@ -260,8 +294,13 @@ public class UserRemoteSource implements UserContract.Remote {
 			new BmobQuery<UserR>().getObject(mUser.getObjectId(), new QueryListener<UserR>() {
 				@Override
 				public void done(UserR userR, BmobException e) {
-					BmobUtil.logBmobErrorInfo(e);
-					emitter.onNext(null == e && userR.getEmailVerified());
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					emitter.onNext(userR.getEmailVerified());
 					emitter.onComplete();
 				}
 			});

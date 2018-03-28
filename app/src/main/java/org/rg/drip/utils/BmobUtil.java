@@ -16,7 +16,7 @@ import cn.bmob.v3.exception.BmobException;
  */
 
 public class BmobUtil {
-	
+
 	private final static HashMap<Integer, String> ERROR_INFO = new HashMap<Integer, String>() {{
 		put(9001, "Application Id 为空，请初始化.");
 		put(9002, "解析返回数据出错");
@@ -42,7 +42,7 @@ public class BmobUtil {
 		put(9022, "文件上传失败，请重新上传");
 		put(9023, "请调用Bmob类的initialize方法去初始化SDK");
 	}};
-	
+
 
 	public static void initialize(Context context) {
 		Bmob.initialize(new BmobConfig.Builder(context)
@@ -56,12 +56,10 @@ public class BmobUtil {
 				                .build());
 //		Bmob.initialize(context, BmobConstant.APPLICATION_ID, BmobConstant.CHANNEL);
 	}
-	
+
 	public static void logBmobErrorInfo(BmobException e) {
-		if(e == null) {
-			return;
-		}
-		LoggerUtil.d("[BmobError] errorCode : " + e.getErrorCode()
+		if(e == null) return;
+		LoggerUtil.e("[BmobError] errorCode : " + e.getErrorCode()
 		             + ", errorMessage : " + e.getLocalizedMessage());
 	}
 }

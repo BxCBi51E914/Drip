@@ -22,6 +22,16 @@
     <string name="next">确定</string>
     <string name="register">注册</string>
 
+    <string name="err_msg_username">请输入你的用户名或者邮箱.</string>
+    <string name="err_msg_password">请输入密码.</string>
+    <string name="tip_input_email_above">请在上方(账号/邮箱)输入正确的邮箱</string>
+    <string name="err_msg_sign_in_error">用户名或邮箱和密码不匹配</string>
+    <string name="err_msg_sign_in_fail">登录失败</string>
+    <string name="tip_msg_sign_in_succeed">登录成功</string>
+    <string name="tip_email_send_succeed">邮件发送成功</string>
+    <string name="err_emial_send_failed">邮件发送失败</string>
+
+
     <string name="home">首页</string>
     <string name="discover">发现</string>
     <string name="shop">商店</string>

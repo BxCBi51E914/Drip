@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.rg.drip.ui.fragment.second.child.childpager.FirstPagerFragment;
-import org.rg.drip.ui.fragment.second.child.childpager.OtherPagerFragment;
+import org.rg.drip.fragment.second.child.childpager.FirstPagerFragment;
+import org.rg.drip.fragment.second.child.childpager.OtherPagerFragment;
 
 /**
  * Created by YoKeyword on 16/6/5.
