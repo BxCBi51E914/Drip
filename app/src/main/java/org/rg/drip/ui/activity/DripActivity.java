@@ -123,7 +123,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 //		user.setUsername("asdasdasd");
 //		user.setPassword("aaaaaaaaaa1qwc");
 //		user.setEmail("2384167200@qq.com");
-//		user.setName("2384");
+//		user.setNickname("2384");
 //		urs.signUp(user)
 //	       .subscribeOn(Schedulers.io())
 //	       .observeOn(AndroidSchedulers.mainThread())

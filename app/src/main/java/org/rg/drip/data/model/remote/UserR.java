@@ -12,7 +12,7 @@ import cn.bmob.v3.BmobUser;
 public class UserR extends BmobUser implements ModelContract.Cache<User> {
 	
 	private Integer id;         // 用户 id
-	private String name;        // 用户名称
+	private String nickname;        // 昵称
 
 	public Integer getId() {
 		return id;
@@ -22,12 +22,12 @@ public class UserR extends BmobUser implements ModelContract.Cache<User> {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class UserR extends BmobUser implements ModelContract.Cache<User> {
 		User user = new User();
 		user.setId(this.getId());
 		user.setUsername(this.getUsername());
-		user.setName(this.getName());
+		user.setNickname(this.getNickname());
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());

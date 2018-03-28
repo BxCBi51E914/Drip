@@ -15,7 +15,7 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 	private Integer id;             // 用户 id
 	private String username;        // 账号
 	private String password;        // 密码
-	private String name;            // 用户名
+	private String nickname;        // 昵称
 	private String email;           // 邮箱
 	private Boolean emailVerified;  // 邮箱是否验证
 	private String objectId;        // Bmob 数据的唯一标识符
@@ -44,12 +44,12 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getEmail() {
@@ -81,7 +81,7 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 		UserL user = new UserL();
 		user.setId(this.getId());
 		user.setUsername(this.getUsername());
-		user.setName(this.getName());
+		user.setNickname(this.getNickname());
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());
@@ -93,7 +93,7 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 		UserR user = new UserR();
 		user.setId(this.getId());
 		user.setUsername(this.getUsername());
-		user.setName(this.getName());
+		user.setNickname(this.getNickname());
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());

@@ -22,15 +22,15 @@ import butterknife.BindView;
  */
 public class SignInActivity extends BaseActivity {
 	
-	@BindView(R.id.fab) FloatingActionButton mSignUpBtn;
+	@BindView(R.id.fab_sign_up) FloatingActionButton mSignUpFab;
 	
-	@BindView(R.id.et_username) EditText mUsernameET;
+	@BindView(R.id.et_username) EditText mUsernameEt;
 	
-	@BindView(R.id.et_password) EditText mPasswordET;
+	@BindView(R.id.et_password) EditText mPasswordEt;
 	
-	@BindView(R.id.go_bt) Button mGo;
+	@BindView(R.id.bt_go) Button mGoBt;
 	
-	@BindView(R.id.forget_password_bt) TextView mForgetPasswordBtn;
+	@BindView(R.id.bt_forget_password) TextView mForgetPasswordBt;
 	
 	@Override
 	protected int getContentViewLayoutID() {
@@ -39,8 +39,8 @@ public class SignInActivity extends BaseActivity {
 	
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		mGo.setOnClickListener(v -> {
-			SignInActivity.this.onBackPressed();
+		mGoBt.setOnClickListener(v -> {
+//			SignInActivity.this.onBackPressed();
 			Explode explode = new Explode();
 			explode.setDuration(500);
 
@@ -52,13 +52,13 @@ public class SignInActivity extends BaseActivity {
 			                                   .toBundle());
 			
 		});
-		mSignUpBtn.setOnClickListener(v -> {
+		mSignUpFab.setOnClickListener(v -> {
 			getWindow().setExitTransition(null);
 			getWindow().setEnterTransition(null);
 			startActivity(new Intent(SignInActivity.this, SignUpActivity.class),
 			              ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this,
-			                                                           mSignUpBtn,
-			                                                           mSignUpBtn.getTransitionName())
+			                                                           mSignUpFab,
+			                                                           mSignUpFab.getTransitionName())
 			                             .toBundle());
 		});
 	}
@@ -66,12 +66,12 @@ public class SignInActivity extends BaseActivity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		mSignUpBtn.setVisibility(View.GONE);
+		mSignUpFab.setVisibility(View.GONE);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mSignUpBtn.setVisibility(View.VISIBLE);
+		mSignUpFab.setVisibility(View.VISIBLE);
 	}
 }

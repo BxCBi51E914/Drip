@@ -16,13 +16,14 @@
 
     <FrameLayout
         android:id="@+id/fragment_user_container_upper"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="220dp"/>
 
     <FrameLayout
         android:id="@+id/fragment_user_container_lower"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="200dp"/>
+        android:layout_marginTop="220dp"/>
 
 </FrameLayout>

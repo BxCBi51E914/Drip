@@ -5,27 +5,38 @@
              android:layout_height="match_parent"
              android:background="@color/colorPrimary">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
 
         <ImageView
+            android:id="@+id/avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/ic_avatar"/>
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            style="@style/button_wrapper_style"
-            android:id="@+id/signInOrSignUpBtn"
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_alignTop="@+id/avatar"
+            android:layout_centerHorizontal="true"
+            android:text="@string/nickname"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="105dp"/>
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/rb_sign_in_or_sign_up"
+            style="@style/button_wrapper_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/avatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="105dp"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -33,8 +44,8 @@
             android:text="@string/sign_in_or_sign_up"
             android:textColor="@color/qmui_s_link_color"
             app:qmui_borderColor="@color/qmui_s_link_color"
-            app:qmui_borderWidth="1px"
+            app:qmui_borderWidth="1dp"
             app:qmui_radius="20dp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

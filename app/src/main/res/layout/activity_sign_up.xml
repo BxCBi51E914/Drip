@@ -2,22 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="320dp"
-                android:layout_height="450dp">
+                android:layout_height="match_parent">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/cv_sign_up"
+        android:layout_marginTop="-20dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_clear"
         android:transitionName="loginFab"
         app:fabSize="normal"/>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cv_add"
+        android:id="@+id/cv_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -116,6 +117,60 @@
                         android:background="@drawable/selector_bg_edit_2"
                         android:hint="@string/repeat_password"
                         android:inputType="textPassword"
+                        android:paddingBottom="2dp"
+                        android:textColor="#f0f7f4"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:textSize="20sp"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#f0f7f4"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/et_nickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:hint="@string/nickname"
+                        android:inputType="textPersonName"
+                        android:paddingBottom="2dp"
+                        android:textColor="#f0f7f4"
+                        android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                        android:textSize="20sp"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingEnd="40dp"
+                android:paddingStart="40dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#f0f7f4"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/selector_bg_edit_2"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
                         android:paddingBottom="2dp"
                         android:textColor="#f0f7f4"
                         android:textCursorDrawable="@drawable/bg_input_cursor_2"

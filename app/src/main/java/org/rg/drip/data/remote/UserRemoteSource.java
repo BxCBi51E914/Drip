@@ -145,7 +145,7 @@ public class UserRemoteSource implements UserContract.Remote {
 			UserR userR = new UserR();
 			userR.setId(user.getId());
 			userR.setUsername(user.getUsername());
-			userR.setName(user.getName());
+			userR.setNickname(user.getNickname());
 			userR.setEmail(user.getEmail());
 			userR.setEmailVerified(user.getEmailVerified());
 			userR.setPassword(user.getPassword());

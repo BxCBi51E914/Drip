@@ -13,7 +13,7 @@ public class UserL extends RealmObject implements ModelContract.Cache<User> {
 
 	private Integer id;              // 用户 id
 	private String username;         // 账号
-	private String name;             // 用户名
+	private String nickname;         // 昵称
 	private String email;            // 邮箱
 	private Boolean emailVerified;   // 邮箱是否验证
 	private String objectId;         // Bmob 数据的唯一标识符
@@ -34,12 +34,12 @@ public class UserL extends RealmObject implements ModelContract.Cache<User> {
 		this.username = username;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getEmail() {
@@ -71,7 +71,7 @@ public class UserL extends RealmObject implements ModelContract.Cache<User> {
 		User user = new User();
 		user.setId(this.getId());
 		user.setUsername(this.getUsername());
-		user.setName(this.getName());
+		user.setNickname(this.getNickname());
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());

@@ -2,6 +2,8 @@ package org.rg.drip.ui.fragment.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -18,8 +20,10 @@ import butterknife.BindView;
  */
 public class AvatarFragment extends BaseSubFragment {
 
-	@BindView(R.id.signInOrSignUpBtn)
-	QMUIRoundButton mSignOrSignUpBtn;
+	@BindView(R.id.rb_sign_in_or_sign_up)
+	QMUIRoundButton mSignOrSignUpBt;
+	
+	@BindView(R.id.tv_nickname) TextView mNickNameTv;
 
 	public static AvatarFragment newInstance() {
 		AvatarFragment fragment = new AvatarFragment();
@@ -35,13 +39,26 @@ public class AvatarFragment extends BaseSubFragment {
 
 	@Override
 	protected void initView() {
-		mSignOrSignUpBtn.setOnClickListener(v -> startActivity(new Intent(getActivity(),
-		                                                                  SignInActivity.class)));
+		mSignOrSignUpBt.setOnClickListener(v -> {
+			startActivity(new Intent(getActivity(),
+			                         SignInActivity.class));
+			ToastUtil.showCustumToast(getContext(), "mSignOrSignUpBt.OnClick()");
+		});
+		
+		mNickNameTv.setOnClickListener(v -> {
+			ToastUtil.showCustumToast(getContext(), "mNickNameTv.OnClick()");
+		});
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		ToastUtil.showCustumToast(getContext(), "AvatarFragment.onResume()");
+		if(Math.random() > 0.5) {
+			mNickNameTv.setVisibility(View.INVISIBLE);
+			mSignOrSignUpBt.setVisibility(View.VISIBLE);
+		} else {
+			mNickNameTv.setVisibility(View.VISIBLE);
+			mSignOrSignUpBt.setVisibility(View.INVISIBLE);
+		}
 	}
 }

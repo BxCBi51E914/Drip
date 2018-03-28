@@ -2,14 +2,18 @@ package org.rg.drip.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
+import android.transition.Explode;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
@@ -22,9 +26,11 @@ import butterknife.BindView;
  */
 public class SignUpActivity extends BaseActivity {
 	
-	@BindView(R.id.fab) FloatingActionButton mCloseBtn;
+	@BindView(R.id.fab_sign_in) FloatingActionButton mSignInFab;
 	
-	@BindView(R.id.cv_add) CardView mCardView;
+	@BindView(R.id.cv_sign_up) CardView mSignUpCardView;
+	
+	@BindView(R.id.bt_go) Button mGoBtn;
 	
 	@Override
 	protected int getContentViewLayoutID() {
@@ -34,7 +40,19 @@ public class SignUpActivity extends BaseActivity {
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		ShowEnterAnimation();
-		mCloseBtn.setOnClickListener(v -> animateRevealClose());
+		mSignInFab.setOnClickListener(v -> animateRevealClose());
+		mGoBtn.setOnClickListener(v -> {
+//			SignInActivity.this.onBackPressed();
+			Explode explode = new Explode();
+			explode.setDuration(500);
+			
+			getWindow().setExitTransition(explode);
+			getWindow().setEnterTransition(explode);
+			
+			startActivity(new Intent(SignUpActivity.this, DripActivity.class),
+			              ActivityOptionsCompat.makeSceneTransitionAnimation(SignUpActivity.this)
+			                                   .toBundle());
+		});
 	}
 	
 	private void ShowEnterAnimation() {
@@ -45,7 +63,7 @@ public class SignUpActivity extends BaseActivity {
 		transition.addListener(new Transition.TransitionListener() {
 			@Override
 			public void onTransitionStart(Transition transition) {
-				mCardView.setVisibility(View.GONE);
+				mSignUpCardView.setVisibility(View.GONE);
 			}
 			
 			@Override
@@ -68,18 +86,16 @@ public class SignUpActivity extends BaseActivity {
 			public void onTransitionResume(Transition transition) {
 			
 			}
-			
-			
 		});
 	}
 	
 	public void animateRevealShow() {
-		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mCardView,
-		                                                             mCardView.getWidth() / 2,
+		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mSignUpCardView,
+		                                                             mSignUpCardView.getWidth() / 2,
 		                                                             0,
-		                                                             mCloseBtn.getWidth() / 2,
-		                                                             mCardView.getHeight());
-		mAnimator.setDuration(500);
+		                                                             mSignInFab.getWidth() / 2,
+		                                                             mSignUpCardView.getHeight());
+		mAnimator.setDuration(600);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override
@@ -89,7 +105,7 @@ public class SignUpActivity extends BaseActivity {
 			
 			@Override
 			public void onAnimationStart(Animator animation) {
-				mCardView.setVisibility(View.VISIBLE);
+				mSignUpCardView.setVisibility(View.VISIBLE);
 				super.onAnimationStart(animation);
 			}
 		});
@@ -97,19 +113,19 @@ public class SignUpActivity extends BaseActivity {
 	}
 	
 	public void animateRevealClose() {
-		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mCardView,
-		                                                             mCardView.getWidth() / 2,
+		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mSignUpCardView,
+		                                                             mSignUpCardView.getWidth() / 2,
 		                                                             0,
-		                                                             mCardView.getHeight(),
-		                                                             mCloseBtn.getWidth() / 2);
-		mAnimator.setDuration(500);
+		                                                             mSignUpCardView.getHeight(),
+		                                                             mSignInFab.getWidth() / 2);
+		mAnimator.setDuration(600);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationEnd(Animator animation) {
-				mCardView.setVisibility(View.INVISIBLE);
+				mSignUpCardView.setVisibility(View.INVISIBLE);
 				super.onAnimationEnd(animation);
-				mCloseBtn.setImageResource(R.drawable.ic_clear);
+				mSignInFab.setImageResource(R.drawable.ic_clear);
 				SignUpActivity.super.onBackPressedSupport();
 			}
 			
