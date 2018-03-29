@@ -23,16 +23,24 @@
     <string name="next">NEXT</string>
     <string name="register">REGISTER</string>
 
-    <string name="err_msg_username">Please input you username or email</string>
-    <string name="err_msg_password">Please input you password</string>
-    <string name="err_msg_sign_in_error">Username or email could not match to password</string>
-    <string name="tip_input_email_above">Please input you email above(Username/Email)</string>
+    <string name="tip_username_or_email">Please input you username or email</string>
+    <string name="tip_username">Please input you username</string>
+    <string name="tip_password">Please input you password</string>
+    <string name="tip_repeat_password">Please input you password again</string>
+    <string name="tip_password_no_equal">Please make sure password equal to repeat password</string>
+    <string name="tip_nickname">Please input you nickname</string>
+    <string name="tip_email">Please input you email</string>
+    <string name="tip_sign_in_error">Username or email could not match to password</string>
+    <string name="tip_email_error">Please input you email rightly</string>
     <string name="tip_sign_in_succeed">Sign in succeed</string>
-    <string name="err_msg_sign_in_fail">Sign in failed</string>
+    <string name="tip_sign_in_failed">Sign in failed</string>
+    <string name="tip_sign_up_succeed">Sign up succeed</string>
+    <string name="tip_sign_up_failed">Sign up failed</string>
     <string name="tip_email_send_succeed">Send email succeed</string>
-    <string name="err_email_send_failed">Send email failed.</string>
+    <string name="tip_email_send_failed">Send email failed.</string>
     <string name="tip_send_email_to_reset">Send email to change the password</string>
     <string name="tip_input_email">Input you email</string>
+
     <string name="check_yes">YES</string>
     <string name="check_no">NO</string>
 

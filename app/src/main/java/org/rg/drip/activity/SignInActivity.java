@@ -29,27 +29,30 @@ import butterknife.BindView;
  * on 2018/3/27.
  */
 public class SignInActivity extends BaseActivity implements SignInContract.View {
-	
+
 	@BindView(R.id.fab_sign_up) FloatingActionButton mSignUpFab;
-	
+
 	@BindView(R.id.et_username) EditText mUsernameEt;
-	
+
 	@BindView(R.id.et_password) EditText mPasswordEt;
-	
+
 	@BindView(R.id.bt_go) Button mGoBt;
-	
+
 	@BindView(R.id.bt_forget_password) TextView mForgetPasswordBt;
-	
+
 	private SignInContract.Presenter mPresenter;
-	
+
+	private QMUITipDialog mLoadingTipDialog;
+
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.activity_sign_in;
 	}
-	
+
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		mPresenter = new SignInPresenter(RepositoryUtil.getUserRepository(), this);
+
 		mGoBt.setOnClickListener(v -> {
 			mPresenter.signIn(mUsernameEt.getText().toString(), mPasswordEt.getText().toString());
 		});
@@ -67,55 +70,64 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 			builder.setPlaceholder(R.string.tip_input_email)
 			       .setTitle(R.string.tip_send_email_to_reset)
 			       .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+			       .addAction(R.string.check_no, ((dialog, index) -> dialog.dismiss()))
 			       .addAction(R.string.check_yes,
 			                  (dialog, index) -> mPresenter.forgetPassword(builder.getEditText()
 			                                                                      .getText()
 			                                                                      .toString()))
-			       .addAction(R.string.check_no, ((dialog, index) -> dialog.dismiss()))
 			       .create()
 			       .show();
 		});
-//		new QMUITipDialog.CustomBuilder(this).setContent(R.layout.tip_loading)
-//		                                                 .create()
-//		                                                 .show();
-		new QMUITipDialog.CustomBuilder(this)
-				.setContent(R.layout.tipdialog_custom)
-				.create().show();
 	}
-	
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 		mSignUpFab.setVisibility(View.GONE);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		mSignUpFab.setVisibility(View.VISIBLE);
 		mPresenter.subscribe();
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		mPresenter.unSubscribe();
-		
 	}
-	
+
 	@Override
 	public void setPresenter(SignInContract.Presenter presenter) {
 		mPresenter = CheckUtil.checkNotNull(presenter);
 	}
-	
+
 	@Override
 	public void showTip(@StringRes int stringId) {
 		ToastUtil.showCustumToast(SignInActivity.this, getString(stringId));
 	}
-	
+
 	@Override
 	public void signInOk() {
 		showTip(R.string.tip_sign_in_succeed);
 		startActivity(new Intent(SignInActivity.this, DripActivity.class));
+	}
+
+	@Override
+	public void showLoadingTipDialog(boolean bShow) {
+		if(bShow) {
+			if(mLoadingTipDialog == null) {
+				mLoadingTipDialog = new QMUITipDialog.CustomBuilder(this)
+						                    .setContent(R.layout.tip_loading)
+						                    .create();
+			}
+			mLoadingTipDialog.show();
+		} else {
+			if(mLoadingTipDialog != null && mLoadingTipDialog.isShowing()) {
+				mLoadingTipDialog.dismiss();
+			}
+		}
 	}
 }

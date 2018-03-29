@@ -14,7 +14,7 @@ public class SignInContract {
 	public interface View extends BaseView<Presenter> {
 
 		/**
-		 * 显示登录错误提示
+		 * 显示提示
 		 */
 		void showTip(@StringRes int stringId);
 
@@ -22,6 +22,11 @@ public class SignInContract {
 		 * 显示登录成功
 		 */
 		void signInOk();
+
+		/**
+		 * 显示或者隐藏加载对话框
+		 */
+		void showLoadingTipDialog(boolean bShow);
 	}
 
 	public interface Presenter extends BasePresenter {

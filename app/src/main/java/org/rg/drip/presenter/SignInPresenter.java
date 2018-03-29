@@ -47,11 +47,11 @@ public class SignInPresenter implements SignInContract.Presenter {
 	@Override
 	public void signIn(String usernameOrEmail, String password) {
 		if(usernameOrEmail.length() == 0) {
-			mView.showTip(R.string.err_msg_username);
+			mView.showTip(R.string.tip_username_or_email);
 			return;
 		}
 		if(password.length() == 0) {
-			mView.showTip(R.string.err_msg_password);
+			mView.showTip(R.string.tip_password);
 			return;
 		}
 
@@ -65,12 +65,12 @@ public class SignInPresenter implements SignInContract.Presenter {
 							               if(result) {
 								               mView.signInOk();
 							               } else {
-								               mView.showTip(R.string.err_msg_sign_in_error);
+								               mView.showTip(R.string.tip_sign_in_error);
 							               }
 						               },
 						               // onError
 						               throwable -> {
-							               mView.showTip(R.string.err_msg_sign_in_fail);
+							               mView.showTip(R.string.tip_sign_in_failed);
 						               }
 				               ));
 	}
@@ -78,9 +78,10 @@ public class SignInPresenter implements SignInContract.Presenter {
 	@Override
 	public void forgetPassword(String email) {
 		if(! CheckUtil.checkEmail(email)) {
-			mView.showTip(R.string.tip_input_email_above);
+			mView.showTip(R.string.tip_email_error);
 			return;
 		}
+		mView.showLoadingTipDialog(true);
 		mCompositeDisposable.add(
 				mUserRepository.changePasswordByEmail(email)
 				               .subscribeOn(Schedulers.io())
@@ -91,12 +92,14 @@ public class SignInPresenter implements SignInContract.Presenter {
 							               if(result) {
 								               mView.showTip(R.string.tip_email_send_succeed);
 							               } else {
-								               mView.showTip(R.string.err_email_send_failed);
+								               mView.showTip(R.string.tip_email_send_failed);
 							               }
+							               mView.showLoadingTipDialog(false);
 						               },
 						               // onError
 						               throwable -> {
-							               mView.showTip(R.string.err_email_send_failed);
+							               mView.showTip(R.string.tip_email_send_failed);
+							               mView.showLoadingTipDialog(false);
 						               }
 				               ));
 	}

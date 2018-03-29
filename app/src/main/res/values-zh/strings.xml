@@ -22,14 +22,21 @@
     <string name="next">确定</string>
     <string name="register">注册</string>
 
-    <string name="err_msg_username">请输入你的用户名或者邮箱.</string>
-    <string name="err_msg_password">请输入密码.</string>
-    <string name="tip_input_email_above">请在上方(账号/邮箱)输入正确的邮箱</string>
-    <string name="err_msg_sign_in_error">用户名或邮箱和密码不匹配</string>
-    <string name="err_msg_sign_in_fail">登录失败</string>
+    <string name="tip_username_or_email">请输入你的用户名或者邮箱</string>
+    <string name="tip_username">请输入用户名</string>
+    <string name="tip_password">请输入密码</string>
+    <string name="tip_repeat_password">请再次输入密码</string>
+    <string name="tip_password_no_equal">请确保两次输入的密码一致</string>
+    <string name="tip_nickname">请输入昵称</string>
+    <string name="tip_email">请输入邮箱地址</string>
+    <string name="tip_email_error">请输入正确的邮箱地址</string>
+    <string name="tip_sign_in_error">用户名或邮箱和密码不匹配</string>
+    <string name="tip_sign_in_failed">登录失败</string>
     <string name="tip_sign_in_succeed">登录成功</string>
+    <string name="tip_sign_up_succeed">注册成功</string>
+    <string name="tip_sign_up_failed">注册失败</string>
     <string name="tip_email_send_succeed">邮件发送成功</string>
-    <string name="err_email_send_failed">邮件发送失败</string>
+    <string name="tip_email_send_failed">邮件发送失败</string>
     <string name="tip_send_email_to_reset">发送邮件重设密码</string>
     <string name="tip_input_email">输入你的邮箱</string>
     <string name="check_yes">确定</string>
