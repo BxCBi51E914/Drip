@@ -5,10 +5,7 @@ import android.support.annotation.NonNull;
 import org.rg.drip.R;
 import org.rg.drip.contract.user.SignInContract;
 import org.rg.drip.data.contract.UserContract;
-import org.rg.drip.data.model.cache.User;
-import org.rg.drip.data.repository.UserRepository;
 import org.rg.drip.utils.CheckUtil;
-import org.rg.drip.utils.ToastUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -94,12 +91,12 @@ public class SignInPresenter implements SignInContract.Presenter {
 							               if(result) {
 								               mView.showTip(R.string.tip_email_send_succeed);
 							               } else {
-								               mView.showTip(R.string.err_emial_send_failed);
+								               mView.showTip(R.string.err_email_send_failed);
 							               }
 						               },
 						               // onError
 						               throwable -> {
-							               mView.showTip(R.string.err_emial_send_failed);
+							               mView.showTip(R.string.err_email_send_failed);
 						               }
 				               ));
 	}

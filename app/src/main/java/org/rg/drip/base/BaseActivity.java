@@ -2,6 +2,7 @@ package org.rg.drip.base;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
 import org.rg.drip.R;
 
@@ -62,34 +65,30 @@ public abstract class BaseActivity extends SupportActivity {
 	}
 
 	/**
-	 * 子类可以重写决定是否使用透明状态栏
-	 */
-	protected boolean translucentStatusBar() {
-		return true;
-	}
-
-	/**
 	 * 设置状态栏颜色
 	 */
 	protected void initSystemBarTint() {
-		Window window = getWindow();
-		// 沉浸式状态栏
-		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-		if(translucentStatusBar()) {
-			window.getDecorView()
-			      .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-			                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-			window.setStatusBarColor(Color.TRANSPARENT);
-		} else {
-			window.setStatusBarColor(setStatusBarColor());
-		}
+//		Window window = getWindow();
+//		// 沉浸式状态栏
+//		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//		if(translucentStatusBar()) {
+//			window.getDecorView()
+//			      .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+//			                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//			window.setStatusBarColor(Color.TRANSPARENT);
+//		} else {
+//			window.setStatusBarColor(setStatusBarColor());
+//		}
+		QMUIStatusBarHelper.translucent(this);
+		getWindow().setStatusBarColor(setStatusBarColor());
 	}
 
 	/**
 	 * 子类可以重写改变状态栏颜色
 	 */
+	@ColorInt
 	protected int setStatusBarColor() {
-		return R.color.blue;
+		return getColor(R.color.colorPrimary);
 	}
 }

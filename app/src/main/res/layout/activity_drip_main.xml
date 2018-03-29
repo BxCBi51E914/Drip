@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/bottombar_height"/>
 
-        <org.rg.drip.view.BottomBar
+        <org.rg.drip.view.bottom_bar.BottomBar
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottombar_height"

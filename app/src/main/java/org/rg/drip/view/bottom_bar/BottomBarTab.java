@@ -1,4 +1,4 @@
-package org.rg.drip.view;
+package org.rg.drip.view.bottom_bar;
 
 import android.content.Context;
 import android.content.res.TypedArray;

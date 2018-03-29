@@ -3,6 +3,8 @@ package org.rg.drip.activity;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
@@ -16,8 +18,8 @@ import org.rg.drip.fragment.second.ZhihuSecondFragment;
 import org.rg.drip.fragment.second.child.ViewPagerFragment;
 import org.rg.drip.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.fragment.third.child.ShopFragment;
-import org.rg.drip.view.BottomBar;
-import org.rg.drip.view.BottomBarTab;
+import org.rg.drip.view.bottom_bar.BottomBar;
+import org.rg.drip.view.bottom_bar.BottomBarTab;
 import org.rg.drip.utils.ToastUtil;
 
 import butterknife.BindView;

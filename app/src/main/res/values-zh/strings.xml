@@ -27,10 +27,13 @@
     <string name="tip_input_email_above">请在上方(账号/邮箱)输入正确的邮箱</string>
     <string name="err_msg_sign_in_error">用户名或邮箱和密码不匹配</string>
     <string name="err_msg_sign_in_fail">登录失败</string>
-    <string name="tip_msg_sign_in_succeed">登录成功</string>
+    <string name="tip_sign_in_succeed">登录成功</string>
     <string name="tip_email_send_succeed">邮件发送成功</string>
-    <string name="err_emial_send_failed">邮件发送失败</string>
-
+    <string name="err_email_send_failed">邮件发送失败</string>
+    <string name="tip_send_email_to_reset">发送邮件重设密码</string>
+    <string name="tip_input_email">输入你的邮箱</string>
+    <string name="check_yes">确定</string>
+    <string name="check_no">取消</string>
 
     <string name="home">首页</string>
     <string name="discover">发现</string>
