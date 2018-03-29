@@ -27,6 +27,7 @@ import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.ToastUtil;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by TankGq
@@ -46,6 +47,23 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	@BindView(R.id.et_nickname) EditText mNicknameEt;
 	@BindView(R.id.et_email) EditText mEmailEt;
 
+	@OnClick({ R.id.fab_sign_in, R.id.bt_go })
+	void OnClick(View v) {
+		switch(v.getId()) {
+			case R.id.fab_sign_in:
+				animateRevealClose();
+				break;
+
+			case R.id.bt_go:
+				mPresenter.signUp(mUsernameEt.getText().toString(),
+				                  mPasswordEt.getText().toString(),
+				                  mRepeatPasswordEt.getText().toString(),
+				                  mNicknameEt.getText().toString(),
+				                  mEmailEt.getText().toString());
+				break;
+		}
+	}
+
 	private SignUpContract.Presenter mPresenter;
 
 	private QMUITipDialog mLoadingTipDialog;
@@ -59,14 +77,6 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	protected void initView(Bundle savedInstanceState) {
 		mPresenter = new SignUpPresenter(RepositoryUtil.getUserRepository(), this);
 		ShowEnterAnimation();
-		mSignInFab.setOnClickListener(v -> animateRevealClose());
-		mGoBtn.setOnClickListener(v -> {
-			mPresenter.signUp(mUsernameEt.getText().toString(),
-			                  mPasswordEt.getText().toString(),
-			                  mRepeatPasswordEt.getText().toString(),
-			                  mNicknameEt.getText().toString(),
-			                  mEmailEt.getText().toString());
-		});
 	}
 
 	/**

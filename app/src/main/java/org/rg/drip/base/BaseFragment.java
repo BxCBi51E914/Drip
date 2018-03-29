@@ -1,11 +1,15 @@
 package org.rg.drip.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.rg.drip.DripApplication;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -35,6 +39,16 @@ public abstract class BaseFragment extends SupportFragment {
 	protected void initViewOnCreateView() {
 	}
 
+	private Activity mActivity;
+	@Nullable
+	@Override
+	public Context getContext() {
+		if(mActivity == null) {
+			return DripApplication.getInstance();
+		}
+		return mActivity;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,6 +63,12 @@ public abstract class BaseFragment extends SupportFragment {
 		
 		initViewOnCreateView();
 		return view;
+	}
+
+	@Override
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		mActivity = getActivity();
 	}
 
 	@Override

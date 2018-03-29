@@ -23,6 +23,7 @@ import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.ToastUtil;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by TankGq
@@ -40,6 +41,42 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 
 	@BindView(R.id.bt_forget_password) TextView mForgetPasswordBt;
 
+	@OnClick({ R.id.fab_sign_up, R.id.bt_go, R.id.bt_forget_password })
+	void Click(View v) {
+		ToastUtil.showCustumToast(this, "OnClick()");
+		switch(v.getId()) {
+			case R.id.fab_sign_up:
+				getWindow().setExitTransition(null);
+				getWindow().setEnterTransition(null);
+				startActivity(new Intent(SignInActivity.this, SignUpActivity.class),
+				              ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this,
+				                                                           mSignUpFab,
+				                                                           mSignUpFab.getTransitionName())
+				                             .toBundle());
+				break;
+
+			case R.id.bt_go:
+				mPresenter.signIn(mUsernameEt.getText().toString(),
+				                  mPasswordEt.getText().toString());
+				break;
+
+			case R.id.bt_forget_password:
+				QMUIDialog.EditTextDialogBuilder builder =
+						new QMUIDialog.EditTextDialogBuilder(this);
+				builder.setPlaceholder(R.string.tip_input_email)
+				       .setTitle(R.string.tip_send_email_to_reset)
+				       .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+				       .addAction(R.string.check_no, ((dialog, index) -> dialog.dismiss()))
+				       .addAction(R.string.check_yes,
+				                  (dialog, index) -> mPresenter.forgetPassword(builder.getEditText()
+				                                                                      .getText()
+				                                                                      .toString()))
+				       .create()
+				       .show();
+				break;
+		}
+	}
+
 	private SignInContract.Presenter mPresenter;
 
 	private QMUITipDialog mLoadingTipDialog;
@@ -52,32 +89,6 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		mPresenter = new SignInPresenter(RepositoryUtil.getUserRepository(), this);
-
-		mGoBt.setOnClickListener(v -> {
-			mPresenter.signIn(mUsernameEt.getText().toString(), mPasswordEt.getText().toString());
-		});
-		mSignUpFab.setOnClickListener(v -> {
-			getWindow().setExitTransition(null);
-			getWindow().setEnterTransition(null);
-			startActivity(new Intent(SignInActivity.this, SignUpActivity.class),
-			              ActivityOptions.makeSceneTransitionAnimation(SignInActivity.this,
-			                                                           mSignUpFab,
-			                                                           mSignUpFab.getTransitionName())
-			                             .toBundle());
-		});
-		mForgetPasswordBt.setOnClickListener(v -> {
-			QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(this);
-			builder.setPlaceholder(R.string.tip_input_email)
-			       .setTitle(R.string.tip_send_email_to_reset)
-			       .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-			       .addAction(R.string.check_no, ((dialog, index) -> dialog.dismiss()))
-			       .addAction(R.string.check_yes,
-			                  (dialog, index) -> mPresenter.forgetPassword(builder.getEditText()
-			                                                                      .getText()
-			                                                                      .toString()))
-			       .create()
-			       .show();
-		});
 	}
 
 	@Override

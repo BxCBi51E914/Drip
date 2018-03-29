@@ -14,7 +14,13 @@ import org.rg.drip.utils.StethoUtil;
  * on 2018/3/20.
  */
 public class DripApplication extends Application {
-	
+
+	private static DripApplication mInstance;
+
+	public static DripApplication getInstance() {
+		return mInstance;
+	}
+
 	/**
 	 * 初始化工具
 	 */
@@ -24,10 +30,11 @@ public class DripApplication extends Application {
 		RealmUtil.initialize(context);
 		StethoUtil.initialize(context);
 	}
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		mInstance = this;
 		initTools(DripApplication.this);
 	}
 }

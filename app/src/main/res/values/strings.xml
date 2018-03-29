@@ -40,6 +40,7 @@
     <string name="tip_email_send_failed">Send email failed.</string>
     <string name="tip_send_email_to_reset">Send email to change the password</string>
     <string name="tip_input_email">Input you email</string>
+    <string name="brackets_unverified">(Unverified)</string>
 
     <string name="check_yes">YES</string>
     <string name="check_no">NO</string>
