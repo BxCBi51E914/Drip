@@ -39,10 +39,23 @@
     <string name="tip_email_send_failed">邮件发送失败</string>
     <string name="tip_send_email_to_reset">发送邮件重设密码</string>
     <string name="tip_input_email">输入你的邮箱</string>
+    <string name="tip_input_new_email">输入你的新邮箱</string>
     <string name="brackets_unverified">(未验证)</string>
 
-    <string name="check_yes">确定</string>
-    <string name="check_no">取消</string>
+    <string name="act_sign_out">退出登录</string>
+    <string name="act_change_password">修改密码</string>
+    <string name="act_change_email">修改邮箱</string>
+    <string name="act_verify_email">验证邮箱</string>
+
+    <string name="ask_sign_out">是否确认退出登录?</string>
+    <string name="ask_change_password">是否确认修改密码?</string>
+    <string name="ask_change_email">修改邮箱?</string>
+    <string name="ask_verify_email">是否发送验证邮件?</string>
+
+    <string name="chk_yes">确定</string>
+    <string name="chk_no">取消</string>
+    <string name="chk_send">发送</string>
+    <string name="chk_out">退出</string>
 
     <string name="home">首页</string>
     <string name="discover">发现</string>

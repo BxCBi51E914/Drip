@@ -9,9 +9,9 @@ import org.rg.drip.base.BaseView;
  * Author : TankGq
  * Time : 28/03/2018
  */
-public class SignUpContract {
+public interface SignUpContract {
 
-	public interface View extends BaseView<Presenter> {
+	interface View extends BaseView<Presenter> {
 
 		/**
 		 * 显示提示
@@ -29,7 +29,7 @@ public class SignUpContract {
 		void showLoadingTipDialog(boolean bShow);
 	}
 
-	public interface Presenter extends BasePresenter {
+	interface Presenter extends BasePresenter {
 
 		/**
 		 * 注册

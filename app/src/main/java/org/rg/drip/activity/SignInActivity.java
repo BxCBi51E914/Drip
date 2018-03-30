@@ -66,8 +66,8 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 				builder.setPlaceholder(R.string.tip_input_email)
 				       .setTitle(R.string.tip_send_email_to_reset)
 				       .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-				       .addAction(R.string.check_no, ((dialog, index) -> dialog.dismiss()))
-				       .addAction(R.string.check_yes,
+				       .addAction(R.string.chk_no, ((dialog, index) -> dialog.dismiss()))
+				       .addAction(R.string.chk_yes,
 				                  (dialog, index) -> mPresenter.forgetPassword(builder.getEditText()
 				                                                                      .getText()
 				                                                                      .toString()))
