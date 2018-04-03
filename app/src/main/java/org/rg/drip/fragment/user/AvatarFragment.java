@@ -49,8 +49,8 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 	void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.rb_sign_in_or_sign_up:
-//				startActivity(new Intent(getActivity(), SignInActivity.class));
-				showSignInFragment();
+				startActivity(new Intent(getActivity(), SignInActivity.class));
+//				showSignInFragment();
 				break;
 			
 			case R.id.tv_nickname:

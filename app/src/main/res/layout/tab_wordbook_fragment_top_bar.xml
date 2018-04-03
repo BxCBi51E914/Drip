@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/fragment_whole"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_gravity="center|start"
+        android:src="@drawable/ic_folder"
+        android:layout_marginStart="16dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_wordbook_name"
+        android:layout_gravity="center|start"
+        android:text="@string/empty"
+        android:layout_marginStart="44dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/tv_choose_wordbook"
+        android:layout_gravity="center|end"
+        android:text="@string/choose_wordbook"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:background="@drawable/ripple_color_accent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</FrameLayout>

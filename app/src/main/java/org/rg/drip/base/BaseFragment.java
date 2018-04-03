@@ -39,6 +39,19 @@ public abstract class BaseFragment extends SupportFragment {
 	protected void initViewOnCreateView() {
 	}
 
+	/**
+	 * 在调用 onLazyInitView 时进行的初始化
+	 */
+	protected void initViewOnLazyInitView() {
+
+	}
+
+	/**
+	 * 在调用 onActivityCreated 时进行初始化
+	 */
+	protected void initViewOnActivityCreated() {
+	}
+
 	private Activity mActivity;
 	
 	@Nullable
@@ -83,5 +96,17 @@ public abstract class BaseFragment extends SupportFragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		mUnbinder.unbind();
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		initViewOnActivityCreated();
+	}
+
+	@Override
+	public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+		super.onLazyInitView(savedInstanceState);
+		initViewOnLazyInitView();
 	}
 }

@@ -23,6 +23,7 @@ import org.rg.drip.base.BaseActivity;
 import org.rg.drip.contract.SignUpContract;
 import org.rg.drip.presenter.SignUpPresenter;
 import org.rg.drip.utils.CheckUtil;
+import org.rg.drip.utils.LoadingTipDialogUtil;
 import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.ToastUtil;
 
@@ -65,8 +66,6 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	}
 
 	private SignUpContract.Presenter mPresenter;
-
-	private QMUITipDialog mLoadingTipDialog;
 
 	@Override
 	protected int getContentViewLayoutID() {
@@ -206,16 +205,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	@Override
 	public void showLoadingTipDialog(boolean bShow) {
 		if(bShow) {
-			if(mLoadingTipDialog == null) {
-				mLoadingTipDialog = new QMUITipDialog.CustomBuilder(this)
-						                    .setContent(R.layout.tip_loading)
-						                    .create();
-			}
-			mLoadingTipDialog.show();
+			LoadingTipDialogUtil.show(SignUpActivity.this);
 		} else {
-			if(mLoadingTipDialog != null && mLoadingTipDialog.isShowing()) {
-				mLoadingTipDialog.dismiss();
-			}
+			LoadingTipDialogUtil.dismiss();
 		}
 	}
 
@@ -224,7 +216,7 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	 */
 	public void jumpToMainActivityWhenSignUpOk() {
 		Explode explode = new Explode();
-		explode.setDuration(500);
+		explode.setDuration(600);
 
 		getWindow().setExitTransition(explode);
 		getWindow().setEnterTransition(explode);

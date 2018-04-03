@@ -22,6 +22,8 @@
     <string name="email">Email</string>
     <string name="next">NEXT</string>
     <string name="register">REGISTER</string>
+    <string name="empty">Empty</string>
+    <string name="choose_wordbook">Choose Wordbook</string>
 
     <string name="tip_username_or_email">Please input you username or email</string>
     <string name="tip_username">Please input you username</string>

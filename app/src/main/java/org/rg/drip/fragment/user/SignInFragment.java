@@ -47,10 +47,10 @@ public class SignInFragment extends BaseSubFragment implements SignInContract.Vi
 		switch(v.getId()) {
 			case R.id.fab_sign_up:
 				SignUpFragment signUpFragment = SignUpFragment.newInstance();
-//				Transition transition = TransitionInflater
-//						.from(getContext())
-//						.inflateTransition(R.transition.fabtransition);
-//				signUpFragment.setSharedElementEnterTransition(transition);
+				Transition transition = TransitionInflater
+						.from(getContext())
+						.inflateTransition(R.transition.fabtransition);
+				signUpFragment.setSharedElementReturnTransition(transition);
 				extraTransaction().addSharedElement(mSignUpFab, mSignUpFab.getTransitionName())
 //						.start(signUpFragment);
                                   .startDontHideSelf(signUpFragment);

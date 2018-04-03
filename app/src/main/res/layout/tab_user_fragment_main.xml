@@ -5,25 +5,31 @@
              android:layout_height="match_parent"
              android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
-        app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
+        android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/fragment_user_container_upper"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
 
-    <FrameLayout
-        android:id="@+id/fragment_user_container_lower"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="220dp"/>
+        <FrameLayout
+            android:id="@+id/fragment_user_container_upper"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="?attr/actionBarSize"/>
 
+        <FrameLayout
+            android:id="@+id/fragment_user_container_lower"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="220dp">
+        </FrameLayout>
+    </RelativeLayout>
 </FrameLayout>

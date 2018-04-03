@@ -16,6 +16,8 @@ import org.rg.drip.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.fragment.third.child.ShopFragment;
 import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
+import org.rg.drip.fragment.wordbook.StudyStateFragment;
+import org.rg.drip.fragment.wordbook.WordBookMainFragment;
 import org.rg.drip.utils.ToastUtil;
 import org.rg.drip.view.bottom_bar.BottomBar;
 import org.rg.drip.view.bottom_bar.BottomBarTab;
@@ -43,16 +45,16 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	@DebugLog
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		SupportFragment firstFragment = findFragment(ZhihuFirstFragment.class);
+		SupportFragment firstFragment = findFragment(WordBookMainFragment.class);
 		if(firstFragment == null) {
-			mFragments[FragmentConstant.WORD_BOOK] = ZhihuFirstFragment.newInstance();
+			mFragments[FragmentConstant.WORDBOOK] = WordBookMainFragment.newInstance();
 			mFragments[FragmentConstant.READING] = ZhihuSecondFragment.newInstance();
 			mFragments[FragmentConstant.THIRD] = ZhihuThirdFragment.newInstance();
 			mFragments[FragmentConstant.SETTING] = UserMainFragment.newInstance();
 			
 			loadMultipleRootFragment(R.id.fl_container,
-			                         FragmentConstant.WORD_BOOK,
-			                         mFragments[FragmentConstant.WORD_BOOK],
+			                         FragmentConstant.WORDBOOK,
+			                         mFragments[FragmentConstant.WORDBOOK],
 			                         mFragments[FragmentConstant.READING],
 			                         mFragments[FragmentConstant.THIRD],
 			                         mFragments[FragmentConstant.SETTING]);
@@ -60,13 +62,13 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			// 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 			
 			// 这里我们需要拿到mFragments的引用
-			mFragments[FragmentConstant.WORD_BOOK] = firstFragment;
+			mFragments[FragmentConstant.WORDBOOK] = firstFragment;
 			mFragments[FragmentConstant.READING] = findFragment(ZhihuSecondFragment.class);
 			mFragments[FragmentConstant.THIRD] = findFragment(ZhihuThirdFragment.class);
 			mFragments[FragmentConstant.SETTING] = findFragment(UserMainFragment.class);
 		}
 		
-		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_home_white_24dp))
+		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_folder_open))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_discover_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_message_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_account_circle_white_24dp));
@@ -89,8 +91,8 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 				
 				// 如果不在该类别Fragment的主页,则回到主页;
 				if(count > 1) {
-					if(currentFragment instanceof ZhihuFirstFragment) {
-						currentFragment.popToChild(FirstHomeFragment.class, false);
+					if(currentFragment instanceof WordBookMainFragment) {
+						currentFragment.popToChild(StudyStateFragment.class, false);
 					} else if(currentFragment instanceof ZhihuSecondFragment) {
 						currentFragment.popToChild(ViewPagerFragment.class, false);
 					} else if(currentFragment instanceof ZhihuThirdFragment) {

@@ -24,7 +24,7 @@ public class WordLocalSource implements WordContract {
 //	public Flowable<List<Word>> getWords(String word) {
 //		return RealmUtil.getInstance()
 //		                .where(WordL.class)
-//		                .beginsWith(WordConstant.WORD, word)
+//		                .beginsWith(WordConstant.WORDBOOK, word)
 //		                .findAllAsync()
 //		                .asFlowable()
 //		                .filter(RealmResults::isLoaded)

@@ -11,7 +11,7 @@ import org.rg.drip.fragment.first.child.FirstHomeFragment;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class ZhihuFirstFragment extends BaseMainFragment {
+public class ZhihuFirstFragment extends BaseMainFragment implements BaseMainFragment.OnBackToFirstListener {
 	
 	public static ZhihuFirstFragment newInstance() {
 		ZhihuFirstFragment fragment = new ZhihuFirstFragment();
@@ -41,5 +41,10 @@ public class ZhihuFirstFragment extends BaseMainFragment {
 		if(findChildFragment(FirstHomeFragment.class) == null) {
 			loadRootFragment(R.id.fl_first_container, FirstHomeFragment.newInstance());
 		}
+	}
+
+	@Override
+	public void onBackToFirstFragment() {
+		_mBackToFirstListener.onBackToFirstFragment();
 	}
 }

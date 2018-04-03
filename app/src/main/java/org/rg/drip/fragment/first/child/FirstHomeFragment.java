@@ -171,7 +171,7 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
      */
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != FragmentConstant.WORD_BOOK) return;
+        if (event.position != FragmentConstant.WORDBOOK) return;
 
         if (mInAtTop) {
             mRefreshLayout.setRefreshing(true);
