@@ -31,7 +31,7 @@ public abstract class BaseFragment extends SupportFragment {
 	/**
 	 * 界面初始化
 	 */
-	protected abstract void initView();
+	protected abstract void initView(Bundle savedInstanceState);
 	
 	/**
 	 * 在调用 onCreateView 时进行的初始化
@@ -40,6 +40,7 @@ public abstract class BaseFragment extends SupportFragment {
 	}
 
 	private Activity mActivity;
+	
 	@Nullable
 	@Override
 	public Context getContext() {
@@ -64,7 +65,7 @@ public abstract class BaseFragment extends SupportFragment {
 		initViewOnCreateView();
 		return view;
 	}
-
+	
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
@@ -75,7 +76,7 @@ public abstract class BaseFragment extends SupportFragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mUnbinder = ButterKnife.bind(this, view);
-		initView();
+		initView(savedInstanceState);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package org.rg.drip.fragment.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,10 +15,19 @@ import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.activity.SignInActivity;
+import org.rg.drip.base.BaseFragment;
+import org.rg.drip.base.BaseMainFragment;
+import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.constant.TabUserConstant;
+import org.rg.drip.contract.AvatarContract;
 import org.rg.drip.data.model.cache.User;
+import org.rg.drip.presenter.AvatarPresenter;
+import org.rg.drip.utils.CheckUtil;
+import org.rg.drip.utils.LoadingTipDialogUtil;
+import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RepositoryUtil;
+import org.rg.drip.utils.ToastUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +39,7 @@ import butterknife.OnClick;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class AvatarFragment extends BaseSubFragment {
+public class AvatarFragment extends BaseSubFragment implements AvatarContract.View {
 	
 	@BindView(R.id.rb_sign_in_or_sign_up) QMUIRoundButton mSignOrSignUpBt;
 	
@@ -39,7 +49,8 @@ public class AvatarFragment extends BaseSubFragment {
 	void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.rb_sign_in_or_sign_up:
-				startActivity(new Intent(getActivity(), SignInActivity.class));
+//				startActivity(new Intent(getActivity(), SignInActivity.class));
+				showSignInFragment();
 				break;
 			
 			case R.id.tv_nickname:
@@ -56,6 +67,11 @@ public class AvatarFragment extends BaseSubFragment {
 		}
 	}
 	
+	private AvatarContract.Presenter mPresenter;
+	
+	/**
+	 * 点击用户昵称显示的下拉菜单
+	 */
 	private QMUIListPopup mListPopup;
 	
 	public static AvatarFragment newInstance() {
@@ -71,8 +87,9 @@ public class AvatarFragment extends BaseSubFragment {
 	}
 	
 	@Override
-	protected void initView() {
-		updateUserSignState();
+	protected void initView(Bundle savedInstanceState) {
+		mPresenter = new AvatarPresenter(RepositoryUtil.getUserRepository(), this);
+		mPresenter.updateSignInUser();
 		List<String> popupItemData = Arrays.asList(getString(R.string.act_sign_out),
 		                                           getString(R.string.act_change_password),
 		                                           getString(R.string.act_change_email));
@@ -81,57 +98,24 @@ public class AvatarFragment extends BaseSubFragment {
 		                               new ArrayAdapter<>(getActivity(),
 		                                                  R.layout.popup_list_item,
 		                                                  popupItemData));
-		mListPopup.create(QMUIDisplayHelper.dp2px(getContext(), 192),
-		                  QMUIDisplayHelper.dp2px(getContext(), 192),
+		mListPopup.create(QMUIDisplayHelper.dp2px(getContext(), TabUserConstant.AVATAR_POPUP_WIDTH),
+		                  QMUIDisplayHelper.dp2px(getContext(),
+		                                          TabUserConstant.AVATAR_POPUP_HEIGHT),
 		                  (parent, view, position, id) -> {
 			                  switch(position) {
 				                  // R.string.act_sign_out
 				                  case 0:
-					                  new QMUIDialog.MessageDialogBuilder(getActivity())
-							                  .setTitle(getString(R.string.act_sign_out))
-							                  .setMessage(getString(R.string.ask_sign_out))
-							                  .addAction(getString(R.string.chk_no),
-							                             (dialog, index) -> dialog.dismiss())
-							                  .addAction(getString(R.string.chk_out),
-							                             (dialog, index) -> {
-								                             RepositoryUtil
-										                             .getUserRepository()
-										                             .signOut();
-								                             updateUserSignState();
-								                             dialog.dismiss();
-							                             })
-							                  .create()
-							                  .show();
+					                  showConfirmSignOutDialog();
 					                  break;
 				
 				                  // R.string.act_change_password
 				                  case 1:
-					                  QMUIDialog.EditTextDialogBuilder
-							                  builder
-							                  = new QMUIDialog.EditTextDialogBuilder(getContext());
-					                  builder
-							                  .setPlaceholder(R.string.tip_input_new_email)
-							                  .setTitle(R.string.act_change_email)
-							                  .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-							                  .addAction(R.string.chk_no,
-							                             ((dialog, index) -> dialog.dismiss()))
-							                  .addAction(R.string.chk_send, (dialog, index) -> {
-							                  })
-							                  .create()
-							                  .show();
+					                  showConfirmChangePasswordDialog();
 					                  break;
 				
 				                  // R.string.act_change_password
 				                  case 2:
-					                  new QMUIDialog.MessageDialogBuilder(getActivity())
-							                  .setTitle(getString(R.string.act_change_password))
-							                  .setMessage(getString(R.string.ask_change_password))
-							                  .addAction(getString(R.string.chk_no),
-							                             (dialog, index) -> dialog.dismiss())
-							                  .addAction(getString(R.string.chk_yes),
-							                             (dialog, index) -> dialog.dismiss())
-							                  .create()
-							                  .show();
+					                  showChangeEmailDialog();
 					                  break;
 			                  }
 			                  mListPopup.dismiss();
@@ -141,22 +125,100 @@ public class AvatarFragment extends BaseSubFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateUserSignState();
+		mPresenter.subscribe();
+		mPresenter.updateSignInUser();
 	}
 	
-	public void updateUserSignState() {
-		User user = RepositoryUtil.getUserRepository().getCurrentUser();
+	@Override
+	public void onPause() {
+		super.onPause();
+		mPresenter.unSubscribe();
+	}
+	
+	@Override
+	public void showTip(int stringId) {
+		ToastUtil.showCustumToast(getContext(), getString(stringId));
+	}
+	
+	@Override
+	public void showLoadingTipDialog(boolean bShow) {
+		if(bShow) {
+			LoadingTipDialogUtil.show(getContext());
+		} else {
+			LoadingTipDialogUtil.dismiss();
+		}
+	}
+	
+	@Override
+	public void loadUser(User user) {
 		if(user == null) {
 			mNickNameTv.setVisibility(View.INVISIBLE);
 			mSignOrSignUpBt.setVisibility(View.VISIBLE);
-		} else {
-			mNickNameTv.setVisibility(View.VISIBLE);
-			mSignOrSignUpBt.setVisibility(View.INVISIBLE);
-			String nickname = user.getNickname();
-			if(null == user.getEmailVerified() || ! user.getEmailVerified()) {
-				nickname += getString(R.string.brackets_unverified);
-			}
-			mNickNameTv.setText(nickname);
+			return;
 		}
+		
+		mNickNameTv.setVisibility(View.VISIBLE);
+		mSignOrSignUpBt.setVisibility(View.INVISIBLE);
+		String nickname = user.getNickname();
+		if(null == user.getEmailVerified() || ! user.getEmailVerified()) {
+			nickname += getString(R.string.brackets_unverified);
+		}
+		mNickNameTv.setText(nickname);
+	}
+	
+	@Override
+	public void showConfirmSignOutDialog() {
+		new QMUIDialog.MessageDialogBuilder(getActivity())
+				.setTitle(getString(R.string.act_sign_out))
+				.setMessage(getString(R.string.ask_sign_out))
+				.addAction(getString(R.string.chk_no), (dialog, index) -> dialog.dismiss())
+				.addAction(getString(R.string.chk_out), (dialog, index) -> {
+					mPresenter.signOut();
+					mPresenter.updateSignInUser();
+					dialog.dismiss();
+				})
+				.create()
+				.show();
+	}
+	
+	@Override
+	public void showChangeEmailDialog() {
+		new QMUIDialog.EditTextDialogBuilder(getContext())
+				.setPlaceholder(R.string.tip_input_new_email)
+				.setTitle(R.string.act_change_email)
+				.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+				.addAction(R.string.chk_no, ((dialog, index) -> dialog.dismiss()))
+				.addAction(R.string.chk_send, (dialog, index) -> {
+				})
+				.create()
+				.show();
+	}
+	
+	@Override
+	public void showConfirmChangePasswordDialog() {
+		new QMUIDialog.MessageDialogBuilder(getActivity())
+				.setTitle(getString(R.string.act_change_password))
+				.setMessage(getString(R.string.ask_change_password))
+				.addAction(getString(R.string.chk_no), (dialog, index) -> dialog.dismiss())
+				.addAction(getString(R.string.chk_yes), (dialog, index) -> dialog.dismiss())
+				.create()
+				.show();
+	}
+	
+	@Override
+	public void showSignInFragment() {
+		BaseFragment parentFragment = (BaseFragment) getParentFragment();
+		if(parentFragment == null) {
+			LoggerUtil.e("The parent of AvatarFragment is null");
+			showTip(R.string.tip_unknown_error);
+			return;
+		}
+		
+		parentFragment.start(SignInFragment.newInstance());
+	}
+	
+	@Override
+	public void setPresenter(AvatarContract.Presenter presenter) {
+		mPresenter = CheckUtil.checkNotNull(presenter);
 	}
 }

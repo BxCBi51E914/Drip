@@ -3,7 +3,7 @@ package org.rg.drip.presenter;
 import android.support.annotation.NonNull;
 
 import org.rg.drip.R;
-import org.rg.drip.contract.user.SignInContract;
+import org.rg.drip.contract.SignInContract;
 import org.rg.drip.data.contract.UserContract;
 import org.rg.drip.utils.CheckUtil;
 
@@ -81,7 +81,6 @@ public class SignInPresenter implements SignInContract.Presenter {
 			mView.showTip(R.string.tip_email_error);
 			return;
 		}
-		mView.showLoadingTipDialog(true);
 		mCompositeDisposable.add(
 				mUserRepository.changePasswordByEmail(email)
 				               .subscribeOn(Schedulers.io())
@@ -102,5 +101,6 @@ public class SignInPresenter implements SignInContract.Presenter {
 							               mView.showLoadingTipDialog(false);
 						               }
 				               ));
+		mView.showLoadingTipDialog(true);
 	}
 }

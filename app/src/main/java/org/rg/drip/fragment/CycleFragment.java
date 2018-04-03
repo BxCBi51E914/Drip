@@ -48,7 +48,7 @@ public class CycleFragment extends BaseSubFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
 
     }
 

@@ -52,7 +52,7 @@ public class ModifyDetailFragment extends BaseSubFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
 
     }
 

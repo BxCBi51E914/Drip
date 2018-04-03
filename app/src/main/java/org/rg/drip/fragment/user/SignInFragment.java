@@ -1,11 +1,14 @@
-package org.rg.drip.activity;
+package org.rg.drip.fragment.user;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.text.InputType;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +17,8 @@ import android.widget.TextView;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseActivity;
+import org.rg.drip.activity.DripActivity;
+import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.contract.SignInContract;
 import org.rg.drip.presenter.SignInPresenter;
 import org.rg.drip.utils.CheckUtil;
@@ -27,10 +31,9 @@ import butterknife.OnClick;
 
 /**
  * Created by TankGq
- * on 2018/3/27.
+ * on 2018/4/3.
  */
-public class SignInActivity extends BaseActivity implements SignInContract.View {
-	
+public class SignInFragment extends BaseSubFragment implements SignInContract.View {
 	private SignInContract.Presenter mPresenter;
 	
 	@BindView(R.id.fab_sign_up) FloatingActionButton mSignUpFab;
@@ -41,17 +44,16 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 	
 	@OnClick({ R.id.fab_sign_up, R.id.bt_go, R.id.bt_forget_password })
 	void Click(View v) {
-		ToastUtil.showCustumToast(this, "OnClick()");
 		switch(v.getId()) {
 			case R.id.fab_sign_up:
-				getWindow().setExitTransition(null);
-				getWindow().setEnterTransition(null);
-				startActivity(new Intent(SignInActivity.this, SignUpActivity.class),
-				              ActivityOptions
-						              .makeSceneTransitionAnimation(SignInActivity.this,
-						                                            mSignUpFab,
-						                                            mSignUpFab.getTransitionName())
-						              .toBundle());
+				SignUpFragment signUpFragment = SignUpFragment.newInstance();
+//				Transition transition = TransitionInflater
+//						.from(getContext())
+//						.inflateTransition(R.transition.fabtransition);
+//				signUpFragment.setSharedElementEnterTransition(transition);
+				extraTransaction().addSharedElement(mSignUpFab, mSignUpFab.getTransitionName())
+//						.start(signUpFragment);
+                                  .startDontHideSelf(signUpFragment);
 				break;
 			
 			case R.id.bt_go:
@@ -70,26 +72,28 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 		return R.layout.activity_sign_in;
 	}
 	
+	public static SignInFragment newInstance() {
+		SignInFragment fragment = new SignInFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
+	}
+	
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		mPresenter = new SignInPresenter(RepositoryUtil.getUserRepository(), this);
+		
+		ViewCompat.setTransitionName(mSignUpFab, mSignUpFab.getTransitionName());
 	}
 	
 	@Override
-	protected void onRestart() {
-		super.onRestart();
-		mSignUpFab.setVisibility(View.GONE);
-	}
-	
-	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
-		mSignUpFab.setVisibility(View.VISIBLE);
 		mPresenter.subscribe();
 	}
 	
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
 		mPresenter.unSubscribe();
 	}
@@ -101,19 +105,19 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 	
 	@Override
 	public void showTip(@StringRes int stringId) {
-		ToastUtil.showCustumToast(SignInActivity.this, getString(stringId));
+		ToastUtil.showCustumToast(getContext(), getString(stringId));
 	}
 	
 	@Override
 	public void signInOk() {
 		showTip(R.string.tip_sign_in_succeed);
-		startActivity(new Intent(SignInActivity.this, DripActivity.class));
+		startActivity(new Intent(getContext(), DripActivity.class));
 	}
 	
 	@Override
 	public void showLoadingTipDialog(boolean bShow) {
 		if(bShow) {
-			LoadingTipDialogUtil.show(SignInActivity.this);
+			LoadingTipDialogUtil.show(getContext());
 		} else {
 			LoadingTipDialogUtil.dismiss();
 		}
@@ -121,7 +125,9 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 	
 	@Override
 	public void showForgetPasswordDialog() {
-		QMUIDialog.EditTextDialogBuilder builder = new QMUIDialog.EditTextDialogBuilder(this);
+		QMUIDialog.EditTextDialogBuilder
+				builder
+				= new QMUIDialog.EditTextDialogBuilder(getContext());
 		builder
 				.setPlaceholder(R.string.tip_input_email)
 				.setTitle(R.string.tip_send_email_to_reset)

@@ -1,4 +1,4 @@
-package org.rg.drip.contract.user;
+package org.rg.drip.contract;
 
 import android.support.annotation.StringRes;
 
@@ -9,7 +9,7 @@ import org.rg.drip.base.BaseView;
  * Author : TankGq
  * Time : 28/03/2018
  */
-public interface SignUpContract {
+public interface SignInContract {
 
 	interface View extends BaseView<Presenter> {
 
@@ -21,23 +21,29 @@ public interface SignUpContract {
 		/**
 		 * 显示登录成功
 		 */
-		void signUpOk();
+		void signInOk();
 
 		/**
 		 * 显示或者隐藏加载对话框
 		 */
 		void showLoadingTipDialog(boolean bShow);
+		
+		/**
+		 * 显示忘记密码对话框
+		 */
+		void showForgetPasswordDialog();
 	}
 
 	interface Presenter extends BasePresenter {
 
 		/**
-		 * 注册
+		 * 登录
 		 */
-		void signUp(String username,
-		            String password,
-		            String repeatPassword,
-		            String nickname,
-		            String email);
+		void signIn(String usernameOrEmail, String password);
+
+		/**
+		 * 忘记密码
+		 */
+		void forgetPassword(String email);
 	}
 }

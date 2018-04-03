@@ -49,7 +49,7 @@ public class FirstDetailFragment extends BaseSubFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
 
     }
 

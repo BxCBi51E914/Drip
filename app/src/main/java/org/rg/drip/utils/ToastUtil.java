@@ -41,6 +41,7 @@ public class ToastUtil {
 	public static ToastUtil makeToast(Context context) {
 		int contextHashCode = context.hashCode();
 		if(mToast == null || contextHashCode != mContextHashCode) {
+			if(null != mToast)  mToast.cancel();
 			mToast = Toast.makeText(context, "ToastUtil", Toast.LENGTH_SHORT);
 			mContextHashCode = contextHashCode;
 		}

@@ -3,8 +3,6 @@ package org.rg.drip.activity;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
@@ -12,15 +10,15 @@ import org.rg.drip.constant.FragmentConstant;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.fragment.first.child.FirstHomeFragment;
-import org.rg.drip.fragment.user.TabUserMainFragment;
-import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.second.ZhihuSecondFragment;
 import org.rg.drip.fragment.second.child.ViewPagerFragment;
 import org.rg.drip.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.fragment.third.child.ShopFragment;
+import org.rg.drip.fragment.user.MeFragment;
+import org.rg.drip.fragment.user.UserMainFragment;
+import org.rg.drip.utils.ToastUtil;
 import org.rg.drip.view.bottom_bar.BottomBar;
 import org.rg.drip.view.bottom_bar.BottomBarTab;
-import org.rg.drip.utils.ToastUtil;
 
 import butterknife.BindView;
 import hugo.weaving.DebugLog;
@@ -50,7 +48,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			mFragments[FragmentConstant.WORD_BOOK] = ZhihuFirstFragment.newInstance();
 			mFragments[FragmentConstant.READING] = ZhihuSecondFragment.newInstance();
 			mFragments[FragmentConstant.THIRD] = ZhihuThirdFragment.newInstance();
-			mFragments[FragmentConstant.SETTING] = TabUserMainFragment.newInstance();
+			mFragments[FragmentConstant.SETTING] = UserMainFragment.newInstance();
 			
 			loadMultipleRootFragment(R.id.fl_container,
 			                         FragmentConstant.WORD_BOOK,
@@ -65,7 +63,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			mFragments[FragmentConstant.WORD_BOOK] = firstFragment;
 			mFragments[FragmentConstant.READING] = findFragment(ZhihuSecondFragment.class);
 			mFragments[FragmentConstant.THIRD] = findFragment(ZhihuThirdFragment.class);
-			mFragments[FragmentConstant.SETTING] = findFragment(TabUserMainFragment.class);
+			mFragments[FragmentConstant.SETTING] = findFragment(UserMainFragment.class);
 		}
 		
 		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_home_white_24dp))
@@ -97,7 +95,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 						currentFragment.popToChild(ViewPagerFragment.class, false);
 					} else if(currentFragment instanceof ZhihuThirdFragment) {
 						currentFragment.popToChild(ShopFragment.class, false);
-					} else if(currentFragment instanceof TabUserMainFragment) {
+					} else if(currentFragment instanceof UserMainFragment) {
 						currentFragment.popToChild(MeFragment.class, false);
 					}
 					return;

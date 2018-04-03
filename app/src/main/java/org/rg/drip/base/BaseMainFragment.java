@@ -7,6 +7,7 @@ import android.content.Context;
  * on 2018/3/20.
  */
 public abstract class BaseMainFragment extends BaseFragment {
+	
 	protected OnBackToFirstListener _mBackToFirstListener;
 
 	@Override

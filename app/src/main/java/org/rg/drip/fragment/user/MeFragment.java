@@ -8,43 +8,39 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.rg.drip.R;
+import org.rg.drip.base.BaseFragment;
+import org.rg.drip.base.BaseMainFragment;
+import org.rg.drip.base.BaseSubFragment;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by TankGq
  * on 2018/3/20.
  */
-public class MeFragment extends SupportFragment {
-    private TextView mTvBtnSettings;
-
-    public static MeFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        MeFragment fragment = new MeFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-		    Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_me_main, container, false);
-        initView(view);
-        return view;
-    }
-
-    private void initView(View view) {
-        mTvBtnSettings = (TextView) view.findViewById(R.id.tv_btn_settings);
-        mTvBtnSettings.setOnClickListener(v -> start(SettingsFragment.newInstance()));
-    }
-
-    @Override
-    public boolean onBackPressedSupport() {
-        // 这里实际项目中推荐使用 EventBus接耦
-        ((TabUserMainFragment)getParentFragment()).onBackToFirstFragment();
-        return true;
-    }
+public class MeFragment extends BaseSubFragment {
+	
+	@BindView(R.id.tv_btn_settings) TextView mTvBtnSettings;
+	@OnClick(R.id.tv_btn_settings)
+	void onClick(View v) {
+		start(SettingsFragment.newInstance());
+	}
+	
+	public static MeFragment newInstance() {
+		Bundle args = new Bundle();
+		MeFragment fragment = new MeFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+	
+	@Override
+	protected int getContentViewLayoutID() {
+		return R.layout.fragment_me_main;
+	}
+	
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+	}
 }

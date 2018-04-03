@@ -31,7 +31,7 @@ public class ZhihuSecondFragment extends BaseMainFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initView(Bundle savedInstanceState) {
 
     }
 
