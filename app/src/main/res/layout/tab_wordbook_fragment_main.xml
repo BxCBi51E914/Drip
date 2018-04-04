@@ -8,23 +8,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/fragment_whole"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
         <include layout="@layout/tab_wordbook_fragment_top_bar"/>
 
         <FrameLayout
-            android:id="@+id/fragment_user_container_upper"
+            android:id="@+id/fragment_wordbook_container_upper"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginTop="?attr/actionBarSize"/>
 
         <FrameLayout
-            android:id="@+id/fragment_user_container_lower"
+            android:id="@+id/fragment_wordbook_container_lower"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/fragment_user_container_upper"/>
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/fragment_wordbook_container_upper"/>
+
+        <FrameLayout
+            android:id="@+id/fragment_wordbook_container_whole"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 </FrameLayout>

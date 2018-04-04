@@ -44,12 +44,17 @@ public class UserMainFragment extends BaseMainFragment implements BaseMainFragme
 	}
 	
 	private void loadFragment() {
-		loadRootFragment(R.id.fragment_user_container_upper, AvatarFragment.newInstance());
-		loadRootFragment(R.id.fragment_user_container_lower, MeFragment.newInstance());
+		loadRootFragment(R.id.fragment_wordbook_container_upper, AvatarFragment.newInstance());
+		loadRootFragment(R.id.fragment_wordbook_container_lower, MeFragment.newInstance());
 	}
 	
 	@Override
 	public void onBackToFirstFragment() {
 		_mBackToFirstListener.onBackToFirstFragment();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
 	}
 }

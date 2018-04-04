@@ -35,7 +35,9 @@ import butterknife.OnClick;
  * on 2018/3/27.
  */
 public class SignUpActivity extends BaseActivity implements SignUpContract.View {
-
+	
+	private SignUpContract.Presenter mPresenter;
+	
 	@BindView(R.id.fab_sign_in) FloatingActionButton mSignInFab;
 
 	@BindView(R.id.cv_sign_up) CardView mSignUpCardView;
@@ -64,8 +66,6 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 				break;
 		}
 	}
-
-	private SignUpContract.Presenter mPresenter;
 
 	@Override
 	protected int getContentViewLayoutID() {
@@ -100,17 +100,14 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 
 			@Override
 			public void onTransitionCancel(Transition transition) {
-
 			}
 
 			@Override
 			public void onTransitionPause(Transition transition) {
-
 			}
 
 			@Override
 			public void onTransitionResume(Transition transition) {
-
 			}
 		});
 	}
@@ -120,9 +117,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	 */
 	public void animateRevealShow() {
 		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mSignUpCardView,
-		                                                             mSignUpCardView.getWidth() / 2,
+		                                                             mSignUpCardView.getWidth() >> 1,
 		                                                             0,
-		                                                             mSignInFab.getWidth() / 2,
+		                                                             mSignInFab.getWidth() >> 1,
 		                                                             mSignUpCardView.getHeight());
 		mAnimator.setDuration(600);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
@@ -146,10 +143,10 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	 */
 	public void animateRevealClose() {
 		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mSignUpCardView,
-		                                                             mSignUpCardView.getWidth() / 2,
+		                                                             mSignUpCardView.getWidth() >> 1,
 		                                                             0,
 		                                                             mSignUpCardView.getHeight(),
-		                                                             mSignInFab.getWidth() / 2);
+		                                                             mSignInFab.getWidth() >> 1);
 		mAnimator.setDuration(600);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {

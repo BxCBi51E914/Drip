@@ -8,9 +8,12 @@
     <color name="tab_unselect">#c9c9c9</color>
     <color name="bg_btn">#dadada</color>
 
+    <color name="transparent">#00000000</color>
+
     <color name="grey">#ffdedede</color>
-    <color name="blue">#ff0099cc</color>
-    <color name="blue_dark">#ff00719b</color>
+    <color name="blue">#4fc3f7</color>
+    <color name="blue_light">#8bf6ff</color>
+    <color name="blue_dark">#0093c4</color>
     <color name="red">#ffff4444</color>
     <color name="red_dark">#ffcd3a3a</color>
     <color name="green">#ff99cc00</color>

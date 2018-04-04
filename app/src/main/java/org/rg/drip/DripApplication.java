@@ -5,6 +5,7 @@ import android.content.Context;
 
 import org.rg.drip.data.model.local.UserL;
 import org.rg.drip.utils.BmobUtil;
+import org.rg.drip.utils.FragmentationUtil;
 import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RealmUtil;
 import org.rg.drip.utils.StethoUtil;
@@ -29,6 +30,7 @@ public class DripApplication extends Application {
 		BmobUtil.initialize(context);
 		RealmUtil.initialize(context);
 		StethoUtil.initialize(context);
+		FragmentationUtil.initialize();
 	}
 
 	@Override

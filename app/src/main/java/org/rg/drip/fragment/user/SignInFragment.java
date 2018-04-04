@@ -46,14 +46,18 @@ public class SignInFragment extends BaseSubFragment implements SignInContract.Vi
 	void Click(View v) {
 		switch(v.getId()) {
 			case R.id.fab_sign_up:
-				SignUpFragment signUpFragment = SignUpFragment.newInstance();
+				SignUpFragment signUpFragment = findFragment(SignUpFragment.class);
+				if(signUpFragment == null) {
+					signUpFragment = SignUpFragment.newInstance();
+				}
 				Transition transition = TransitionInflater
 						.from(getContext())
 						.inflateTransition(R.transition.fabtransition);
+				signUpFragment.setSharedElementEnterTransition(transition);
 				signUpFragment.setSharedElementReturnTransition(transition);
-				extraTransaction().addSharedElement(mSignUpFab, mSignUpFab.getTransitionName())
-//						.start(signUpFragment);
-                                  .startDontHideSelf(signUpFragment);
+				extraTransaction()
+						.addSharedElement(mSignUpFab, mSignUpFab.getTransitionName())
+						.replace(signUpFragment);
 				break;
 			
 			case R.id.bt_go:
@@ -82,7 +86,6 @@ public class SignInFragment extends BaseSubFragment implements SignInContract.Vi
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		mPresenter = new SignInPresenter(RepositoryUtil.getUserRepository(), this);
-		
 		ViewCompat.setTransitionName(mSignUpFab, mSignUpFab.getTransitionName());
 	}
 	

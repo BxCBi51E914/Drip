@@ -49,8 +49,7 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 	void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.rb_sign_in_or_sign_up:
-				startActivity(new Intent(getActivity(), SignInActivity.class));
-//				showSignInFragment();
+				showSignInFragment();
 				break;
 			
 			case R.id.tv_nickname:
@@ -207,14 +206,16 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 	
 	@Override
 	public void showSignInFragment() {
-		BaseFragment parentFragment = (BaseFragment) getParentFragment();
-		if(parentFragment == null) {
-			LoggerUtil.e("The parent of AvatarFragment is null");
-			showTip(R.string.tip_unknown_error);
-			return;
-		}
-		
-		parentFragment.start(SignInFragment.newInstance());
+//		BaseFragment parentFragment = (BaseFragment) getParentFragment();
+//		if(parentFragment == null) {
+//			LoggerUtil.e("The parent of AvatarFragment is null");
+//			showTip(R.string.tip_unknown_error);
+//			return;
+//		}
+//
+//		parentFragment.loadRootFragment(R.id.fragment_user_container_whole,
+//		                                SignInFragment.newInstance());
+		startActivity(new Intent(getActivity(), SignInActivity.class));
 	}
 	
 	@Override

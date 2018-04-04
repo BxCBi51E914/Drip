@@ -19,17 +19,21 @@
             app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
 
         <FrameLayout
-            android:id="@+id/fragment_user_container_upper"
+            android:id="@+id/fragment_wordbook_container_upper"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_marginTop="?attr/actionBarSize"/>
 
         <FrameLayout
-            android:id="@+id/fragment_user_container_lower"
+            android:id="@+id/fragment_wordbook_container_lower"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
             android:layout_marginTop="220dp">
         </FrameLayout>
     </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/fragment_user_container_whole"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

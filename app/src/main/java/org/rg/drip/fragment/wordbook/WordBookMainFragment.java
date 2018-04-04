@@ -43,12 +43,13 @@ public class WordBookMainFragment extends BaseMainFragment
 	}
 
 	private void loadFragment() {
-		loadRootFragment(R.id.fragment_user_container_upper, StudyStateFragment.newInstance());
-		loadRootFragment(R.id.fragment_user_container_lower, StudyActionFragment.newInstance());
+		loadRootFragment(R.id.fragment_wordbook_container_upper, StudyStateFragment.newInstance());
+		loadRootFragment(R.id.fragment_wordbook_container_lower, StudyActionFragment.newInstance());
 	}
 
 	@Override
 	protected void initViewOnLazyInitView() {
-
 	}
+	
+	
 }

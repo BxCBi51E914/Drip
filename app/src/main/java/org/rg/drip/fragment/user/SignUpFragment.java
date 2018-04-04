@@ -100,7 +100,8 @@ public class SignUpFragment extends BaseSubFragment implements SignUpContract.Vi
 		Transition transition = TransitionInflater
 				.from(getContext())
 				.inflateTransition(R.transition.fabtransition);
-		setSharedElementEnterTransition(transition);
+//		setSharedElementEnterTransition(transition);
+//		setSharedElementReturnTransition(transition);
 		
 		transition.addListener(new Transition.TransitionListener() {
 			@Override
@@ -171,10 +172,10 @@ public class SignUpFragment extends BaseSubFragment implements SignUpContract.Vi
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationEnd(Animator animation) {
-				mSignUpCardView.setVisibility(View.INVISIBLE);
 				super.onAnimationEnd(animation);
+				mSignUpCardView.setVisibility(View.INVISIBLE);
 				mSignInFab.setImageResource(R.drawable.ic_clear);
-				onBackPressedSupport();
+				pop();
 			}
 			
 			@Override
