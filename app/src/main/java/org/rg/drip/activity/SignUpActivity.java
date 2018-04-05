@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
+import android.transition.ChangeTransform;
 import android.transition.Explode;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
@@ -35,9 +36,9 @@ import butterknife.OnClick;
  * on 2018/3/27.
  */
 public class SignUpActivity extends BaseActivity implements SignUpContract.View {
-	
+
 	private SignUpContract.Presenter mPresenter;
-	
+
 	@BindView(R.id.fab_sign_in) FloatingActionButton mSignInFab;
 
 	@BindView(R.id.cv_sign_up) CardView mSignUpCardView;
@@ -117,10 +118,15 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	 */
 	public void animateRevealShow() {
 		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mSignUpCardView,
-		                                                             mSignUpCardView.getWidth() >> 1,
+		                                                             mSignUpCardView.getWidth() >>
+		                                                             1,
 		                                                             0,
 		                                                             mSignInFab.getWidth() >> 1,
-		                                                             mSignUpCardView.getHeight());
+		                                                             (float) Math.sqrt(
+				                                                             mSignUpCardView.getHeight() *
+				                                                             mSignUpCardView.getHeight() +
+				                                                             mSignUpCardView.getWidth() *
+				                                                             mSignUpCardView.getHeight()));
 		mAnimator.setDuration(600);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
@@ -143,7 +149,8 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 	 */
 	public void animateRevealClose() {
 		Animator mAnimator = ViewAnimationUtils.createCircularReveal(mSignUpCardView,
-		                                                             mSignUpCardView.getWidth() >> 1,
+		                                                             mSignUpCardView.getWidth() >>
+		                                                             1,
 		                                                             0,
 		                                                             mSignUpCardView.getHeight(),
 		                                                             mSignInFab.getWidth() >> 1);

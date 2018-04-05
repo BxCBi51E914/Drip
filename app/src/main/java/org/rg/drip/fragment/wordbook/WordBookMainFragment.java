@@ -37,7 +37,7 @@ public class WordBookMainFragment extends BaseMainFragment
 
 	@Override
 	protected void initViewOnActivityCreated() {
-		if(findChildFragment(AvatarFragment.class) == null) {
+		if(findChildFragment(StudyStateFragment.class) == null) {
 			loadFragment();
 		}
 	}
@@ -50,6 +50,4 @@ public class WordBookMainFragment extends BaseMainFragment
 	@Override
 	protected void initViewOnLazyInitView() {
 	}
-	
-	
 }

@@ -1,8 +1,16 @@
 package org.rg.drip.fragment.wordbook;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 
+import org.rg.drip.R;
+import org.rg.drip.adapter.StudyStateFragmentAdapter;
+import org.rg.drip.adapter.ZhihuPagerFragmentAdapter;
 import org.rg.drip.base.BaseSubFragment;
+
+import butterknife.BindView;
 
 /**
  * Author : TankGq
@@ -10,8 +18,11 @@ import org.rg.drip.base.BaseSubFragment;
  */
 public class StudyStateFragment extends BaseSubFragment {
 
-	public static StudyActionFragment newInstance() {
-		StudyActionFragment fragment = new StudyActionFragment();
+	@BindView(R.id.tab) TabLayout mTabLayout;
+	@BindView(R.id.viewPager) ViewPager mViewPager;
+
+	public static StudyStateFragment newInstance() {
+		StudyStateFragment fragment = new StudyStateFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
@@ -19,11 +30,19 @@ public class StudyStateFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return 0;
+		return R.layout.tab_wordbook_fragment_study_state;
 	}
 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
+		mTabLayout.addTab(mTabLayout.newTab());
+		mTabLayout.addTab(mTabLayout.newTab());
+		mTabLayout.addTab(mTabLayout.newTab());
 
+		mViewPager.setAdapter(new StudyStateFragmentAdapter(getChildFragmentManager(),
+		                                                    getString(R.string.tab_complete_progress),
+		                                                    getString(R.string.tab_learning_progress),
+		                                                    getString(R.string.tab_word_count)));
+		mTabLayout.setupWithViewPager(mViewPager);
 	}
 }

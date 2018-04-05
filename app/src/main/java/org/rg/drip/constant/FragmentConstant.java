@@ -9,4 +9,6 @@ public class FragmentConstant {
 	public static final int READING = 1;
 	public static final int THIRD = 2;
 	public static final int SETTING = 3;
+
+	public static final int ANIMATOR_DURATION = 600;
 }

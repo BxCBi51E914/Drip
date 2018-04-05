@@ -51,10 +51,18 @@
     <string name="act_sign_out">Sign Out</string>
     <string name="act_change_password">Change Password</string>
     <string name="act_change_email">Change Email</string>
+    <string name="act_start_learn">Start Learn</string>
+    <string name="act_browse_in_card">Browse In Card</string>
+    <string name="act_word_list">Word List</string>
+    <string name="act_review_setting">Review Setting</string>
 
     <string name="ask_sign_out">Sure want to sign out?</string>
     <string name="ask_change_password">Sure want to change you password?</string>
     <string name="ask_change_email">Change email?</string>
+
+    <string name="tab_complete_progress">Complete Progress</string>
+    <string name="tab_learning_progress">Learning Progress</string>
+    <string name="tab_word_count">Word Count</string>
 
     <string name="chk_yes">YES</string>
     <string name="chk_no">NO</string>

@@ -30,6 +30,7 @@ ext {
     stethoRealmVersion = '2.2.2'
 
     qmuiVersion = '1.0.6'
+    mpAndroidChartVersion = '3.0.3'
 }
 
 buildscript {

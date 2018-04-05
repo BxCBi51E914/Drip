@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="#f3f3f3"
+             android:background="@color/white_dark"
              android:orientation="vertical"
              android:paddingTop="32dp">
 
@@ -21,9 +21,9 @@
             android:drawablePadding="16dp"
             android:textSize="16sp"
             android:background="?attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_settings_grey_500_24dp"
+            android:drawableStart="@drawable/ic_settings_grey_500_24dp"
             android:paddingLeft="16dp"
-            android:drawableRight="@drawable/fragmentation_ic_right"
+            android:drawableEnd="@drawable/fragmentation_ic_right"
             android:paddingRight="16dp"/>
     </LinearLayout>
 </FrameLayout>

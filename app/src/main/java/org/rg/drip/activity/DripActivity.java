@@ -8,19 +8,21 @@ import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.FragmentConstant;
 import org.rg.drip.event.TabSelectedEvent;
-import org.rg.drip.fragment.first.ZhihuFirstFragment;
-import org.rg.drip.fragment.first.child.FirstHomeFragment;
 import org.rg.drip.fragment.second.ZhihuSecondFragment;
 import org.rg.drip.fragment.second.child.ViewPagerFragment;
 import org.rg.drip.fragment.third.ZhihuThirdFragment;
 import org.rg.drip.fragment.third.child.ShopFragment;
 import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
+import org.rg.drip.fragment.wordbook.StudyActionFragment;
 import org.rg.drip.fragment.wordbook.StudyStateFragment;
 import org.rg.drip.fragment.wordbook.WordBookMainFragment;
 import org.rg.drip.utils.ToastUtil;
 import org.rg.drip.view.bottom_bar.BottomBar;
 import org.rg.drip.view.bottom_bar.BottomBarTab;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import hugo.weaving.DebugLog;
@@ -32,67 +34,85 @@ import me.yokeyword.fragmentation.SupportFragment;
  * on 2018/3/20.
  */
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
-	
-	private SupportFragment[] mFragments = new SupportFragment[4];
-	
+
+	private List<SupportFragment> mMainFragments = new ArrayList<>(4);
+
 	@BindView(R.id.bottomBar) BottomBar mBottomBar;
-	
+
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.activity_drip_main;
 	}
-	
+
 	@DebugLog
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		SupportFragment firstFragment = findFragment(WordBookMainFragment.class);
 		if(firstFragment == null) {
-			mFragments[FragmentConstant.WORDBOOK] = WordBookMainFragment.newInstance();
-			mFragments[FragmentConstant.READING] = ZhihuSecondFragment.newInstance();
-			mFragments[FragmentConstant.THIRD] = ZhihuThirdFragment.newInstance();
-			mFragments[FragmentConstant.SETTING] = UserMainFragment.newInstance();
-			
+			mMainFragments.add(FragmentConstant.WORDBOOK, WordBookMainFragment.newInstance());
+			mMainFragments.add(FragmentConstant.READING, ZhihuSecondFragment.newInstance());
+			mMainFragments.add(FragmentConstant.THIRD, ZhihuThirdFragment.newInstance());
+			mMainFragments.add(FragmentConstant.SETTING, UserMainFragment.newInstance());
+
 			loadMultipleRootFragment(R.id.fl_container,
 			                         FragmentConstant.WORDBOOK,
-			                         mFragments[FragmentConstant.WORDBOOK],
-			                         mFragments[FragmentConstant.READING],
-			                         mFragments[FragmentConstant.THIRD],
-			                         mFragments[FragmentConstant.SETTING]);
+			                         mMainFragments.get(FragmentConstant.WORDBOOK),
+			                         mMainFragments.get(FragmentConstant.READING),
+			                         mMainFragments.get(FragmentConstant.THIRD),
+			                         mMainFragments.get(FragmentConstant.SETTING));
 		} else {
-			// 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
-			
-			// 这里我们需要拿到mFragments的引用
-			mFragments[FragmentConstant.WORDBOOK] = firstFragment;
-			mFragments[FragmentConstant.READING] = findFragment(ZhihuSecondFragment.class);
-			mFragments[FragmentConstant.THIRD] = findFragment(ZhihuThirdFragment.class);
-			mFragments[FragmentConstant.SETTING] = findFragment(UserMainFragment.class);
+			mMainFragments.add(FragmentConstant.WORDBOOK, firstFragment);
+			mMainFragments.add(FragmentConstant.READING, findFragment(ZhihuSecondFragment.class));
+			mMainFragments.add(FragmentConstant.THIRD, findFragment(ZhihuThirdFragment.class));
+			mMainFragments.add(FragmentConstant.SETTING, findFragment(UserMainFragment.class));
 		}
-		
+
 		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_folder_open))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_discover_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_message_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_account_circle_white_24dp));
-		
+
 		mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(int position, int prePosition) {
-				showHideFragment(mFragments[position], mFragments[prePosition]);
+				// position 与 FragmentConstant.WORDBOOK 之类一一对应
+				SupportFragment fragment = mMainFragments.get(prePosition);
+				if(fragment instanceof BaseMainFragment) {
+					((BaseMainFragment) fragment).cancelAnimateCircularReveal();
+				}
+				showHideFragment(mMainFragments.get(position), mMainFragments.get(prePosition));
+				fragment = mMainFragments.get(position);
+				if(fragment instanceof BaseMainFragment) {
+					int height = mBottomBar.getHeight();
+					int width = mBottomBar.getWidth();
+					int count = mBottomBar.getCount();
+					int y = (int) mBottomBar.getY();
+					int perWidth = width / count;
+					int w = (Math.max((count - position - 1) << 1 | 1, position << 1 | 1) >> 1)
+					        * perWidth + (perWidth >> 1);
+					((BaseMainFragment) fragment).animateCircularReveal(perWidth * position +
+					                                                    (perWidth >> 1),
+					                                                    y + (height >> 1),
+					                                                    height >> 1,
+					                                                    (float) Math.sqrt(w * w +
+					                                                                      y * y));
+				}
 			}
-			
+
 			@Override
 			public void onTabUnselected(int position) {
-			
+
 			}
-			
+
 			@Override
 			public void onTabReselected(int position) {
-				final SupportFragment currentFragment = mFragments[position];
+				final SupportFragment currentFragment = mMainFragments.get(position);
 				int count = currentFragment.getChildFragmentManager().getBackStackEntryCount();
-				
+
 				// 如果不在该类别Fragment的主页,则回到主页;
 				if(count > 1) {
 					if(currentFragment instanceof WordBookMainFragment) {
-						currentFragment.popToChild(StudyStateFragment.class, false);
+						currentFragment.popToChild(StudyActionFragment.class, false);
 					} else if(currentFragment instanceof ZhihuSecondFragment) {
 						currentFragment.popToChild(ViewPagerFragment.class, false);
 					} else if(currentFragment instanceof ZhihuThirdFragment) {
@@ -102,8 +122,8 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 					}
 					return;
 				}
-				
-				
+
+
 				// 这里推荐使用EventBus来实现 -> 解耦
 				if(count == 1) {
 					// 在FirstPagerFragment中接收, 因为是嵌套的孙子Fragment 所以用EventBus比较方便
@@ -114,7 +134,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			}
 		});
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -138,12 +158,12 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 //	            }
 //	       );
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-	
+
 	@Override
 	public void onBackPressedSupport() {
 		if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
@@ -152,7 +172,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			ActivityCompat.finishAfterTransition(this);
 		}
 	}
-	
+
 	@Override
 	public void onBackToFirstFragment() {
 		mBottomBar.setCurrentItem(0);

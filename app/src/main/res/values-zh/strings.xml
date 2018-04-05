@@ -51,6 +51,14 @@
     <string name="act_change_password">修改密码</string>
     <string name="act_change_email">修改邮箱</string>
     <string name="act_verify_email">验证邮箱</string>
+    <string name="act_start_learn">开始学习</string>
+    <string name="act_browse_in_card">卡片浏览</string>
+    <string name="act_word_list">单词列表</string>
+    <string name="act_review_setting">复习设置</string>
+
+    <string name="tab_complete_progress">完成进度</string>
+    <string name="tab_learning_progress">学习进度</string>
+    <string name="tab_word_count">单词数量</string>
 
     <string name="ask_sign_out">是否确认退出登录?</string>
     <string name="ask_change_password">是否确认修改密码?</string>

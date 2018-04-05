@@ -1,20 +1,14 @@
 package org.rg.drip.fragment.user;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.rg.drip.R;
-import org.rg.drip.base.BaseFragment;
-import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.base.BaseSubFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by TankGq
@@ -37,7 +31,7 @@ public class MeFragment extends BaseSubFragment {
 	
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.fragment_me_main;
+		return R.layout.tab_user_fragment_me;
 	}
 	
 	@Override

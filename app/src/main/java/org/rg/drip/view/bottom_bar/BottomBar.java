@@ -79,6 +79,10 @@ public class BottomBar extends LinearLayout {
         return this;
     }
 
+    public int getCount() {
+    	return mTabLayout.getChildCount();
+    }
+
     public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
         mListener = onTabSelectedListener;
     }

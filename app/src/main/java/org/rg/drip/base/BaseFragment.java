@@ -36,7 +36,7 @@ public abstract class BaseFragment extends SupportFragment {
 	/**
 	 * 在调用 onCreateView 时进行的初始化
 	 */
-	protected void initViewOnCreateView() {
+	protected void initViewOnCreateView(View view) {
 	}
 
 	/**
@@ -75,7 +75,7 @@ public abstract class BaseFragment extends SupportFragment {
 			view = super.onCreateView(inflater, container, savedInstanceState);
 		}
 		
-		initViewOnCreateView();
+		initViewOnCreateView(view);
 		return view;
 	}
 	

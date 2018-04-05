@@ -3,21 +3,18 @@ package org.rg.drip.base;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 
-import org.rg.drip.R;
-import org.rg.drip.activity.SignUpActivity;
+import org.rg.drip.constant.FragmentConstant;
 
 /**
  * Created by TankGq
  * on 2018/3/20.
  */
 public abstract class BaseMainFragment extends BaseFragment {
-	
+
 	protected OnBackToFirstListener _mBackToFirstListener;
 
 	@Override
@@ -66,29 +63,44 @@ public abstract class BaseMainFragment extends BaseFragment {
 	public interface OnBackToFirstListener {
 		void onBackToFirstFragment();
 	}
-	
-	private void animateCircularReveal(View vStart, View vEnd, View vTarget) {
-		Animator mAnimator = ViewAnimationUtils.createCircularReveal(vTarget,
-		                                                             vStart.getWidth() >> 1,
-		                                                             vEnd.getHeight() >> 1,
-		                                                             vStart.getWidth() >> 1,
-		                                                             vEnd.getHeight());
-		boolean forward = vStart.getWidth() < vEnd.getHeight();
-		mAnimator.setDuration(600);
+
+	private Animator mAnimator;
+
+	public void animateCircularReveal(int centerX,
+	                                  int centerY,
+	                                  float startRadius,
+	                                  float endRadius) {
+		cancelAnimateCircularReveal();
+		mAnimator = ViewAnimationUtils.createCircularReveal(getView(),
+		                                                    centerX,
+		                                                    centerY,
+		                                                    startRadius,
+		                                                    endRadius);
+
+		mAnimator.setDuration(FragmentConstant.ANIMATOR_DURATION);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationEnd(Animator animation) {
-				vTarget.setVisibility(forward ? View.VISIBLE : View.GONE);
+				getView().setVisibility(View.VISIBLE);
 				super.onAnimationEnd(animation);
 			}
-			
+
 			@Override
 			public void onAnimationStart(Animator animation) {
 				super.onAnimationStart(animation);
-				vTarget.setVisibility(forward ? View.GONE : View.VISIBLE);
+				getView().setVisibility(View.GONE);
 			}
 		});
 		mAnimator.start();
+	}
+
+	public void cancelAnimateCircularReveal() {
+		if(mAnimator != null) {
+			mAnimator.cancel();
+			getView().setVisibility(View.GONE);
+			getView().clearAnimation();
+			mAnimator = null;
+		}
 	}
 }

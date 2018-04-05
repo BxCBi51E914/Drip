@@ -7,12 +7,12 @@ import org.rg.drip.base.BaseSubFragment;
 
 /**
  * Author : TankGq
- * Time : 03/04/2018
+ * Time : 2018/4/5
  */
-public class StudyActionFragment extends BaseSubFragment {
+public class CompleteProgressFragment extends BaseSubFragment {
 
-	public static StudyActionFragment newInstance() {
-		StudyActionFragment fragment = new StudyActionFragment();
+	public static CompleteProgressFragment newInstance() {
+		CompleteProgressFragment fragment = new CompleteProgressFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
@@ -20,7 +20,7 @@ public class StudyActionFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_wordbook_fragment_study_action;
+		return R.layout.tab_wordbook_fragment_complete_progress;
 	}
 
 	@Override

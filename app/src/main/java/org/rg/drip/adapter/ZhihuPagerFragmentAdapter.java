@@ -8,7 +8,8 @@ import org.rg.drip.fragment.second.child.childpager.FirstPagerFragment;
 import org.rg.drip.fragment.second.child.childpager.OtherPagerFragment;
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Author : TankGq
+ * Time : 16/6/5
  */
 public class ZhihuPagerFragmentAdapter extends FragmentPagerAdapter {
     private String[] mTitles;
