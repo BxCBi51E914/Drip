@@ -24,6 +24,10 @@
     <string name="register">REGISTER</string>
     <string name="empty">Empty</string>
     <string name="choose_wordbook">Choose Wordbook</string>
+    <string name="language">Language</string>
+    <string name="language_zh">中文</string>
+    <string name="language_en">English</string>
+    <string name="language_auto">Auto</string>
 
     <string name="tip_username_or_email">Please input you username or email</string>
     <string name="tip_username">Please input you username</string>

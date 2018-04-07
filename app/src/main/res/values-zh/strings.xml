@@ -23,6 +23,10 @@
     <string name="register">注册</string>
     <string name="empty">空</string>
     <string name="choose_wordbook">选择单词本</string>
+    <string name="language">语言</string>
+    <string name="language_zh">中文</string>
+    <string name="language_en">English</string>
+    <string name="language_auto">自动</string>
 
     <string name="tip_username_or_email">请输入你的用户名或者邮箱</string>
     <string name="tip_username">请输入用户名</string>

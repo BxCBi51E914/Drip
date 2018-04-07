@@ -1,7 +1,12 @@
 package org.rg.drip.fragment.wordbook;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -59,7 +64,7 @@ public class CompleteProgressFragment extends BaseSubFragment {
 		mPieChart.setDragDecelerationFrictionCoef(0.8f);
 
 //		mPieChart.setCenterTextTypeface(mTfLight);
-		mPieChart.setCenterText("123");
+		mPieChart.setCenterText("单词总数\n9999");
 		mPieChart.setDrawHoleEnabled(true);
 		mPieChart.setHoleColor(Color.WHITE);
 		mPieChart.setEntryLabelColor(getResources().getColor(R.color.colorAccent));
@@ -94,12 +99,13 @@ public class CompleteProgressFragment extends BaseSubFragment {
 
 		// NOTE: The order of the entries when being added to the entries array determines their position around the center of
 		// the chart.
+		float[] radios = {10f, 20f, 30f, 39.5f};
 		for(int i = 0; i < count; i++) {
-			entries.add(new PieEntry((float) ((Math.random() * range) + range / 5),
+			entries.add(new PieEntry(radios[i],
 			                         mParties[i % mParties.length],
 			                         getResources().getDrawable(R.drawable.star)));
 		}
-		entries.add(new PieEntry(0.1f,
+		entries.add(new PieEntry(0.5f,
 		                         mParties[count % mParties.length],
 		                         getResources().getDrawable(R.drawable.star)));
 		PieDataSet dataSet = new PieDataSet(entries, "");
@@ -148,5 +154,17 @@ public class CompleteProgressFragment extends BaseSubFragment {
 		mPieChart.highlightValues(null);
 
 		mPieChart.invalidate();
+	}
+
+	private SpannableString generateCenterSpannableText() {
+
+		SpannableString s = new SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda");
+		s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
+		s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
+		s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
+		s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
+		s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
+		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
+		return s;
 	}
 }
