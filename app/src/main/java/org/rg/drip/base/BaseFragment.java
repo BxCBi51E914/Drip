@@ -109,4 +109,8 @@ public abstract class BaseFragment extends SupportFragment {
 		super.onLazyInitView(savedInstanceState);
 		initViewOnLazyInitView();
 	}
+
+	public interface OnEnterAnimator {
+		void onEnterAnimator();
+	}
 }

@@ -18,6 +18,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import org.rg.drip.R;
+import org.rg.drip.base.BaseFragment;
 import org.rg.drip.base.BaseSubFragment;
 
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ import butterknife.BindView;
  * Author : TankGq
  * Time : 2018/4/5
  */
-public class CompleteProgressFragment extends BaseSubFragment {
+public class CompleteProgressFragment extends BaseSubFragment
+		implements BaseFragment.OnEnterAnimator {
 
 	String[] mParties = new String[] {
 			"Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
@@ -48,7 +50,7 @@ public class CompleteProgressFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_wordbook_fragment_complete_progress;
+		return R.layout.wordbook_fragment_complete_progress;
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class CompleteProgressFragment extends BaseSubFragment {
 		mPieChart.setDragDecelerationFrictionCoef(0.8f);
 
 //		mPieChart.setCenterTextTypeface(mTfLight);
-		mPieChart.setCenterText("单词总数\n9999");
+		mPieChart.setCenterText(generateCenterSpannableText());
 		mPieChart.setDrawHoleEnabled(true);
 		mPieChart.setHoleColor(Color.WHITE);
 		mPieChart.setEntryLabelColor(getResources().getColor(R.color.colorAccent));
@@ -89,8 +91,6 @@ public class CompleteProgressFragment extends BaseSubFragment {
 //		mPieChart.setOnChartValueSelectedListener(this);
 
 		setData(4, 100);
-
-		mPieChart.animateXY(1000, 1000);
 	}
 
 	private void setData(int count, float range) {
@@ -99,7 +99,7 @@ public class CompleteProgressFragment extends BaseSubFragment {
 
 		// NOTE: The order of the entries when being added to the entries array determines their position around the center of
 		// the chart.
-		float[] radios = {10f, 20f, 30f, 39.5f};
+		float[] radios = { 10f, 20f, 30f, 39.5f };
 		for(int i = 0; i < count; i++) {
 			entries.add(new PieEntry(radios[i],
 			                         mParties[i % mParties.length],
@@ -154,17 +154,34 @@ public class CompleteProgressFragment extends BaseSubFragment {
 		mPieChart.highlightValues(null);
 
 		mPieChart.invalidate();
+
+		// setUserVisibleHint 的第一次调用比初始化 UI 还要早,
+		// 所以第一个 tab 界面得在初始化 UI 的时候再调用一次
+		onEnterAnimator();
 	}
 
 	private SpannableString generateCenterSpannableText() {
 
-		SpannableString s = new SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda");
-		s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
-		s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
-		s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
-		s.setSpan(new RelativeSizeSpan(.8f), 14, s.length() - 15, 0);
-		s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
-		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
+		SpannableString s = new SpannableString("单词总数\n9999");
+		s.setSpan(new RelativeSizeSpan(1.7f), 0, 8, 0);
+		s.setSpan(new StyleSpan(Typeface.ITALIC), 9, s.length(), 0);
+		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 9, s.length(), 0);
 		return s;
+	}
+
+	@Override
+	public void onEnterAnimator() {
+		if(mPieChart == null) {
+			return;
+		}
+		mPieChart.animateXY(1500, 1500);
+	}
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if(isVisibleToUser) {
+			onEnterAnimator();
+		}
 	}
 }

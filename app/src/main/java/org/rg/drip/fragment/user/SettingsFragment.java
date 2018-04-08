@@ -2,9 +2,8 @@ package org.rg.drip.fragment.user;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.qmuiteam.qmui.widget.QMUILoadingView;
@@ -15,10 +14,6 @@ import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.utils.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -40,13 +35,13 @@ public class SettingsFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_user_fragment_settings;
+		return R.layout.user_fragment_settings;
 	}
 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		initToolbarNav(mToolbar);
-		SparseArray<Integer> itemIdDic = new SparseArray<>();
+		SparseIntArray itemIdDic = new SparseIntArray();
 		QMUICommonListItemView
 				itemWithDetail =
 				mGroupListView.createItemView(getString(R.string.language));

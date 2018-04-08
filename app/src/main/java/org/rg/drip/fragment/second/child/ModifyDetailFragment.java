@@ -102,4 +102,10 @@ public class ModifyDetailFragment extends BaseSubFragment {
         super.onSupportInvisible();
         hideSoftInput();
     }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        pop();
+        return true;
+    }
 }

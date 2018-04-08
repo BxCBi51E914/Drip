@@ -8,6 +8,8 @@ import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.FragmentConstant;
 import org.rg.drip.event.TabSelectedEvent;
+import org.rg.drip.fragment.first.ZhihuFirstFragment;
+import org.rg.drip.fragment.first.child.FirstHomeFragment;
 import org.rg.drip.fragment.second.ZhihuSecondFragment;
 import org.rg.drip.fragment.second.child.ViewPagerFragment;
 import org.rg.drip.fragment.third.ZhihuThirdFragment;
@@ -15,7 +17,6 @@ import org.rg.drip.fragment.third.child.ShopFragment;
 import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
 import org.rg.drip.fragment.wordbook.StudyActionFragment;
-import org.rg.drip.fragment.wordbook.StudyStateFragment;
 import org.rg.drip.fragment.wordbook.WordBookMainFragment;
 import org.rg.drip.utils.ToastUtil;
 import org.rg.drip.view.bottom_bar.BottomBar;
@@ -51,7 +52,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 		if(firstFragment == null) {
 			mMainFragments.add(FragmentConstant.WORDBOOK, WordBookMainFragment.newInstance());
 			mMainFragments.add(FragmentConstant.READING, ZhihuSecondFragment.newInstance());
-			mMainFragments.add(FragmentConstant.THIRD, ZhihuThirdFragment.newInstance());
+			mMainFragments.add(FragmentConstant.THIRD, ZhihuFirstFragment.newInstance());
 			mMainFragments.add(FragmentConstant.SETTING, UserMainFragment.newInstance());
 
 			loadMultipleRootFragment(R.id.fl_container,
@@ -63,7 +64,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 		} else {
 			mMainFragments.add(FragmentConstant.WORDBOOK, firstFragment);
 			mMainFragments.add(FragmentConstant.READING, findFragment(ZhihuSecondFragment.class));
-			mMainFragments.add(FragmentConstant.THIRD, findFragment(ZhihuThirdFragment.class));
+			mMainFragments.add(FragmentConstant.THIRD, findFragment(ZhihuFirstFragment.class));
 			mMainFragments.add(FragmentConstant.SETTING, findFragment(UserMainFragment.class));
 		}
 
@@ -78,7 +79,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 				// position 与 FragmentConstant.WORDBOOK 之类一一对应
 				SupportFragment fragment = mMainFragments.get(prePosition);
 				if(fragment instanceof BaseMainFragment) {
-					((BaseMainFragment) fragment).cancelAnimateCircularReveal();
+					((BaseMainFragment) fragment).cancelAnimateCircularReveal(fragment.getView());
 				}
 				showHideFragment(mMainFragments.get(position), mMainFragments.get(prePosition));
 				fragment = mMainFragments.get(position);
@@ -90,7 +91,8 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 					int perWidth = width / count;
 					int w = (Math.max((count - position - 1) << 1 | 1, position << 1 | 1) >> 1)
 					        * perWidth + (perWidth >> 1);
-					((BaseMainFragment) fragment).animateCircularReveal(perWidth * position +
+					((BaseMainFragment) fragment).animateCircularReveal(fragment.getView(),
+					                                                    perWidth * position +
 					                                                    (perWidth >> 1),
 					                                                    y + (height >> 1),
 					                                                    height >> 1,
@@ -115,14 +117,13 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 						currentFragment.popToChild(StudyActionFragment.class, false);
 					} else if(currentFragment instanceof ZhihuSecondFragment) {
 						currentFragment.popToChild(ViewPagerFragment.class, false);
-					} else if(currentFragment instanceof ZhihuThirdFragment) {
-						currentFragment.popToChild(ShopFragment.class, false);
+					} else if(currentFragment instanceof ZhihuFirstFragment) {
+						currentFragment.popToChild(FirstHomeFragment.class, false);
 					} else if(currentFragment instanceof UserMainFragment) {
 						currentFragment.popToChild(MeFragment.class, false);
 					}
 					return;
 				}
-
 
 				// 这里推荐使用EventBus来实现 -> 解耦
 				if(count == 1) {
@@ -138,7 +139,6 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ToastUtil.showCustumToast(DripActivity.this, "DripActivity.onCreate");
 //		UserRemoteSource urs = UserRemoteSource.getInstance();
 //		User user = new User();
 //		user.setId(1);

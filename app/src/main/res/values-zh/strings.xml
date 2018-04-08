@@ -21,13 +21,13 @@
     <string name="email">邮箱</string>
     <string name="next">确定</string>
     <string name="register">注册</string>
-    <string name="empty">空</string>
     <string name="choose_wordbook">选择单词本</string>
     <string name="language">语言</string>
     <string name="language_zh">中文</string>
     <string name="language_en">English</string>
     <string name="language_auto">自动</string>
 
+    <string name="tip_unselected_wordbook">未选择单词本</string>
     <string name="tip_username_or_email">请输入你的用户名或者邮箱</string>
     <string name="tip_username">请输入用户名</string>
     <string name="tip_password">请输入密码</string>
@@ -74,7 +74,7 @@
     <string name="chk_send">发送</string>
     <string name="chk_out">退出</string>
 
-    <string name="home">首页</string>
+    <string name="reading">阅读</string>
     <string name="discover">发现</string>
     <string name="shop">商店</string>
     <string name="system">账户</string>

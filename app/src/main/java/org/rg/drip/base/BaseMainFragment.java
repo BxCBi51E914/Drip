@@ -8,6 +8,7 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 
 import org.rg.drip.constant.FragmentConstant;
+import org.rg.drip.utils.ToastUtil;
 
 /**
  * Created by TankGq
@@ -46,6 +47,7 @@ public abstract class BaseMainFragment extends BaseFragment {
 	 */
 	@Override
 	public boolean onBackPressedSupport() {
+		ToastUtil.showCustumToast(getContext(), ""+getChildFragmentManager().getBackStackEntryCount());
 		if(getChildFragmentManager().getBackStackEntryCount() > 1) {
 			popChild();
 		} else {
@@ -66,12 +68,13 @@ public abstract class BaseMainFragment extends BaseFragment {
 
 	private Animator mAnimator;
 
-	public void animateCircularReveal(int centerX,
+	public void animateCircularReveal(View view,
+	                                  int centerX,
 	                                  int centerY,
 	                                  float startRadius,
 	                                  float endRadius) {
-		cancelAnimateCircularReveal();
-		mAnimator = ViewAnimationUtils.createCircularReveal(getView(),
+		cancelAnimateCircularReveal(view);
+		mAnimator = ViewAnimationUtils.createCircularReveal(view,
 		                                                    centerX,
 		                                                    centerY,
 		                                                    startRadius,
@@ -82,24 +85,24 @@ public abstract class BaseMainFragment extends BaseFragment {
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override
 			public void onAnimationEnd(Animator animation) {
-				getView().setVisibility(View.VISIBLE);
+				view.setVisibility(View.VISIBLE);
 				super.onAnimationEnd(animation);
 			}
 
 			@Override
 			public void onAnimationStart(Animator animation) {
 				super.onAnimationStart(animation);
-				getView().setVisibility(View.GONE);
+				view.setVisibility(View.GONE);
 			}
 		});
 		mAnimator.start();
 	}
 
-	public void cancelAnimateCircularReveal() {
+	public void cancelAnimateCircularReveal(View view) {
 		if(mAnimator != null) {
 			mAnimator.cancel();
-			getView().setVisibility(View.GONE);
-			getView().clearAnimation();
+			view.setVisibility(View.GONE);
+			view.clearAnimation();
 			mAnimator = null;
 		}
 	}

@@ -1,6 +1,5 @@
 package org.rg.drip.fragment.first.child;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +20,6 @@ import org.rg.drip.adapter.FirstHomeAdapter;
 import org.rg.drip.entity.Article;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.helper.DetailTransition;
-import org.rg.drip.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +80,7 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         mFab = (FloatingActionButton) view.findViewById(R.id.fab);
 
-        mToolbar.setTitle(R.string.home);
+        mToolbar.setTitle(R.string.reading);
 
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRefreshLayout.setOnRefreshListener(this);
@@ -92,29 +90,22 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                FirstDetailFragment fragment = FirstDetailFragment.newInstance(mAdapter.getItem(position));
+        mAdapter.setOnItemClickListener((position, view1, vh) -> {
+            FirstDetailFragment fragment = FirstDetailFragment.newInstance(mAdapter.getItem(position));
 
-                // 这里是使用SharedElement的用例
-                // LOLLIPOP(5.0)系统的 SharedElement支持有 系统BUG， 这里判断大于 > LOLLIPOP
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                    setExitTransition(new Fade());
-                    fragment.setEnterTransition(new Fade());
-                    fragment.setSharedElementReturnTransition(new DetailTransition());
-                    fragment.setSharedElementEnterTransition(new DetailTransition());
+            // 这里是使用SharedElement的用例
+            // LOLLIPOP(5.0)系统的 SharedElement支持有 系统BUG， 这里判断大于 > LOLLIPOP
+            setExitTransition(new Fade());
+            fragment.setEnterTransition(new Fade());
+            fragment.setSharedElementReturnTransition(new DetailTransition());
+            fragment.setSharedElementEnterTransition(new DetailTransition());
 
-                    // 25.1.0以下的support包,Material过渡动画只有在进栈时有,返回时没有;
-                    // 25.1.0+的support包，SharedElement正常
-                    extraTransaction()
-                            .addSharedElement(((FirstHomeAdapter.VH) vh).img, getString(R.string.image_transition))
-                            .addSharedElement(((FirstHomeAdapter.VH) vh).tvTitle, "tv")
-                            .start(fragment);
-                } else {
-                    start(fragment);
-                }
-            }
+            // 25.1.0以下的support包,Material过渡动画只有在进栈时有,返回时没有;
+            // 25.1.0+的support包，SharedElement正常
+            extraTransaction()
+                    .addSharedElement(((FirstHomeAdapter.VH) vh).img, getString(R.string.image_transition))
+                    .addSharedElement(((FirstHomeAdapter.VH) vh).tvTitle, "tv")
+                    .replace(fragment);
         });
 
         // Init Datas

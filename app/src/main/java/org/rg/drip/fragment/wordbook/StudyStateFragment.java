@@ -3,11 +3,9 @@ package org.rg.drip.fragment.wordbook;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import org.rg.drip.R;
 import org.rg.drip.adapter.StudyStateFragmentAdapter;
-import org.rg.drip.adapter.ZhihuPagerFragmentAdapter;
 import org.rg.drip.base.BaseSubFragment;
 
 import butterknife.BindView;
@@ -30,7 +28,7 @@ public class StudyStateFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_wordbook_fragment_study_state;
+		return R.layout.wordbook_fragment_study_state;
 	}
 
 	@Override

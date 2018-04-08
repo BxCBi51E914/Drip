@@ -13,7 +13,7 @@ import butterknife.BindView;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class UserMainFragment extends BaseMainFragment implements BaseMainFragment.OnBackToFirstListener {
+public class UserMainFragment extends BaseMainFragment {
 	@BindView(R.id.toolbar) Toolbar mToolbar;
 	
 	public static UserMainFragment newInstance() {
@@ -25,7 +25,7 @@ public class UserMainFragment extends BaseMainFragment implements BaseMainFragme
 	
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_user_fragment_main;
+		return R.layout.user_fragment_main;
 	}
 	
 	@Override
@@ -46,15 +46,5 @@ public class UserMainFragment extends BaseMainFragment implements BaseMainFragme
 	private void loadFragment() {
 		loadRootFragment(R.id.fragment_wordbook_container_upper, AvatarFragment.newInstance());
 		loadRootFragment(R.id.fragment_wordbook_container_lower, MeFragment.newInstance());
-	}
-	
-	@Override
-	public void onBackToFirstFragment() {
-		_mBackToFirstListener.onBackToFirstFragment();
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
 	}
 }

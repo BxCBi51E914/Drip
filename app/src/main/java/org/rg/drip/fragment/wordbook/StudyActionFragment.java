@@ -20,7 +20,7 @@ public class StudyActionFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_wordbook_fragment_study_action;
+		return R.layout.wordbook_fragment_study_action;
 	}
 
 	@Override

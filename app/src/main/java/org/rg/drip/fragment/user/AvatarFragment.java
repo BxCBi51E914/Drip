@@ -2,7 +2,6 @@ package org.rg.drip.fragment.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,8 +15,6 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import org.rg.drip.R;
 import org.rg.drip.activity.SignInActivity;
-import org.rg.drip.base.BaseFragment;
-import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.constant.TabUserConstant;
 import org.rg.drip.contract.AvatarContract;
@@ -25,7 +22,6 @@ import org.rg.drip.data.model.cache.User;
 import org.rg.drip.presenter.AvatarPresenter;
 import org.rg.drip.utils.CheckUtil;
 import org.rg.drip.utils.LoadingTipDialogUtil;
-import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.ToastUtil;
 
@@ -82,7 +78,7 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 	
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_user_fragment_avatar;
+		return R.layout.user_fragment_avatar;
 	}
 	
 	@Override

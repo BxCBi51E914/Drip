@@ -31,7 +31,7 @@ public class MeFragment extends BaseSubFragment {
 	
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_user_fragment_me;
+		return R.layout.user_fragment_me;
 	}
 	
 	@Override

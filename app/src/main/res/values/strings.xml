@@ -22,13 +22,13 @@
     <string name="email">Email</string>
     <string name="next">NEXT</string>
     <string name="register">REGISTER</string>
-    <string name="empty">Empty</string>
     <string name="choose_wordbook">Choose Wordbook</string>
     <string name="language">Language</string>
     <string name="language_zh">中文</string>
     <string name="language_en">English</string>
     <string name="language_auto">Auto</string>
 
+    <string name="tip_unselected_wordbook">Unselected Wordbook</string>
     <string name="tip_username_or_email">Please input you username or email</string>
     <string name="tip_username">Please input you username</string>
     <string name="tip_password">Please input you password</string>
@@ -73,7 +73,7 @@
     <string name="chk_send">SEND</string>
     <string name="chk_out">OUT</string>
 
-    <string name="home">Home</string>
+    <string name="reading">Reading</string>
     <string name="discover">Discover</string>
     <string name="shop">Shop</string>
     <string name="system">Account</string>

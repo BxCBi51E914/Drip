@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.fragment.user.AvatarFragment;
 
 /**
  * Author : TankGq
@@ -22,7 +21,13 @@ public class WordBookMainFragment extends BaseMainFragment
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.tab_wordbook_fragment_main;
+		return R.layout.wordbook_fragment_main;
+	}
+
+
+	@Override
+	protected boolean isFirstFragment() {
+		return true;
 	}
 
 	@Override

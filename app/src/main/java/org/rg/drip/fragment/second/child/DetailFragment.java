@@ -112,4 +112,10 @@ public class DetailFragment extends BaseSubFragment {
             Toast.makeText(_mActivity, R.string.modify_title, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        pop();
+        return true;
+    }
 }

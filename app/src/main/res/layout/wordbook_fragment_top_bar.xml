@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/tv_wordbook_name"
         android:layout_gravity="center|start"
-        android:text="@string/empty"
+        android:text="@string/tip_unselected_wordbook"
         android:layout_marginStart="44dp"
         android:textSize="20sp"
         android:textColor="@color/white"
