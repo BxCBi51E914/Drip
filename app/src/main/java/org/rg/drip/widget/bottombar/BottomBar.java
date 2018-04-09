@@ -1,4 +1,4 @@
-package org.rg.drip.view.bottom_bar;
+package org.rg.drip.widget.bottombar;
 
 import android.content.Context;
 import android.graphics.Color;

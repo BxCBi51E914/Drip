@@ -66,6 +66,7 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$rootProject.ext.stethoVersion"
     implementation "com.uphyca:stetho_realm:$rootProject.ext.stethoRealmVersion"
     implementation "com.qmuiteam:qmui:$rootProject.ext.qmuiVersion"
-    implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
-    implementation "com.github.PhilJay:MPAndroidChart:v$rootProject.ext.mpAndroidChartVersion"
+    implementation "com.github.zzz40500:android-shapeLoadingView:$rootProject.ext.shapeLoadingView"
+    implementation "com.github.PhilJay:MPAndroidChart:$rootProject.ext.mpAndroidChartVersion"
+    implementation "com.loopeer.library:cardstack:$rootProject.ext.cardStackVersion"
 }
