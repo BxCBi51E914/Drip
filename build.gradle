@@ -29,8 +29,10 @@ ext {
     stethoVersion = '1.5.0'
     stethoRealmVersion = '2.2.2'
 
+    shapeLoadingView = '1.0.3.2'
     qmuiVersion = '1.0.6'
-    mpAndroidChartVersion = '3.0.3'
+    mpAndroidChartVersion = 'v3.0.3'
+    cardStackVersion = '1.0.2'
 }
 
 buildscript {

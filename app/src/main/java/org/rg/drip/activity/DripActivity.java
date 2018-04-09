@@ -15,11 +15,10 @@ import org.rg.drip.fragment.third.child.ShopFragment;
 import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
 import org.rg.drip.fragment.wordbook.StudyActionFragment;
-import org.rg.drip.fragment.wordbook.StudyStateFragment;
 import org.rg.drip.fragment.wordbook.WordBookMainFragment;
 import org.rg.drip.utils.ToastUtil;
-import org.rg.drip.view.bottom_bar.BottomBar;
-import org.rg.drip.view.bottom_bar.BottomBarTab;
+import org.rg.drip.widget.bottombar.BottomBar;
+import org.rg.drip.widget.bottombar.BottomBarTab;
 
 import java.util.ArrayList;
 import java.util.List;
