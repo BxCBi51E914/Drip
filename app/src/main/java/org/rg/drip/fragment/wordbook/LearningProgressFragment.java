@@ -70,11 +70,10 @@ public class LearningProgressFragment extends BaseSubFragment
 
 		YAxis y = mLineChart.getAxisLeft();
 		y.setLabelCount(5, false);
-		y.setTextColor(Color.rgb(255, 140, 157));
+		y.setTextColor(getResources().getColor(R.color.colorPrimary));
 		y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
 		y.setTextSize(13f);
 		y.setDrawGridLines(false);
-		y.setAxisLineColor(getResources().getColor(R.color.colorPrimary));
 
 		mLineChart.getAxisRight().setEnabled(false);
 

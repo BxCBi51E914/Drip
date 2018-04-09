@@ -33,6 +33,7 @@ ext {
     qmuiVersion = '1.0.6'
     mpAndroidChartVersion = 'v3.0.3'
     cardStackVersion = '1.0.2'
+    swipeCardsViewVersion = '1.3.5'
 }
 
 buildscript {
@@ -58,7 +59,7 @@ allprojects {
         //Bmob的maven仓库地址
         maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
 
-        maven { url 'https://github.com/WickeDev/stetho-realm/raw/master/maven-repo' }\
+        maven { url 'https://github.com/WickeDev/stetho-realm/raw/master/maven-repo' }
 
         maven { url "https://jitpack.io" }
     }

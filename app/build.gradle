@@ -69,4 +69,5 @@ dependencies {
     implementation "com.github.zzz40500:android-shapeLoadingView:$rootProject.ext.shapeLoadingView"
     implementation "com.github.PhilJay:MPAndroidChart:$rootProject.ext.mpAndroidChartVersion"
     implementation "com.loopeer.library:cardstack:$rootProject.ext.cardStackVersion"
+    implementation "com.huxq17.android:SwipeCardsView:$rootProject.ext.swipeCardsViewVersion"
 }
