@@ -1,16 +1,17 @@
-package org.rg.drip.data.model.cache;
+package org.rg.drip.data.model.local;
 
 import org.rg.drip.data.contract.ModelContract;
-import org.rg.drip.data.model.local.WordLinkL;
-import org.rg.drip.data.model.remote.WordLinkR;
+import org.rg.drip.data.model.cache.WordLink;
+
+import io.realm.RealmObject;
 
 /**
  * 记录单词属于哪个单词本, 以及该单词的状态
- *
+ * <p>
  * Author : Tank
  * Time : 20/03/2018
  */
-public class WordLink implements ModelContract.Local<WordLinkL>, ModelContract.Remote<WordLinkR> {
+public class WordLinkL extends RealmObject implements ModelContract.Cache<WordLink> {
 
 	private Integer id;             // 单词 id
 	private String word;            // 单词
@@ -50,18 +51,8 @@ public class WordLink implements ModelContract.Local<WordLinkL>, ModelContract.R
 	}
 
 	@Override
-	public WordLinkL convertToLocal() {
-		WordLinkL wordLink = new WordLinkL();
-		wordLink.setId(this.getId());
-		wordLink.setWord(this.getWord());
-		wordLink.setState(this.getState());
-		wordLink.setState(this.getState());
-		return wordLink;
-	}
-
-	@Override
-	public WordLinkR convertToRemote() {
-		WordLinkR wordLink = new WordLinkR();
+	public WordLink convertToCache() {
+		WordLink wordLink = new WordLink();
 		wordLink.setId(this.getId());
 		wordLink.setWord(this.getWord());
 		wordLink.setState(this.getState());

@@ -7,6 +7,8 @@ import org.rg.drip.utils.ConfigUtil;
  * on 2018/4/10.
  */
 public class GlobalData {
+
+	public static Object nullObj = new Object();
 	
 	public static String config = ConfigUtil.getDefaultConfig();
 	

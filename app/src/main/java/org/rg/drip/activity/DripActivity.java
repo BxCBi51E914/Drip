@@ -7,6 +7,10 @@ import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.UIConstant;
+import org.rg.drip.data.model.cache.WordLink;
+import org.rg.drip.data.model.cache.Wordbook;
+import org.rg.drip.data.model.remote.WordLinkR;
+import org.rg.drip.data.model.remote.WordbookR;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.fragment.first.child.FirstHomeFragment;
@@ -16,13 +20,21 @@ import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
 import org.rg.drip.fragment.wordbook.StudyActionFragment;
 import org.rg.drip.fragment.wordbook.WordBookMainFragment;
+import org.rg.drip.utils.BmobUtil;
+import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.widget.bottombar.BottomBar;
 import org.rg.drip.widget.bottombar.BottomBarTab;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.bmob.v3.BmobBatch;
+import cn.bmob.v3.datatype.BatchResult;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListListener;
 import hugo.weaving.DebugLog;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -131,12 +143,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 				}
 			}
 		});
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-//		UserRemoteSource urs = UserRemoteSource.getInstance();
+		//		UserRemoteSource urs = UserRemoteSource.getInstance();
 //		User user = new User();
 //		user.setId(1);
 //		user.setUsername("asdasdasd");
@@ -154,6 +161,34 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 //		            ToastUtil.showColorfulToast(DripActivity.this, "失败");
 //	            }
 //	       );
+
+//		WordbookR wordbook = new WordbookR();
+//		wordbook.setId(0);
+//		wordbook.setUserId(0);
+//		wordbook.setMd5("123");
+//		WordLinkR wordLink = new WordLinkR();
+//		wordLink.setId(0);
+//		wordLink.setState((byte) 0);
+//		wordLink.setWord("word");
+//		wordLink.setWordBookId(0);
+//		new BmobBatch().insertBatch(Collections.singletonList(wordbook))
+//		               .insertBatch(Collections.singletonList(wordLink))
+//		               .doBatch(new QueryListListener<BatchResult>() {
+//			               @Override
+//			               public void done(List<BatchResult> list, BmobException e) {
+//				               if(e != null) {
+//					               BmobUtil.logBmobErrorInfo(e);
+//					               return;
+//				               }
+//				               for(BatchResult result : list) {
+//					               if(result.isSuccess()) {
+//						               LoggerUtil.d("true");
+//					               } else {
+//						               BmobUtil.logBmobErrorInfo(result.getError());
+//					               }
+//				               }
+//			               }
+//		               });
 	}
 
 	@Override

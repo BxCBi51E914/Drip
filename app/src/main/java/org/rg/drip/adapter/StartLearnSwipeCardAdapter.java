@@ -46,11 +46,11 @@ public class StartLearnSwipeCardAdapter extends BaseCardAdapter {
 			return;
 		}
 		TextView wordTv = cardView.findViewById(R.id.tv_word);
-		TextView ipaTv = cardView.findViewById(R.id.tv_ipa);
+		TextView phoneticTv = cardView.findViewById(R.id.tv_phonetic);
 		TextView explainTv = cardView.findViewById(R.id.tv_explain);
 		Word word = data.get(CheckUtil.checkElementIndex(position, data.size()));
 		wordTv.setText(word.getWord());
-		ipaTv.setText(word.getIpa());
+		phoneticTv.setText(word.getPhonetic());
 		explainTv.setText(word.getExplain());
 	}
 	

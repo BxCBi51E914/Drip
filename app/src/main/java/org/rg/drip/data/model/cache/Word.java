@@ -1,14 +1,18 @@
 package org.rg.drip.data.model.cache;
 
+import org.rg.drip.data.contract.ModelContract;
+import org.rg.drip.data.model.local.WordL;
+import org.rg.drip.data.model.remote.WordR;
+
 /**
  * 单词
  * <p>
  * Author : Tank
  * Time : 08/03/2018
  */
-public class Word {
+public class Word implements ModelContract.Local<WordL>, ModelContract.Remote<WordR> {
 	
-	private Number id;          // 单词 id
+	private Integer id;          // 单词 id
 	private String word;        // 单词名称
 	private String phonetic;    // 音标
 	private String explain;     // 中文释义
@@ -25,11 +29,11 @@ public class Word {
 //	private String audio;       // 读音音频 url （待添加）
 	
 	
-	public Number getId() {
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(Number id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -55,5 +59,23 @@ public class Word {
 	
 	public void setExplain(String explain) {
 		this.explain = explain;
+	}
+
+	@Override
+	public WordL convertToLocal() {
+		WordL word = new WordL();
+		word.setId(this.getId());
+		word.setPhonetic(this.getPhonetic());
+		word.setExplain(this.getExplain());
+		return word;
+	}
+
+	@Override
+	public WordR convertToRemote() {
+		WordR word = new WordR();
+		word.setId(this.getId());
+		word.setPhonetic(this.getPhonetic());
+		word.setExplain(this.getExplain());
+		return word;
 	}
 }

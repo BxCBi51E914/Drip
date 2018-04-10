@@ -22,7 +22,7 @@ import butterknife.BindView;
  */
 public class StartLearningFragment extends BaseSubFragment {
 	
-	@BindView(R.id.swipe_cards_view) SwipeCardsView mSwipeCardsView;
+	@BindView(R.id.swipe_cards_View) SwipeCardsView mSwipeCardsView;
 	private StartLearnSwipeCardAdapter mAdapter;
 
 	public static StartLearningFragment newInstance() {

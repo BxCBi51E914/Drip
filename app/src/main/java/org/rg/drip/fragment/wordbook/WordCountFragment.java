@@ -133,9 +133,9 @@ public class WordCountFragment extends BaseSubFragment implements BaseFragment.O
 		// have as many colors as stack-values per entry
 		int[] colors = new int[stacksize];
 
-		for(int i = 0; i < colors.length; i++) {
+		for(int i = 0; i < colors.length; ++ i) {
 			colors[i] =
-					ColorTemplate.VORDIPLOM_COLORS[ColorTemplate.VORDIPLOM_COLORS.length - i - 1];
+					ColorTemplate.VORDIPLOM_COLORS[4 - i];
 		}
 
 		return colors;

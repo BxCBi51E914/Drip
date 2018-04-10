@@ -1,6 +1,6 @@
 package org.rg.drip.data.contract;
 
-import org.rg.drip.data.model.cache.WordBook;
+import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.cache.WordLink;
 
 import java.util.List;
@@ -18,12 +18,12 @@ public class WordBookContract {
 		/**
 		 * 存储单词本
 		 */
-		Flowable<Boolean> storeWordbook(WordBook wordBookId, List<WordLink> wordLinks);
+		Flowable<Boolean> storeWordbook(Wordbook wordbookId, List<WordLink> wordLinks);
 		
 		/**
 		 * 更新单词本
 		 */
-		Flowable<Boolean> updateWordbook(WordBook wordBook, List<WordLink> wordLinks);
+		Flowable<Boolean> updateWordbook(Wordbook wordbook, List<WordLink> wordLinks);
 		
 		/**
 		 * 创建单词本
@@ -63,17 +63,22 @@ public class WordBookContract {
 		/**
 		 * 获得相应单词本
 		 */
-		WordBook getWordbook(int wordbookId);
+		Flowable<Wordbook> getWordbook(int wordbookId, int userId);
+
+		/**
+		 * 判断单词本是否存在
+		 */
+		Flowable<Boolean> checkWordbookExist(int wordbookId, int userId);
 		
 		/**
 		 * 通过默认的单词本创建属于自己的单词本
 		 */
-		Flowable<Boolean> createWordbookByDeafult(int wordbookId);
+		Flowable<Wordbook> createWordbookByDefault(int userId, Wordbook wordbook);
 		
 		/**
 		 * 创建单词本
 		 */
-		Flowable<Boolean> createWordbook();
+		Flowable<Wordbook> createWordbook();
 		
 		/**
 		 * 批量添加单词
@@ -100,7 +105,7 @@ public class WordBookContract {
 		/**
 		 * 获得单词本
 		 */
-		Flowable<List<WordLink>> getWordBook(int wordbookId);
+		Flowable<List<WordLink>> getWordsInWordBook(int wordbookId, int userId);
 		
 		/**
 		 * 获取单词本中有多少单词
@@ -114,27 +119,32 @@ public class WordBookContract {
 	}
 	
 	public interface Repository {
-		
+
 		/**
 		 * 获得相应单词本
 		 */
-		WordBook getWordbook(int wordbookId);
+		Wordbook getWordbook(int wordbookId);
+
+		/**
+		 * 获得当前选择的单词本
+		 */
+		Wordbook getCurrentWordBook();
+
+		/**
+		 * 判断单词本是否存在
+		 */
+		Flowable<Boolean> checkWordbookExist(int wordbookId, int userId);
+
+		/**
+		 * 通过默认的单词本创建属于自己的单词本
+		 */
+		Flowable<Wordbook> createWordbookByDefault(int userId, Wordbook wordbook);
 		
 		/**
 		 * 设置当前用户选择的单词本
 		 */
-		void setCurrentWordBookId(WordBook wordBook);
-		
-		/**
-		 * 获得当前选择的单词本
-		 */
-		WordBook getCurrentWordBook();
-		
-		/**
-		 * 通过默认的单词本创建属于自己的单词本
-		 */
-		Flowable<Boolean> createWordbookByDeafult(int wordbookId);
-		
+		void setCurrentWordBookId(Wordbook wordbook);
+
 		/**
 		 * 创建单词本
 		 */

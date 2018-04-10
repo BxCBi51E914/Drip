@@ -29,7 +29,7 @@
     <string name="language_auto">Auto</string>
     
     <string name="holder_word">thumb</string>
-    <string name="holder_ipa">[θʌm]</string>
+    <string name="holder_phonetic">[θʌm]</string>
     <string name="holder_explain">n.(大)拇指</string>
 
     <string name="tip_unselected_wordbook">Unselected Wordbook</string>
