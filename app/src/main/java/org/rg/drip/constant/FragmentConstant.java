@@ -11,4 +11,7 @@ public class FragmentConstant {
 	public static final int SETTING = 3;
 
 	public static final int ANIMATOR_DURATION = 600;
+	
+	
+	public static final int SWIPE_VISIBLE_CARD_COUNT = 3;
 }

@@ -27,6 +27,10 @@
     <string name="language_zh">中文</string>
     <string name="language_en">English</string>
     <string name="language_auto">Auto</string>
+    
+    <string name="holder_word">thumb</string>
+    <string name="holder_ipa">[θʌm]</string>
+    <string name="holder_explain">n.(大)拇指</string>
 
     <string name="tip_unselected_wordbook">Unselected Wordbook</string>
     <string name="tip_username_or_email">Please input you username or email</string>
