@@ -108,4 +108,9 @@ public class UserRepository implements UserContract.Repository {
 	public Flowable<Boolean> checkEmailVerified() {
 		return mUserRemoteSource.checkEmailVerified();
 	}
+	
+	@Override
+	public Flowable<Boolean> saveUserConfig(String config) {
+		return mUserRemoteSource.saveUserConfig(config);
+	}
 }

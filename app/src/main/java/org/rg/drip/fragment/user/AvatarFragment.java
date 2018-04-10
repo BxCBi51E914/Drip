@@ -16,7 +16,6 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import org.rg.drip.R;
 import org.rg.drip.activity.SignInActivity;
 import org.rg.drip.base.BaseSubFragment;
-import org.rg.drip.constant.TabUserConstant;
 import org.rg.drip.contract.AvatarContract;
 import org.rg.drip.data.model.cache.User;
 import org.rg.drip.presenter.AvatarPresenter;

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.rg.drip.constant.FragmentConstant;
+import org.rg.drip.constant.UIConstant;
 import org.rg.drip.R;
 import org.rg.drip.adapter.FirstHomeAdapter;
 import org.rg.drip.entity.Article;
@@ -162,7 +162,7 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
      */
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != FragmentConstant.WORDBOOK) return;
+        if (event.position != UIConstant.WORDBOOK) return;
 
         if (mInAtTop) {
             mRefreshLayout.setRefreshing(true);

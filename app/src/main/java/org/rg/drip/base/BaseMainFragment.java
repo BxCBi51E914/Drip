@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 
-import org.rg.drip.constant.FragmentConstant;
+import org.rg.drip.constant.UIConstant;
 import org.rg.drip.utils.ToastUtil;
 
 /**
@@ -80,7 +80,7 @@ public abstract class BaseMainFragment extends BaseFragment {
 		                                                    startRadius,
 		                                                    endRadius);
 
-		mAnimator.setDuration(FragmentConstant.ANIMATOR_DURATION);
+		mAnimator.setDuration(UIConstant.ANIMATOR_DURATION);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override

@@ -74,6 +74,11 @@ public interface UserContract {
 		 * 检查用户邮箱是否验证过
 		 */
 		Flowable<Boolean> checkEmailVerified();
+		
+		/**
+		 * 保存用户设置
+		 */
+		Flowable<Boolean> saveUserConfig(String config);
 	}
 
 	interface Repository {
@@ -137,5 +142,10 @@ public interface UserContract {
 		 * 检查用户邮箱是否验证过
 		 */
 		Flowable<Boolean> checkEmailVerified();
+		
+		/**
+		 * 保存用户设置
+		 */
+		Flowable<Boolean> saveUserConfig(String config);
 	}
 }

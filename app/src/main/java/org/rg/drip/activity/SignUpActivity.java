@@ -21,6 +21,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
+import org.rg.drip.constant.UIConstant;
 import org.rg.drip.contract.SignUpContract;
 import org.rg.drip.presenter.SignUpPresenter;
 import org.rg.drip.utils.CheckUtil;
@@ -127,7 +128,7 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 				                                                             mSignUpCardView.getHeight() +
 				                                                             mSignUpCardView.getWidth() *
 				                                                             mSignUpCardView.getHeight()));
-		mAnimator.setDuration(600);
+		mAnimator.setDuration(UIConstant.ANIMATOR_DURATION);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override
@@ -154,7 +155,7 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 		                                                             0,
 		                                                             mSignUpCardView.getHeight(),
 		                                                             mSignInFab.getWidth() >> 1);
-		mAnimator.setDuration(600);
+		mAnimator.setDuration(UIConstant.ANIMATOR_DURATION);
 		mAnimator.setInterpolator(new AccelerateInterpolator());
 		mAnimator.addListener(new AnimatorListenerAdapter() {
 			@Override

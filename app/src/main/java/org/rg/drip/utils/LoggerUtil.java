@@ -8,6 +8,8 @@ import com.orhanobut.logger.LogcatLogStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 
+import org.rg.drip.GlobalData;
+
 /**
  * Author : Tank
  * Time : 15/03/2018
@@ -15,7 +17,6 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class LoggerUtil {
 
-	private static final Boolean mIsDebug = true;
 	private static final String TAG = "DRIP_LOG";
 
 	public static void init() {
@@ -40,7 +41,7 @@ public class LoggerUtil {
 		AndroidLogAdapter androidLogAdapter = new AndroidLogAdapter(formatStrategy) {
 			@Override
 			public boolean isLoggable(int priority, String tag) {
-				return mIsDebug;
+				return GlobalData.isDebug;
 			}
 		};
 

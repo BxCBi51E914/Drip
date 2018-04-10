@@ -306,4 +306,28 @@ public class UserRemoteSource implements UserContract.Remote {
 			});
 		}, BackpressureStrategy.BUFFER);
 	}
+	
+	@Override
+	public Flowable<Boolean> saveUserConfig(String config) {
+		if(mUser == null) {
+			return Flowable.just(false);
+		}
+		return Flowable.create(emitter -> {
+			UserR user = new UserR();
+			user.setConfig(config);
+			user.update(mUser.getObjectId(), new UpdateListener() {
+				@Override
+				public void done(BmobException e) {
+					if(e != null) {
+						BmobUtil.logBmobErrorInfo(e);
+						emitter.onNext(false);
+						emitter.onError(e);
+						return;
+					}
+					emitter.onNext(true);
+					emitter.onComplete();
+				}
+			});
+		}, BackpressureStrategy.BUFFER);
+	}
 }

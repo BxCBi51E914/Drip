@@ -2,17 +2,16 @@ package org.rg.drip.data.model.cache;
 
 /**
  * 单词
- *
+ * <p>
  * Author : Tank
  * Time : 08/03/2018
  */
 public class Word {
 	
-	private int id;             // 单词 id
+	private Number id;          // 单词 id
 	private String word;        // 单词名称
-	private String ipa;         // 音标
+	private String phonetic;    // 音标
 	private String explain;     // 中文释义
-//	private String phonetic;    // 音标，以英语英标为主
 //	private String definition;  // 单词释义（英文），每行一个释义
 //	private String translation; // 单词释义（中文），每行一个释义
 //	private String pos;         // 词语位置，用 "/" 分割不同位置
@@ -26,11 +25,11 @@ public class Word {
 //	private String audio;       // 读音音频 url （待添加）
 	
 	
-	public int getId() {
+	public Number getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Number id) {
 		this.id = id;
 	}
 	
@@ -42,12 +41,12 @@ public class Word {
 		this.word = word;
 	}
 	
-	public String getIpa() {
-		return ipa;
+	public String getPhonetic() {
+		return phonetic;
 	}
 	
-	public void setIpa(String ipa) {
-		this.ipa = ipa;
+	public void setPhonetic(String phonetic) {
+		this.phonetic = phonetic;
 	}
 	
 	public String getExplain() {

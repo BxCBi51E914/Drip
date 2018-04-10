@@ -19,6 +19,7 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 	private String email;           // 邮箱
 	private Boolean emailVerified;  // 邮箱是否验证
 	private String objectId;        // Bmob 数据的唯一标识符
+	private String config;          // 用户设置
 
 	public Integer getId() {
 		return id;
@@ -75,7 +76,15 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 	public void setObjectId(String objectId) {
 		this.objectId = objectId;
 	}
-
+	
+	public String getConfig() {
+		return config;
+	}
+	
+	public void setConfig(String config) {
+		this.config = config;
+	}
+	
 	@Override
 	public UserL convertToLocal() {
 		UserL user = new UserL();
@@ -85,6 +94,7 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());
+		user.setConfig(this.getConfig());
 		return user;
 	}
 
@@ -97,6 +107,7 @@ public class User implements ModelContract.Local<UserL>, ModelContract.Remote<Us
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());
+		user.setConfig(this.getConfig());
 		return user;
 	}
 }

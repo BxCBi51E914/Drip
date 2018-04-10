@@ -6,19 +6,16 @@ import android.support.v4.app.ActivityCompat;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.constant.FragmentConstant;
+import org.rg.drip.constant.UIConstant;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.fragment.first.ZhihuFirstFragment;
 import org.rg.drip.fragment.first.child.FirstHomeFragment;
 import org.rg.drip.fragment.second.ZhihuSecondFragment;
 import org.rg.drip.fragment.second.child.ViewPagerFragment;
-import org.rg.drip.fragment.third.ZhihuThirdFragment;
-import org.rg.drip.fragment.third.child.ShopFragment;
 import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
 import org.rg.drip.fragment.wordbook.StudyActionFragment;
 import org.rg.drip.fragment.wordbook.WordBookMainFragment;
-import org.rg.drip.utils.ToastUtil;
 import org.rg.drip.widget.bottombar.BottomBar;
 import org.rg.drip.widget.bottombar.BottomBarTab;
 
@@ -50,22 +47,22 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 	protected void initView(Bundle savedInstanceState) {
 		SupportFragment firstFragment = findFragment(WordBookMainFragment.class);
 		if(firstFragment == null) {
-			mMainFragments.add(FragmentConstant.WORDBOOK, WordBookMainFragment.newInstance());
-			mMainFragments.add(FragmentConstant.READING, ZhihuSecondFragment.newInstance());
-			mMainFragments.add(FragmentConstant.THIRD, ZhihuFirstFragment.newInstance());
-			mMainFragments.add(FragmentConstant.SETTING, UserMainFragment.newInstance());
+			mMainFragments.add(UIConstant.WORDBOOK, WordBookMainFragment.newInstance());
+			mMainFragments.add(UIConstant.READING, ZhihuSecondFragment.newInstance());
+			mMainFragments.add(UIConstant.THIRD, ZhihuFirstFragment.newInstance());
+			mMainFragments.add(UIConstant.SETTING, UserMainFragment.newInstance());
 
 			loadMultipleRootFragment(R.id.fl_container,
-			                         FragmentConstant.WORDBOOK,
-			                         mMainFragments.get(FragmentConstant.WORDBOOK),
-			                         mMainFragments.get(FragmentConstant.READING),
-			                         mMainFragments.get(FragmentConstant.THIRD),
-			                         mMainFragments.get(FragmentConstant.SETTING));
+			                         UIConstant.WORDBOOK,
+			                         mMainFragments.get(UIConstant.WORDBOOK),
+			                         mMainFragments.get(UIConstant.READING),
+			                         mMainFragments.get(UIConstant.THIRD),
+			                         mMainFragments.get(UIConstant.SETTING));
 		} else {
-			mMainFragments.add(FragmentConstant.WORDBOOK, firstFragment);
-			mMainFragments.add(FragmentConstant.READING, findFragment(ZhihuSecondFragment.class));
-			mMainFragments.add(FragmentConstant.THIRD, findFragment(ZhihuFirstFragment.class));
-			mMainFragments.add(FragmentConstant.SETTING, findFragment(UserMainFragment.class));
+			mMainFragments.add(UIConstant.WORDBOOK, firstFragment);
+			mMainFragments.add(UIConstant.READING, findFragment(ZhihuSecondFragment.class));
+			mMainFragments.add(UIConstant.THIRD, findFragment(ZhihuFirstFragment.class));
+			mMainFragments.add(UIConstant.SETTING, findFragment(UserMainFragment.class));
 		}
 
 		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_folder_open))
@@ -76,7 +73,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 		mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(int position, int prePosition) {
-				// position 与 FragmentConstant.WORDBOOK 之类一一对应
+				// position 与 UIConstant.WORDBOOK 之类一一对应
 				SupportFragment fragment = mMainFragments.get(prePosition);
 				if(fragment instanceof BaseMainFragment) {
 					((BaseMainFragment) fragment).cancelAnimateCircularReveal(fragment.getView());

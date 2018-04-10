@@ -11,12 +11,13 @@ import io.realm.RealmObject;
  */
 public class UserL extends RealmObject implements ModelContract.Cache<User> {
 
-	private Integer id;              // 用户 id
-	private String username;         // 账号
-	private String nickname;         // 昵称
-	private String email;            // 邮箱
-	private Boolean emailVerified;   // 邮箱是否验证
-	private String objectId;         // Bmob 数据的唯一标识符
+	private Integer id;             // 用户 id
+	private String username;        // 账号
+	private String nickname;        // 昵称
+	private String email;           // 邮箱
+	private Boolean emailVerified;  // 邮箱是否验证
+	private String objectId;        // Bmob 数据的唯一标识符
+	private String config;          // 用户设置
 
 	public Integer getId() {
 		return id;
@@ -65,7 +66,15 @@ public class UserL extends RealmObject implements ModelContract.Cache<User> {
 	public void setObjectId(String objectId) {
 		this.objectId = objectId;
 	}
-
+	
+	public String getConfig() {
+		return config;
+	}
+	
+	public void setConfig(String config) {
+		this.config = config;
+	}
+	
 	@Override
 	public User convertToCache() {
 		User user = new User();
@@ -75,6 +84,7 @@ public class UserL extends RealmObject implements ModelContract.Cache<User> {
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());
+		user.setConfig(this.getConfig());
 		return user;
 	}
 }

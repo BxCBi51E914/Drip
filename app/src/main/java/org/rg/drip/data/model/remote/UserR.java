@@ -12,7 +12,8 @@ import cn.bmob.v3.BmobUser;
 public class UserR extends BmobUser implements ModelContract.Cache<User> {
 	
 	private Integer id;         // 用户 id
-	private String nickname;        // 昵称
+	private String nickname;    // 昵称
+	private String config;      // 用户设置
 
 	public Integer getId() {
 		return id;
@@ -29,7 +30,15 @@ public class UserR extends BmobUser implements ModelContract.Cache<User> {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-
+	
+	public String getConfig() {
+		return config;
+	}
+	
+	public void setConfig(String config) {
+		this.config = config;
+	}
+	
 	@Override
 	public User convertToCache() {
 		User user = new User();
@@ -39,6 +48,7 @@ public class UserR extends BmobUser implements ModelContract.Cache<User> {
 		user.setEmail(this.getEmail());
 		user.setEmailVerified(this.getEmailVerified());
 		user.setObjectId(this.getObjectId());
+		user.setConfig(this.getConfig());
 		return user;
 	}
 }
