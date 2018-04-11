@@ -60,7 +60,7 @@ public class BmobUtil {
 //		Bmob.initialize(context, BmobConstant.APPLICATION_ID, BmobConstant.CHANNEL);
 	}
 
-	public static void logBmobErrorInfo(BmobException e) {
+	public static void logErrorInfo(BmobException e) {
 		if(e == null) return;
 		LoggerUtil.e("[BmobError] errorCode : " + e.getErrorCode()
 		             + ", errorMessage : " + e.getLocalizedMessage());

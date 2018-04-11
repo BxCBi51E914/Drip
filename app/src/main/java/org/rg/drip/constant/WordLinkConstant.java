@@ -6,8 +6,8 @@ package org.rg.drip.constant;
  */
 public class WordLinkConstant {
 	
-	public static final String ID = "id";
-	public static final String WORD = "word";
-	public static final String WORDBOOK_CODE = "wordBookCode";
-	public static final String STATE = "state";
+	public static final String FIELD_ID = "id";
+	public static final String FIELD_WORD = "word";
+	public static final String FIELD_WORDBOOK_CODE = "wordBookCode";
+	public static final String FIELD_STATE = "state";
 }

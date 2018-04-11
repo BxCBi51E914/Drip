@@ -69,12 +69,12 @@ public class UserRemoteSource implements UserContract.Remote {
 	public Flowable<Boolean> checkUsernameExist(String username) {
 		return Flowable.create(emitter -> {
 			new BmobQuery<UserR>()
-					.addWhereEqualTo(UserConstant.USERNAME, username)
+					.addWhereEqualTo(UserConstant.FIELD_USERNAME, username)
 					.count(UserR.class, new CountListener() {
 						@Override
 						public void done(Integer integer, BmobException e) {
 							if(e != null) {
-								BmobUtil.logBmobErrorInfo(e);
+								BmobUtil.logErrorInfo(e);
 								emitter.onNext(false);
 								emitter.onError(e);
 								return;
@@ -90,12 +90,12 @@ public class UserRemoteSource implements UserContract.Remote {
 	public Flowable<Boolean> checkNameExist(String name) {
 		return Flowable.create(emitter -> {
 			new BmobQuery<UserR>()
-					.addWhereEqualTo(UserConstant.NAME, name)
+					.addWhereEqualTo(UserConstant.FIELD_NAME, name)
 					.count(UserR.class, new CountListener() {
 						@Override
 						public void done(Integer integer, BmobException e) {
 							if(e != null) {
-								BmobUtil.logBmobErrorInfo(e);
+								BmobUtil.logErrorInfo(e);
 								emitter.onNext(false);
 								emitter.onError(e);
 								return;
@@ -117,7 +117,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(UserR userR, BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -141,7 +141,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(UserR userR, BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -172,7 +172,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(UserR userR, BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -204,7 +204,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -225,7 +225,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -250,7 +250,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -275,7 +275,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -297,7 +297,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(UserR userR, BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;
@@ -321,7 +321,7 @@ public class UserRemoteSource implements UserContract.Remote {
 				@Override
 				public void done(BmobException e) {
 					if(e != null) {
-						BmobUtil.logBmobErrorInfo(e);
+						BmobUtil.logErrorInfo(e);
 						emitter.onNext(false);
 						emitter.onError(e);
 						return;

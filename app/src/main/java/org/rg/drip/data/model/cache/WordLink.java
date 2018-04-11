@@ -14,7 +14,7 @@ public class WordLink implements ModelContract.Local<WordLinkL>, ModelContract.R
 	
 	private Integer id;             // 单词 id, 从1开始自增
 	private String word;            // 单词
-	private String wordBookCode;    // 所属单词本的标识, 格式为 wordbookId + "_" + userId
+	private String wordBookCode;    // 所属单词本的标识, 格式为 wordbookId + "_" + userId, 为了查询方便
 	private Integer state;          // 状态的 id
 	
 	public Integer getId() {

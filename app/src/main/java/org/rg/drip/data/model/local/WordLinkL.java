@@ -4,6 +4,7 @@ import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.cache.WordLink;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * 记录单词属于哪个单词本, 以及该单词的状态
@@ -12,44 +13,45 @@ import io.realm.RealmObject;
  * Time : 20/03/2018
  */
 public class WordLinkL extends RealmObject implements ModelContract.Cache<WordLink> {
-	
+
+	@PrimaryKey
 	private Integer id;             // 单词 id, 从1开始自增
 	private String word;            // 单词
 	private String wordBookCode;    // 所属单词本的标识, 格式为 wordbookId + "_" + userId
 	private Integer state;          // 状态的 id
-	
+
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getWord() {
 		return word;
 	}
-	
+
 	public void setWord(String word) {
 		this.word = word;
 	}
-	
+
 	public String getWordBookCode() {
 		return wordBookCode;
 	}
-	
+
 	public void setWordBookCode(String wordBookCode) {
 		this.wordBookCode = wordBookCode;
 	}
-	
+
 	public Integer getState() {
 		return state;
 	}
-	
+
 	public void setState(Integer state) {
 		this.state = state;
 	}
-	
+
 	@Override
 	public WordLink convertToCache() {
 		WordLink wordLink = new WordLink();

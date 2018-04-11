@@ -6,10 +6,10 @@ package org.rg.drip.constant;
  */
 public class UserConstant {
 
-	public static final String ID = "id";
-	public static final String USERNAME = "username";
-	public static final String PASSWORD = "password";
-	public static final String NAME = "name";
-	public static final String EMAIL = "email";
-	public static final String EMAILVERIFIED = "emailVerified";
+	public static final String FIELD_ID = "id";
+	public static final String FIELD_USERNAME = "username";
+	public static final String FIELD_PASSWORD = "password";
+	public static final String FIELD_NAME = "name";
+	public static final String FIELD_EMAIL = "email";
+	public static final String FIELD_EMAILVERIFIED = "emailVerified";
 }

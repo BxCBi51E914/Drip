@@ -4,6 +4,7 @@ import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.cache.User;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by TankGq
@@ -11,12 +12,13 @@ import io.realm.RealmObject;
  */
 public class UserL extends RealmObject implements ModelContract.Cache<User> {
 
+	@PrimaryKey
+	private String objectId;        // Bmob 数据的唯一标识符
 	private Integer id;             // 用户 id, 从1开始自增
 	private String username;        // 账号
 	private String nickname;        // 昵称
 	private String email;           // 邮箱
 	private Boolean emailVerified;  // 邮箱是否验证
-	private String objectId;        // Bmob 数据的唯一标识符
 	private String config;          // 用户设置
 
 	public Integer getId() {
@@ -66,15 +68,15 @@ public class UserL extends RealmObject implements ModelContract.Cache<User> {
 	public void setObjectId(String objectId) {
 		this.objectId = objectId;
 	}
-	
+
 	public String getConfig() {
 		return config;
 	}
-	
+
 	public void setConfig(String config) {
 		this.config = config;
 	}
-	
+
 	@Override
 	public User convertToCache() {
 		User user = new User();

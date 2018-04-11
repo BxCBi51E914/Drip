@@ -6,10 +6,10 @@ package org.rg.drip.constant;
  */
 public class WordConstant {
 	
-	public static final String ID = "id";
-	public static final String WORD = "word";
-	public static final String PHONETIC = "phonetic";
-	public static final String EXPLAIN = "explain";
+	public static final String FIELD_ID = "id";
+	public static final String FIELD_WORD = "word";
+	public static final String FIELD_PHONETIC = "phonetic";
+	public static final String FIELD_EXPLAIN = "explain";
 	
 	public static final int STATE_UNKNOWN = 0x00;         // 未知
 	public static final int STATE_UNFAMILIAR = 0x01;      // 不熟悉

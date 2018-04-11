@@ -1,12 +1,13 @@
 package org.rg.drip.data.model.cache;
 
+import org.rg.drip.constant.WordbookConstant;
 import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.local.WordbookL;
 import org.rg.drip.data.model.remote.WordbookR;
 
 /**
  * 单词本
- *
+ * <p>
  * Created by TankGq
  * on 2018/3/16.
  */
@@ -14,23 +15,23 @@ public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.R
 
 	private Integer id;         // 单词本 id, 从1开始自增
 	private Integer userId;     // 用户的 id
-	
+
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Integer getUserId() {
 		return userId;
 	}
-	
+
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
+
 	@Override
 	public WordbookL convertToLocal() {
 		WordbookL wordbook = new WordbookL();
@@ -46,14 +47,22 @@ public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.R
 		wordbook.setUserId(this.getUserId());
 		return wordbook;
 	}
-	
-	public String getCode() {
+
+	public static String getCode(int id, int userId) {
 		return id + "_" + userId;
 	}
-	
+
+	public String getCode() {
+		return getCode(this.getId(), this.getUserId());
+	}
+
+	public String getDefaultCode() {
+		return getCode(this.getId(), WordbookConstant.DEFAULT_WORDBOOK_USER_ID);
+	}
+
 	public Wordbook() {
 	}
-	
+
 	public Wordbook(Integer id, Integer userId) {
 		this.id = id;
 		this.userId = userId;

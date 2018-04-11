@@ -5,6 +5,7 @@ import android.content.Context;
 import java.sql.Time;
 import java.util.Objects;
 
+import cn.bmob.v3.exception.BmobException;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -56,5 +57,10 @@ public class RealmUtil {
 			mRealm.close();
 		}
 		mRealm = null;
+	}
+
+	public static void logErrorInfo(Throwable e) {
+		if(e == null) return;
+		LoggerUtil.e("[RealmError] " + e.getLocalizedMessage());
 	}
 }

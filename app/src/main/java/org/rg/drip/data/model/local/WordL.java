@@ -4,6 +4,7 @@ import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.cache.Word;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Author : Tank
@@ -11,6 +12,7 @@ import io.realm.RealmObject;
  */
 public class WordL extends RealmObject implements ModelContract.Cache<Word> {
 
+	@PrimaryKey
 	private Integer id;         // 单词 id, 从1开始自增
 	private String word;        // 单词名称
 	private String phonetic;    // 音标

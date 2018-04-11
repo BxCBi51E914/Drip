@@ -1,5 +1,8 @@
 package org.rg.drip.utils;
 
+import org.rg.drip.constant.WordbookConstant;
+import org.rg.drip.data.model.cache.Wordbook;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,5 +36,38 @@ public class CheckUtil {
 
 	public static boolean checkEmail(String email) {
 		return ! (email == null || email.length() == 0) && EMAIL_PATTERN.matcher(email).matches();
+	}
+
+	public static boolean checkWordbook(Wordbook wordbook) {
+		if(wordbook.getId() == WordbookConstant.WORDBOOK_ID_SPLIT
+		   || (wordbook.getId() < WordbookConstant.WORDBOOK_ID_SPLIT
+		       && wordbook.getUserId() != WordbookConstant.DEFAULT_WORDBOOK_USER_ID)) {
+			LoggerUtil.e("[Wordbook] id: " +
+			             wordbook.getId() +
+			             ", userId: " +
+			             wordbook.getUserId());
+			return false;
+		}
+
+		return true;
+	}
+
+	public static boolean checkWordbook(Wordbook wordbook, String type) {
+		if(! checkWordbook(wordbook)) {
+			return false;
+		}
+		switch(type) {
+			case WordbookConstant.TYPE_DEFAULT:
+				return (wordbook.getId() < WordbookConstant.WORDBOOK_ID_SPLIT
+				        && wordbook.getUserId() == WordbookConstant.DEFAULT_WORDBOOK_USER_ID);
+			case WordbookConstant.TYPE_USER_COPY:
+				return (wordbook.getId() < WordbookConstant.WORDBOOK_ID_SPLIT
+				        && wordbook.getUserId() != WordbookConstant.DEFAULT_WORDBOOK_USER_ID);
+			case WordbookConstant.TYPE_USER_CREATE:
+				return (wordbook.getId() > WordbookConstant.WORDBOOK_ID_SPLIT
+				        && wordbook.getUserId() != WordbookConstant.DEFAULT_WORDBOOK_USER_ID);
+		}
+
+		return false;
 	}
 }

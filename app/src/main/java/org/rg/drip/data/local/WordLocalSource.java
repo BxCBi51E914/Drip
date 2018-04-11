@@ -13,7 +13,7 @@ public class WordLocalSource implements WordContract {
 //	public Flowable<Word> getWord(int id) {
 //		return RealmUtil.getInstance()
 //		                .where(WordL.class)
-//		                .equalTo(WordConstant.ID, id)
+//		                .equalTo(WordConstant.FIELD_ID, id)
 //		                .findFirstAsync()
 //		                .asFlowable()
 //		                .filter(wordL -> wordL.isLoaded())
