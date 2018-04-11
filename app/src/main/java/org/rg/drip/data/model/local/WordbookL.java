@@ -13,9 +13,8 @@ import io.realm.RealmObject;
  */
 public class WordbookL extends RealmObject implements ModelContract.Cache<Wordbook> {
 
-	private Integer id;             // 单词本 id
+	private Integer id;             // 单词本 id, 从1开始自增
 	private Integer userId;         // 用户的 id
-	private String md5;             // 单词本的 md5
 
 	public Integer getId() {
 		return id;
@@ -33,21 +32,12 @@ public class WordbookL extends RealmObject implements ModelContract.Cache<Wordbo
 		this.userId = userId;
 	}
 
-	public String getMd5() {
-		return md5;
-	}
-
-	public void setMd5(String md5) {
-		this.md5 = md5;
-	}
-
 
 	@Override
 	public Wordbook convertToCache() {
 		Wordbook wordbook = new Wordbook();
 		wordbook.setId(this.getId());
 		wordbook.setUserId(this.getUserId());
-		wordbook.setMd5(this.getMd5());
 		return wordbook;
 	}
 }

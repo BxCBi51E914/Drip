@@ -12,50 +12,50 @@ import io.realm.RealmObject;
  * Time : 20/03/2018
  */
 public class WordLinkL extends RealmObject implements ModelContract.Cache<WordLink> {
-
-	private Integer id;             // 单词 id
+	
+	private Integer id;             // 单词 id, 从1开始自增
 	private String word;            // 单词
-	private Integer wordBookId;     // 所属单词本 id
-	private Byte state;             // 状态的 id
-
+	private String wordBookCode;    // 所属单词本的标识, 格式为 wordbookId + "_" + userId
+	private Integer state;          // 状态的 id
+	
 	public Integer getId() {
 		return id;
 	}
-
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public String getWord() {
 		return word;
 	}
-
+	
 	public void setWord(String word) {
 		this.word = word;
 	}
-
-	public Integer getWordBookId() {
-		return wordBookId;
+	
+	public String getWordBookCode() {
+		return wordBookCode;
 	}
-
-	public void setWordBookId(Integer wordBookId) {
-		this.wordBookId = wordBookId;
+	
+	public void setWordBookCode(String wordBookCode) {
+		this.wordBookCode = wordBookCode;
 	}
-
-	public Byte getState() {
+	
+	public Integer getState() {
 		return state;
 	}
-
-	public void setState(Byte state) {
+	
+	public void setState(Integer state) {
 		this.state = state;
 	}
-
+	
 	@Override
 	public WordLink convertToCache() {
 		WordLink wordLink = new WordLink();
 		wordLink.setId(this.getId());
 		wordLink.setWord(this.getWord());
-		wordLink.setState(this.getState());
+		wordLink.setWordBookCode(this.getWordBookCode());
 		wordLink.setState(this.getState());
 		return wordLink;
 	}

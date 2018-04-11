@@ -11,7 +11,7 @@ import io.realm.RealmObject;
  */
 public class UserL extends RealmObject implements ModelContract.Cache<User> {
 
-	private Integer id;             // 用户 id
+	private Integer id;             // 用户 id, 从1开始自增
 	private String username;        // 账号
 	private String nickname;        // 昵称
 	private String email;           // 邮箱

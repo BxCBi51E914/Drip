@@ -4,7 +4,10 @@ import android.content.Context;
 
 import org.rg.drip.constant.BmobConstant;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobConfig;
@@ -61,5 +64,49 @@ public class BmobUtil {
 		if(e == null) return;
 		LoggerUtil.e("[BmobError] errorCode : " + e.getErrorCode()
 		             + ", errorMessage : " + e.getLocalizedMessage());
+	}
+	
+	/**
+	 * BmobBatch 执行的条数或者查询得到的条数有限制，所以得等长分隔下, 注意这边并不是拷贝出一份新的数据
+	 */
+	public static <T> List<List<T>> split(List<T> data, int maxSize) {
+		List<List<T>> result = new ArrayList<>();
+		int size = data.size();
+		int batchCount = getBatchCount(size, maxSize);
+		
+		for(int idx = 0; idx < batchCount; ++ idx) {
+			result.add(data.subList(idx * maxSize, (idx + 1) * maxSize));
+		}
+		return result;
+	}
+	
+	/**
+	 * BmobBatch 执行的条数有限制，所以得等长分隔下, 注意这边并不是拷贝出一份新的数据
+	 */
+	public static <T> List<List<T>> batchSplit(List<T> data) {
+		return split(data, BmobConstant.BATCH_MAX_COUNT);
+	}
+	
+	/**
+	 * 查询得到的条数有限制，所以得等长分隔下, 注意这边并不是拷贝出一份新的数据
+	 */
+	public static <T> List<List<T>> querySplit(List<T> data) {
+		return split(data, BmobConstant.LIMIT_MAX_COUNT);
+	}
+	
+	/**
+	 * 获得需要多少批次
+	 */
+	public static int getBatchCount(int dataSize, int maxSize) {
+		maxSize = Math.min(maxSize, BmobConstant.BATCH_MAX_COUNT);
+		return (dataSize + maxSize - 1) / maxSize;
+	}
+	
+	/**
+	 * 获得需要查询多少次
+	 */
+	public static int getQueryCount(int totalCount, int maxSize) {
+		maxSize = Math.min(maxSize, BmobConstant.LIMIT_MAX_COUNT);
+		return (totalCount + maxSize - 1) / maxSize;
 	}
 }

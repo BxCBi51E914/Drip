@@ -12,9 +12,8 @@ import org.rg.drip.data.model.remote.WordbookR;
  */
 public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.Remote<WordbookR> {
 
-	private Integer id;         // 单词本 id
+	private Integer id;         // 单词本 id, 从1开始自增
 	private Integer userId;     // 用户的 id
-	private String md5;         // 单词本的 md5
 	
 	public Integer getId() {
 		return id;
@@ -32,20 +31,11 @@ public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.R
 		this.userId = userId;
 	}
 	
-	public String getMd5() {
-		return md5;
-	}
-	
-	public void setMd5(String md5) {
-		this.md5 = md5;
-	}
-
 	@Override
 	public WordbookL convertToLocal() {
 		WordbookL wordbook = new WordbookL();
 		wordbook.setId(this.getId());
 		wordbook.setUserId(this.getUserId());
-		wordbook.setMd5(this.getMd5());
 		return wordbook;
 	}
 
@@ -54,7 +44,18 @@ public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.R
 		WordbookR wordbook = new WordbookR();
 		wordbook.setId(this.getId());
 		wordbook.setUserId(this.getUserId());
-		wordbook.setMd5(this.getMd5());
 		return wordbook;
+	}
+	
+	public String getCode() {
+		return id + "_" + userId;
+	}
+	
+	public Wordbook() {
+	}
+	
+	public Wordbook(Integer id, Integer userId) {
+		this.id = id;
+		this.userId = userId;
 	}
 }

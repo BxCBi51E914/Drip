@@ -1,7 +1,10 @@
 package org.rg.drip.data.contract;
 
+import org.rg.drip.data.model.cache.User;
+import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.cache.WordLink;
+import org.rg.drip.data.model.remote.WordLinkR;
 
 import java.util.List;
 
@@ -16,46 +19,59 @@ public class WordBookContract {
 	public interface Local {
 		
 		/**
-		 * 存储单词本
+		 * 获得相应单词本
 		 */
-		Flowable<Boolean> storeWordbook(Wordbook wordbookId, List<WordLink> wordLinks);
+		Flowable<Wordbook> getWordbook(Wordbook wordbook);
 		
 		/**
-		 * 更新单词本
+		 * 判断单词本是否存在
 		 */
-		Flowable<Boolean> updateWordbook(Wordbook wordbook, List<WordLink> wordLinks);
+		Flowable<Boolean> checkWordbookExist(Wordbook wordbook);
+		
+		/**
+		 * 通过默认的单词本创建属于自己的单词本
+		 */
+		Flowable<Wordbook> createByDefault(Wordbook defaultWordbook, User currentUser);
 		
 		/**
 		 * 创建单词本
 		 */
-		Flowable<Boolean> createWordbook();
+		Flowable<Wordbook> createWordbook(User currentUser);
 		
 		/**
 		 * 批量添加单词
 		 */
-		Flowable<Boolean> insertWordsIntoWordbook(int wordbookId, List<Integer> wordIds);
+		Flowable<Integer> insertWords(Wordbook wordbook, List<Word> words);
 		
 		/**
 		 * 批量删除单词
 		 */
-		Flowable<Boolean> deleteWordsInWordBook(int wordbookId, List<Integer> wordIds);
+		Flowable<Integer> deleteWords(Wordbook wordbook, List<WordLink> wordLinks);
 		
 		/**
-		 * 获得单词本中状态为 state 的单词
+		 * 批量获得相应状态的单词, 分页的方式
 		 */
-		Flowable<List<WordLink>> getWordsByStateInWordBook(int wordbookId, int state);
-		
-		/**
-		 * 批量获得单词的状态
-		 */
-		Flowable<Boolean> getWordsStateInWordBook(int wordbookId, List<Integer> wordIds);
+		Flowable<List<WordLink>> getWordsState(Wordbook wordbook, int state, int skip, int limit);
 		
 		/**
 		 * 批量修改单词的状态
 		 */
-		Flowable<Boolean> changeWordsStateInWordBook(int wordbookId,
-		                                             List<Integer> wordIds,
-		                                             int state);
+		Flowable<Integer> changeWordsState(Wordbook wordbook, List<Word> words, int state);
+		
+		/**
+		 * 获得单词本, 分页的方式
+		 */
+		Flowable<List<WordLink>> getWordsInWordBook(Wordbook wordbook, int count, int skip);
+		
+		/**
+		 * 获取单词本中有多少单词
+		 */
+		Flowable<Integer> getWorkBookCount(Wordbook wordbook);
+		
+		/**
+		 * 获得单词本中状态为 state 的个数
+		 */
+		Flowable<Integer> getStateCount(Wordbook wordbook, int state);
 	}
 	
 	public interface Remote {
@@ -63,128 +79,129 @@ public class WordBookContract {
 		/**
 		 * 获得相应单词本
 		 */
-		Flowable<Wordbook> getWordbook(int wordbookId, int userId);
-
+		Flowable<Wordbook> getWordbook(Wordbook wordbook);
+		
 		/**
 		 * 判断单词本是否存在
 		 */
-		Flowable<Boolean> checkWordbookExist(int wordbookId, int userId);
+		Flowable<Boolean> checkWordbookExist(Wordbook wordbook);
 		
 		/**
 		 * 通过默认的单词本创建属于自己的单词本
 		 */
-		Flowable<Wordbook> createWordbookByDefault(int userId, Wordbook wordbook);
+		Flowable<Wordbook> createByDefault(Wordbook defaultWordbook, User currentUser);
 		
 		/**
 		 * 创建单词本
 		 */
-		Flowable<Wordbook> createWordbook();
+		Flowable<Wordbook> createWordbook(User currentUser);
 		
 		/**
 		 * 批量添加单词
 		 */
-		Flowable<Boolean> insertWordsIntoWordbook(int wordbookId, List<Integer> wordIds);
+		Flowable<Integer> insertWords(Wordbook wordbook, List<Word> words);
 		
 		/**
 		 * 批量删除单词
 		 */
-		Flowable<Boolean> deleteWordsInWordBook(int wordbookId, List<Integer> wordIds);
+		Flowable<Integer> deleteWords(Wordbook wordbook, List<WordLink> wordLinks);
 		
 		/**
-		 * 批量获得单词的状态
+		 * 批量获得相应状态的单词, 分页的方式
 		 */
-		Flowable<Boolean> getWordsStateInWordBook(int wordbookId, List<Integer> wordIds);
+		Flowable<List<WordLink>> getWordsState(Wordbook wordbook, int state, int skip, int limit);
 		
 		/**
 		 * 批量修改单词的状态
 		 */
-		Flowable<Boolean> changeWordsStateInWordBook(int wordbookId,
-		                                             List<Integer> wordIds,
-		                                             int state);
+		Flowable<Integer> changeWordsState(Wordbook wordbook, List<Word> words, int state);
 		
 		/**
-		 * 获得单词本
+		 * 获得单词本, 分页的方式
 		 */
-		Flowable<List<WordLink>> getWordsInWordBook(int wordbookId, int userId);
+		Flowable<List<WordLink>> getWordsInWordBook(Wordbook wordbook, int count, int skip);
 		
 		/**
 		 * 获取单词本中有多少单词
 		 */
-		Flowable<Integer> getWorkBookCount(int wordbookId);
+		Flowable<Integer> getWorkBookCount(Wordbook wordbook);
 		
 		/**
 		 * 获得单词本中状态为 state 的个数
 		 */
-		Flowable<Integer> getWordBookStateCount(int wordbookId, int state);
+		Flowable<Integer> getStateCount(Wordbook wordbook, int state);
+		
+		/**
+		 * 获得单词对应的 WordLinkR, 主要是为了获得 objectId 给 Bmob 用
+		 */
+		Flowable<List<WordLinkR>> getWordLinks(Wordbook wordbook, List<WordLink> wordLinks);
 	}
 	
 	public interface Repository {
-
+		
 		/**
 		 * 获得相应单词本
 		 */
 		Wordbook getWordbook(int wordbookId);
-
+		
 		/**
 		 * 获得当前选择的单词本
 		 */
 		Wordbook getCurrentWordBook();
-
+		
+		/**
+		 * 获得相应单词本
+		 */
+		Flowable<Wordbook> getWordbook(Wordbook wordbook);
+		
 		/**
 		 * 判断单词本是否存在
 		 */
-		Flowable<Boolean> checkWordbookExist(int wordbookId, int userId);
-
+		Flowable<Boolean> checkWordbookExist(Wordbook wordbook);
+		
 		/**
 		 * 通过默认的单词本创建属于自己的单词本
 		 */
-		Flowable<Wordbook> createWordbookByDefault(int userId, Wordbook wordbook);
+		Flowable<Wordbook> createByDefault(Wordbook defaultWordbook, User currentUser);
 		
-		/**
-		 * 设置当前用户选择的单词本
-		 */
-		void setCurrentWordBookId(Wordbook wordbook);
-
 		/**
 		 * 创建单词本
 		 */
-		Flowable<Boolean> createWordbook();
+		Flowable<Wordbook> createWordbook(User currentUser);
 		
 		/**
 		 * 批量添加单词
 		 */
-		Flowable<Boolean> insertWordsIntoWordbook(int wordbookId, List<Integer> wordIds);
+		Flowable<Integer> insertWords(Wordbook wordbook, List<Word> words);
 		
 		/**
 		 * 批量删除单词
 		 */
-		Flowable<Boolean> deleteWordsInWordBook(int wordbookId, List<Integer> wordIds);
+		Flowable<Integer> deleteWords(Wordbook wordbook, List<WordLink> wordLinks);
 		
 		/**
-		 * 批量获得单词的状态
+		 * 批量获得相应状态的单词, 分页的方式
 		 */
-		Flowable<Boolean> getWordsStateInWordBook(int wordbookId, List<Integer> wordIds);
+		Flowable<List<WordLink>> getWordsState(Wordbook wordbook, int state, int skip, int limit);
 		
 		/**
 		 * 批量修改单词的状态
 		 */
-		Flowable<Boolean> changeWordsStateInWordBook(int wordbookId,
-		                                             List<Integer> wordIds,
-		                                             int state);
+		Flowable<Integer> changeWordsState(Wordbook wordbook, List<Word> words, int state);
 		
 		/**
-		 * 获得单词本
+		 * 获得单词本, 分页的方式
 		 */
-		Flowable<List<WordLink>> getWordBook(int wordbookId);
+		Flowable<List<WordLink>> getWordsInWordBook(Wordbook wordbook, int count, int skip);
 		
 		/**
 		 * 获取单词本中有多少单词
 		 */
-		Flowable<Integer> getWorkBookCount(int wordbookId);
+		Flowable<Integer> getWorkBookCount(Wordbook wordbook);
 		
 		/**
 		 * 获得单词本中状态为 state 的个数
 		 */
-		Flowable<Integer> getWordBookStateCount(int wordbookId, int state);
+		Flowable<Integer> getStateCount(Wordbook wordbook, int state);
 	}
 }

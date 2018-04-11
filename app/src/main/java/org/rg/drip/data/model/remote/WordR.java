@@ -11,7 +11,7 @@ import cn.bmob.v3.BmobObject;
  */
 public class WordR extends BmobObject implements ModelContract.Cache<Word> {
 
-	private Integer id;          // 单词 id
+	private Integer id;          // 单词 id, 从1开始自增
 	private String word;        // 单词名称
 	private String phonetic;    // 音标
 	private String explain;     // 中文释义
@@ -64,6 +64,7 @@ public class WordR extends BmobObject implements ModelContract.Cache<Word> {
 	public Word convertToCache() {
 		Word word = new Word();
 		word.setId(this.getId());
+		word.setWord(this.getWord());
 		word.setPhonetic(this.getPhonetic());
 		word.setExplain(this.getExplain());
 		return word;

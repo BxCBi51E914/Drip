@@ -12,7 +12,7 @@ import org.rg.drip.data.model.local.UserL;
  */
 public class User implements ModelContract.Local<UserL>, ModelContract.Remote<UserR> {
 
-	private Integer id;             // 用户 id
+	private Integer id;             // 用户 id, 从1开始自增
 	private String username;        // 账号
 	private String password;        // 密码
 	private String nickname;        // 昵称

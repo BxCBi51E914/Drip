@@ -66,7 +66,7 @@ public class CompleteProgressFragment extends BaseSubFragment
 		mPieChart.setDragDecelerationFrictionCoef(0.8f);
 
 //		mPieChart.setCenterTextTypeface(mTfLight);
-		mPieChart.setCenterText(generateCenterSpannableText());
+		mPieChart.setCenterText(generateCenterSpannableText(9999));
 		mPieChart.setDrawHoleEnabled(true);
 		mPieChart.setHoleColor(Color.WHITE);
 		mPieChart.setEntryLabelColor(getResources().getColor(R.color.colorAccent));
@@ -160,12 +160,12 @@ public class CompleteProgressFragment extends BaseSubFragment
 		onEnterAnimator();
 	}
 
-	private SpannableString generateCenterSpannableText() {
-
-		SpannableString s = new SpannableString("单词总数\n9999");
-		s.setSpan(new RelativeSizeSpan(1.7f), 0, 8, 0);
-		s.setSpan(new StyleSpan(Typeface.ITALIC), 9, s.length(), 0);
-		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 9, s.length(), 0);
+	private SpannableString generateCenterSpannableText(int wordCount) {
+		SpannableString s = new SpannableString("单词总数\n" + wordCount);
+		s.setSpan(new RelativeSizeSpan(1.5f), 0, 4, 0);
+		s.setSpan(new StyleSpan(Typeface.BOLD), 5, s.length(), 0);
+		s.setSpan(new RelativeSizeSpan(2f), 5, s.length(), 0);
+		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 5, s.length(), 0);
 		return s;
 	}
 

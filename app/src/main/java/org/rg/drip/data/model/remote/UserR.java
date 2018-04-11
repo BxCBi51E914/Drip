@@ -11,7 +11,7 @@ import cn.bmob.v3.BmobUser;
  */
 public class UserR extends BmobUser implements ModelContract.Cache<User> {
 	
-	private Integer id;         // 用户 id
+	private Integer id;         // 用户 id, 从1开始自增
 	private String nickname;    // 昵称
 	private String config;      // 用户设置
 

@@ -12,7 +12,7 @@ import org.rg.drip.data.model.remote.WordR;
  */
 public class Word implements ModelContract.Local<WordL>, ModelContract.Remote<WordR> {
 	
-	private Integer id;          // 单词 id
+	private Integer id;         // 单词 id, 从1开始自增
 	private String word;        // 单词名称
 	private String phonetic;    // 音标
 	private String explain;     // 中文释义
@@ -65,6 +65,7 @@ public class Word implements ModelContract.Local<WordL>, ModelContract.Remote<Wo
 	public WordL convertToLocal() {
 		WordL word = new WordL();
 		word.setId(this.getId());
+		word.setWord(this.getWord());
 		word.setPhonetic(this.getPhonetic());
 		word.setExplain(this.getExplain());
 		return word;
@@ -74,6 +75,7 @@ public class Word implements ModelContract.Local<WordL>, ModelContract.Remote<Wo
 	public WordR convertToRemote() {
 		WordR word = new WordR();
 		word.setId(this.getId());
+		word.setWord(this.getWord());
 		word.setPhonetic(this.getPhonetic());
 		word.setExplain(this.getExplain());
 		return word;
