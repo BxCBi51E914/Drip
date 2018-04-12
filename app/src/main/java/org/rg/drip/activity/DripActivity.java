@@ -156,7 +156,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			}
 		});
 		
-		final int limit = 1;
+		final int limit = 500;
 		final long delayTime = 1;
 		final int zipCount = 10, concatCount = 100;
 		final List<Word> data = new ArrayList<>();
@@ -170,7 +170,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 							LoggerUtil.d("error: " + throwable.getMessage());
 							if(throwable.getMessage().contains("Qps beyond the limit")) {
 								LoggerUtil.d("retry: skip = " + skip);
-								return Flowable.just(1).delay(1, TimeUnit.SECONDS);
+								return Flowable.just(1).delay(2, TimeUnit.SECONDS);
 							}
 							return Flowable.error(throwable);
 						}));
@@ -186,15 +186,13 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 		
 		final long start = System.currentTimeMillis();
 		Disposable disposable = concatFlowable.observeOn(Schedulers.io())
-		                                      .subscribeOn(AndroidSchedulers.mainThread())
+		                                      .subscribeOn(Schedulers.io())
 		                                      .subscribe(words -> {
-			                                      int size = words.size();
-			                                      StringBuilder content = new StringBuilder();
-			                                      for(int idx = 0; idx < size; ++ idx) {
-				                                      content.append(words.get(idx).getId())
-				                                             .append(", ");
-			                                      }
-			                                      LoggerUtil.d(content.toString());
+			                                      LoggerUtil.d("size = "
+			                                                   + words.size()
+			                                                   + ", time = "
+			                                                   + (System.currentTimeMillis()
+			                                                      - start));
 			                                      data.addAll(words);
 		                                      });
 	}
