@@ -2,10 +2,12 @@ package org.rg.drip.utils;
 
 import android.content.Context;
 
-import java.sql.Time;
+import org.rg.drip.constant.RealmConstant;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import cn.bmob.v3.exception.BmobException;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -14,11 +16,8 @@ import io.realm.RealmConfiguration;
  * Time : 17/03/2018
  */
 public class RealmUtil {
-	private static final String DEFAULT_REAML_NAME = "drip.realm";
-	// 需要 64 字节, 即 REALM_KEY.length = 64
-//	private static final byte[] REALM_KEY = { 0x44, 0x72, 0x69, 0x70 };
 
-	public static String mRealmName = DEFAULT_REAML_NAME;
+	public static String mRealmName = RealmConstant.DEFAULT_REAML_NAME;
 	public static RealmConfiguration mConfig = null;
 
 	private static Realm mRealm = null;
@@ -45,7 +44,7 @@ public class RealmUtil {
 	}
 
 	public static Realm getInstance() {
-		return getInstance(DEFAULT_REAML_NAME);
+		return getInstance(RealmConstant.DEFAULT_REAML_NAME);
 	}
 
 	public static void closeRealm() {
@@ -62,5 +61,26 @@ public class RealmUtil {
 	public static void logErrorInfo(Throwable e) {
 		if(e == null) return;
 		LoggerUtil.e("[RealmError] " + e.getLocalizedMessage());
+	}
+
+	/**
+	 * 等长分隔下, 注意这边并不是拷贝出一份新的数据
+	 */
+	public static <T> List<List<T>> split(List<T> data, int maxSize) {
+		List<List<T>> result = new ArrayList<>();
+		int size = data.size();
+		int batchCount = getBatchCount(size, maxSize);
+
+		for(int idx = 0; idx < batchCount; ++ idx) {
+			result.add(data.subList(idx * maxSize, (idx + 1) * maxSize));
+		}
+		return result;
+	}
+
+	/**
+	 * 获得需要多少批次
+	 */
+	public static int getBatchCount(int dataSize, int maxSize) {
+		return (dataSize + maxSize - 1) / maxSize;
 	}
 }

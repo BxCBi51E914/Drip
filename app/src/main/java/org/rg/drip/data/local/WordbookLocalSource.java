@@ -1,18 +1,29 @@
 package org.rg.drip.data.local;
 
+import org.reactivestreams.Publisher;
+import org.rg.drip.constant.BmobConstant;
+import org.rg.drip.constant.RealmConstant;
+import org.rg.drip.constant.WordConstant;
 import org.rg.drip.constant.WordbookConstant;
 import org.rg.drip.data.contract.WordBookContract;
 import org.rg.drip.data.model.cache.WordLink;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.local.WordLinkL;
 import org.rg.drip.data.model.local.WordbookL;
+import org.rg.drip.data.model.remote.WordLinkR;
+import org.rg.drip.utils.BmobUtil;
 import org.rg.drip.utils.CheckUtil;
 import org.rg.drip.utils.RealmUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Author : TankGq
@@ -117,8 +128,21 @@ public class WordbookLocalSource implements WordBookContract.Local {
 		}, BackpressureStrategy.BUFFER);
 	}
 
+	/**
+	 * 获得单词对应的 WordLinkL
+	 */
+	private Flowable<List<WordLinkR>> getWordLinks(final Wordbook wordbook,
+	                                               final List<WordLink> wordLinks) {
+		if(! CheckUtil.checkWordbook(wordbook)) {
+			return Flowable.just(new ArrayList<>());
+		}
+
+		List<List<WordLink>> data = RealmUtil.split(wordLinks, RealmConstant.COMBINE_MAX_COUNT);
+		return null;
+	}
+
 	@Override
-	public Flowable<Integer> deleteWords(Wordbook wordbook, List<WordLink> wordLinks) {
+	public Flowable<Boolean> deleteWords(Wordbook wordbook, List<WordLink> wordLinks) {
 		return null;
 	}
 

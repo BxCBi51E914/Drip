@@ -55,4 +55,11 @@ public class BmobQueryUtil<T> {
 	public BmobQuery<T> compileWithOr() {
 		return new BmobQuery<T>().or(mQueryList);
 	}
+
+	/**
+	 * 获得查询的 List
+	 */
+	public List<BmobQuery<T>> asQueryList() {
+		return mQueryList;
+	}
 }

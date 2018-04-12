@@ -55,16 +55,16 @@ import me.yokeyword.fragmentation.SupportFragment;
  * on 2018/3/20.
  */
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
-	
+
 	private List<SupportFragment> mMainFragments = new ArrayList<>(4);
-	
+
 	@BindView(R.id.bottomBar) BottomBar mBottomBar;
-	
+
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.activity_drip_main;
 	}
-	
+
 	@DebugLog
 	@Override
 	protected void initView(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			mMainFragments.add(UIConstant.READING, ZhihuSecondFragment.newInstance());
 			mMainFragments.add(UIConstant.THIRD, ZhihuFirstFragment.newInstance());
 			mMainFragments.add(UIConstant.SETTING, UserMainFragment.newInstance());
-			
+
 			loadMultipleRootFragment(R.id.fl_container,
 			                         UIConstant.WORDBOOK,
 			                         mMainFragments.get(UIConstant.WORDBOOK),
@@ -87,12 +87,12 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			mMainFragments.add(UIConstant.THIRD, findFragment(ZhihuFirstFragment.class));
 			mMainFragments.add(UIConstant.SETTING, findFragment(UserMainFragment.class));
 		}
-		
+
 		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_folder_open))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_discover_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_message_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_account_circle_white_24dp));
-		
+
 		mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(int position, int prePosition) {
@@ -113,25 +113,26 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 					        * perWidth + (perWidth >> 1);
 					((BaseMainFragment) fragment).animateCircularReveal(fragment.getView(),
 					                                                    perWidth * position + (
-							                                                    perWidth
-							                                                    >> 1),
+							                                                                          perWidth
+							                                                                          >>
+							                                                                          1),
 					                                                    y + (height >> 1),
 					                                                    height >> 1,
 					                                                    (float) Math.sqrt(w * w
 					                                                                      + y * y));
 				}
 			}
-			
+
 			@Override
 			public void onTabUnselected(int position) {
-				
+
 			}
-			
+
 			@Override
 			public void onTabReselected(int position) {
 				final SupportFragment currentFragment = mMainFragments.get(position);
 				int count = currentFragment.getChildFragmentManager().getBackStackEntryCount();
-				
+
 				// 如果不在该类别Fragment的主页,则回到主页;
 				if(count > 1) {
 					if(currentFragment instanceof WordBookMainFragment) {
@@ -145,7 +146,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 					}
 					return;
 				}
-				
+
 				// 这里推荐使用EventBus来实现 -> 解耦
 				if(count == 1) {
 					// 在FirstPagerFragment中接收, 因为是嵌套的孙子Fragment 所以用EventBus比较方便
@@ -155,8 +156,8 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 				}
 			}
 		});
-		
-		final int limit = 500;
+
+		final int limit = 1;
 		final long delayTime = 1;
 		final int zipCount = 10, concatCount = 100;
 		final List<Word> data = new ArrayList<>();
@@ -165,8 +166,8 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			Flowable<List<Word>> zipFlowable = Flowable.just(new ArrayList<>());
 			for(int j = 0; j < zipCount; ++ j) {
 				final int skip = (i * zipCount + j) * limit;
-				Flowable<List<Word>> flowable = getWords(skip, limit).retryWhen(attempts -> attempts
-						.flatMap(throwable -> {
+				Flowable<List<Word>> flowable = getWords(skip, limit).retryWhen(
+						attempts -> attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
 							LoggerUtil.d("error: " + throwable.getMessage());
 							if(throwable.getMessage().contains("Qps beyond the limit")) {
 								LoggerUtil.d("retry: skip = " + skip);
@@ -183,7 +184,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			                                  (words, integer) -> words);
 			concatFlowable = concatFlowable.concatWith(zipFlowable);
 		}
-		
+
 		final long start = System.currentTimeMillis();
 		Disposable disposable = concatFlowable.observeOn(Schedulers.io())
 		                                      .subscribeOn(Schedulers.io())
@@ -196,7 +197,7 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			                                      data.addAll(words);
 		                                      });
 	}
-	
+
 	private Flowable<List<Word>> getWords(final int skip, final int limit) {
 		return Flowable.create(emitter -> {
 			new BmobQuery<WordR>().setSkip(skip)
@@ -223,12 +224,12 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			                      });
 		}, BackpressureStrategy.BUFFER);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-	
+
 	@Override
 	public void onBackPressedSupport() {
 		if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
@@ -237,12 +238,12 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			ActivityCompat.finishAfterTransition(this);
 		}
 	}
-	
+
 	@Override
 	public void onBackToFirstFragment() {
 		mBottomBar.setCurrentItem(0);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

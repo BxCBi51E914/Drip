@@ -1,6 +1,9 @@
 package org.rg.drip.constant;
 
+import org.rg.drip.data.model.cache.WordLink;
 import org.rg.drip.data.model.cache.Wordbook;
+
+import java.util.HashMap;
 
 /**
  * Created by TankGq
@@ -26,6 +29,8 @@ public class WordbookConstant {
 	 */
 	public static final Wordbook nullptr = new Wordbook(WORDBOOK_ID_SPLIT,
 	                                                    DEFAULT_WORDBOOK_USER_ID);
+
+	public static final HashMap<String, WordLink> emptyMap = new HashMap<>();
 
 	/**
 	 * app 自带的单词本, 简称默认单词本,

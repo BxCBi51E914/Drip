@@ -25,4 +25,21 @@ public class BmobConstant {
 	 * 每次查询能获得的数据的最大个数
 	 */
 	public static final int LIMIT_MAX_COUNT = 500;
+
+	/**
+	 * Bmob 的 QPS 限制导致同个 IP 1s 内只接收 10 条请求,
+	 * 这边要考虑的是发送后, 服务器收到消息, 而不是 1s 内发 10 条请求
+	 * 这边保守点限制了 8 条
+	 */
+	public static final int QPS_MAX_COUNT = 8;
+
+	/**
+	 * 并发的请求最短需要执行的时间, 单位秒
+	 */
+	public static final int MIN_TIME_ONCE = 1;
+
+	/**
+	 * 当因为 QPS 的限制导致请求失败的时候, 等待该时间后再次重新发起请求, 单位秒
+	 */
+	public static final int QPS_WAIT_TIME = 2;
 }

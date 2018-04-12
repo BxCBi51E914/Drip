@@ -4,10 +4,13 @@ import org.rg.drip.data.model.cache.User;
 import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.cache.WordLink;
+import org.rg.drip.data.model.local.WordLinkL;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * Created by TankGq
@@ -40,7 +43,7 @@ public class WordBookContract {
 		/**
 		 * 批量删除单词
 		 */
-		Flowable<Integer> deleteWords(Wordbook wordbook, List<WordLink> wordLinks);
+		Flowable<Boolean> deleteWords(Wordbook wordbook, List<WordLink> wordLinks);
 
 		/**
 		 * 批量获得相应状态的单词, 分页的方式
@@ -108,22 +111,17 @@ public class WordBookContract {
 		/**
 		 * 批量修改单词的状态
 		 */
-		Flowable changeWordsState(Wordbook wordbook, List<WordLink> wordLinks, int state);
-
-		/**
-		 * 获得单词本, 分页的方式
-		 */
-		Flowable<List<WordLink>> getWords(Wordbook wordbook, int count, int skip);
+		Single<Integer> changeWordsState(Wordbook wordbook, List<WordLink> wordLinks, int state);
 
 		/**
 		 * 获得单词本
 		 */
-		Flowable<List<WordLink>> getWords(Wordbook wordbook);
+		Flowable<HashMap<String, WordLink>> getWords(Wordbook wordbook);
 
 		/**
 		 * 获取单词本中有多少单词
 		 */
-		Flowable<Integer> getWorkBookCount(Wordbook wordbook);
+		Flowable<Integer> getCount(Wordbook wordbook);
 
 		/**
 		 * 获得单词本中状态为 state 的个数
