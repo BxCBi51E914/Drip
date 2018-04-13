@@ -3,6 +3,7 @@ package org.rg.drip.fragment.wordbook;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseSubFragment;
@@ -20,6 +21,7 @@ public class StudyActionFragment extends BaseSubFragment {
 	@BindView(R.id.bt_browse_in_card) Button mBrowseInCardBt;
 	@BindView(R.id.bt_word_list) Button mWordListBt;
 	@BindView(R.id.bt_review_setting) Button mReviewSettingBt;
+	@BindView(R.id.tv_describe) TextView mDescribeTv;
 
 	@OnClick({ R.id.bt_start_learn,
 	           R.id.bt_browse_in_card,
@@ -68,6 +70,6 @@ public class StudyActionFragment extends BaseSubFragment {
 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-
+		mDescribeTv.setText(String.format(getString(R.string.tip_current_target), 999, 999));
 	}
 }

@@ -4,7 +4,6 @@ import org.rg.drip.data.model.cache.User;
 import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.cache.WordLink;
-import org.rg.drip.data.model.local.WordLinkL;
 
 import java.util.HashMap;
 import java.util.List;
@@ -139,7 +138,7 @@ public class WordBookContract {
 		/**
 		 * 获得当前选择的单词本
 		 */
-		Wordbook getCurrentWordBook();
+		Flowable<Wordbook> getCurrentWordBook();
 
 		/**
 		 * 获得相应单词本

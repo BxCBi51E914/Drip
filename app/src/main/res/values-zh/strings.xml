@@ -57,7 +57,9 @@
     <string name="tip_save_succeed">保存成功</string>
     <string name="tip_save_failed">保存失败</string>
     <string name="tip_default_wordbook">默认单词本</string>
-    <string name="tip_user_wordbook">用户的单词本</string>
+    <string name="tip_my_wordbook">用户的单词本</string>
+    <string name="tip_total_word">单词总数\n%d</string>
+    <string name="tip_current_target">今天需要学习 %d 个单词, 复习 %d 个单词</string>
     <string name="brackets_unverified">(未验证)</string>
 
     <string name="act_sign_out">退出登录</string>

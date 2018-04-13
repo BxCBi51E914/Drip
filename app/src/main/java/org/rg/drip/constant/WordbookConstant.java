@@ -24,12 +24,6 @@ public class WordbookConstant {
 	 */
 	public static final int WORDBOOK_ID_SPLIT = 0;
 
-	/**
-	 * 给 Flowable 用的, 主要是因为不让发射空值
-	 */
-	public static final Wordbook nullptr = new Wordbook(WORDBOOK_ID_SPLIT,
-	                                                    DEFAULT_WORDBOOK_USER_ID);
-
 	public static final HashMap<String, WordLink> emptyMap = new HashMap<>();
 
 	/**

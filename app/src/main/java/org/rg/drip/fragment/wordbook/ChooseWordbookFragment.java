@@ -1,19 +1,26 @@
 package org.rg.drip.fragment.wordbook;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.SparseIntArray;
+import android.util.SparseArray;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.CompoundButton;
 
-import com.qmuiteam.qmui.widget.QMUILoadingView;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseSubFragment;
-import org.rg.drip.utils.ToastUtil;
+import org.rg.drip.constant.MessageEventConstant;
+import org.rg.drip.constant.UIConstant;
+import org.rg.drip.data.model.cache.Wordbook;
+import org.rg.drip.event.MessageEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -21,10 +28,14 @@ import butterknife.BindView;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class ChooseWordbookFragment extends BaseSubFragment {
+public class ChooseWordbookFragment extends BaseSubFragment implements CompoundButton.OnCheckedChangeListener {
 
-	@BindView(R.id.toolbarSettings) Toolbar mToolbar;
 	@BindView(R.id.groupListView) QMUIGroupListView mGroupListView;
+	private QMUIGroupListView.Section mDefaultWordbookList;
+	private QMUIGroupListView.Section mMyWordbookList;
+
+	private List<QMUICommonListItemView> mItemViewList;
+	private SparseArray<Wordbook> mWordbookDic;
 
 	public static ChooseWordbookFragment newInstance() {
 		ChooseWordbookFragment fragment = new ChooseWordbookFragment();
@@ -40,80 +51,113 @@ public class ChooseWordbookFragment extends BaseSubFragment {
 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		initToolbarNav(mToolbar);
-		SparseIntArray itemIdDic = new SparseIntArray();
-		QMUICommonListItemView
-				itemWithDetail =
-				mGroupListView.createItemView(getString(R.string.language));
-		itemWithDetail.setDetailText("(" + getString(R.string.language_en) + ")");
-		itemWithDetail.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-		itemIdDic.put(R.string.language, View.generateViewId());
-		itemWithDetail.setId(itemIdDic.get(R.string.language));
+		mItemViewList = new ArrayList<>();
+		mWordbookDic = new SparseArray<>();
+		mMyWordbookList = QMUIGroupListView.newSection(getContext());
+		mMyWordbookList.setTitle(getString(R.string.tip_my_wordbook));
+		mDefaultWordbookList = QMUIGroupListView.newSection(getContext());
+		mDefaultWordbookList.setTitle(getString(R.string.tip_default_wordbook));
 
-		QMUICommonListItemView normalItem = mGroupListView.createItemView("Item 1");
-		normalItem.setOrientation(QMUICommonListItemView.VERTICAL);
+		// 自己的单词本
+		List<Wordbook> wordbooks = new ArrayList<>();
+		Wordbook wordbook = new Wordbook();
+		wordbook.setId(1);
+		wordbook.setUserId(1);
+		wordbook.setName("我的单词本1");
+		wordbooks.add(wordbook);
+		wordbook = new Wordbook();
+		wordbook.setId(2);
+		wordbook.setUserId(1);
+		wordbook.setName("我的单词本2");
+		wordbooks.add(wordbook);
+		wordbook = new Wordbook();
+		wordbook.setId(3);
+		wordbook.setUserId(1);
+		wordbook.setName("我的单词本3");
+		wordbooks.add(wordbook);
+		QMUICommonListItemView itemView;
+		int size = wordbooks.size();
+		for(int idx = 0; idx < size; ++ idx) {
+			itemView = mGroupListView.createItemView(wordbooks.get(idx).getName());
+			itemView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
+			itemView.getSwitch().setOnCheckedChangeListener(this);
+			itemView.getSwitch().setChecked(false);
+			itemView.getSwitch().setId(View.generateViewId());
+			mItemViewList.add(itemView);
+			mWordbookDic.put(itemView.getSwitch().getId(), wordbooks.get(idx));
+			mMyWordbookList.addItemView(itemView, null);
+		}
+		mMyWordbookList.addTo(mGroupListView);
 
-		QMUICommonListItemView itemWithDetailBelow = mGroupListView.createItemView("Item 3");
-		itemWithDetailBelow.setOrientation(QMUICommonListItemView.VERTICAL);
-		itemWithDetailBelow.setDetailText("在标题下方的详细信息");
+		// 默认的单词本
+		wordbook = new Wordbook();
+		wordbook.setId(- 1);
+		wordbook.setUserId(0);
+		wordbook.setName("默认单词本1");
+		wordbooks = new ArrayList<>();
+		wordbooks.add(wordbook);
+		wordbook = new Wordbook();
+		wordbook.setId(- 2);
+		wordbook.setUserId(0);
+		wordbook.setName("默认单词本2");
+		wordbooks.add(wordbook);
+		wordbook = new Wordbook();
+		wordbook.setId(- 3);
+		wordbook.setUserId(0);
+		wordbook.setName("默认单词本3");
+		wordbooks.add(wordbook);
 
-		QMUICommonListItemView itemWithChevron = mGroupListView.createItemView("Item 4");
-		itemWithChevron.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
+		size = wordbooks.size();
+		for(int idx = 0; idx < size; ++ idx) {
+			itemView = mGroupListView.createItemView(wordbooks.get(idx).getName());
+			itemView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
+			itemView.getSwitch().setOnCheckedChangeListener(this);
+			itemView.getSwitch().setChecked(false);
+			itemView.getSwitch().setId(View.generateViewId());
+			mItemViewList.add(itemView);
+			mWordbookDic.put(itemView.getSwitch().getId(), wordbooks.get(idx));
+			mDefaultWordbookList.addItemView(itemView, null);
+		}
+		mDefaultWordbookList.addTo(mGroupListView);
+	}
 
-		QMUICommonListItemView itemWithSwitch = mGroupListView.createItemView("Item 5");
-		itemWithSwitch.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-		itemWithSwitch.getSwitch()
-		              .setOnCheckedChangeListener((buttonView, isChecked) -> Toast.makeText(
-				              getActivity(),
-				              "checked = " + isChecked,
-				              Toast.LENGTH_SHORT).show());
+	@Override
+	protected boolean registerEventBus() {
+		return true;
+	}
 
-		QMUICommonListItemView itemWithCustom = mGroupListView.createItemView("Item 6");
-		itemWithCustom.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
-		QMUILoadingView loadingView = new QMUILoadingView(getActivity());
-		itemWithCustom.addAccessoryCustomView(loadingView);
-
-		View.OnClickListener onClickListener = v -> {
-			if(v.getId() == itemIdDic.get(R.string.language)) {
-				new QMUIBottomSheet.BottomListSheetBuilder(getActivity())
-						.addItem(getString(R.string.language_auto))
-						.addItem(getString(R.string.language_en))
-						.addItem(getString(R.string.language_zh))
-						.setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
-							ToastUtil.showCustumToast(getContext(), tag);
-							dialog.dismiss();
-						})
-						.build()
-						.show();
-			}
-			if(v instanceof QMUICommonListItemView) {
-				String text = ((QMUICommonListItemView) v).getText().toString();
-				ToastUtil.showCustumToast(getContext(), text + " is Clicked");
-			}
-		};
-
-		QMUIGroupListView.newSection(getContext())
-		                 .addItemView(itemWithDetail, onClickListener)
-		                 .addTo(mGroupListView);
-
-		QMUIGroupListView.newSection(getContext())
-		                 .setTitle("Section 1: 默认提供的样式")
-		                 .setDescription("Section 1 的描述")
-		                 .addItemView(normalItem, onClickListener)
-		                 .addItemView(itemWithDetailBelow, onClickListener)
-		                 .addItemView(itemWithChevron, onClickListener)
-		                 .addItemView(itemWithSwitch, onClickListener)
-		                 .addTo(mGroupListView);
-
-		QMUIGroupListView.newSection(getContext())
-		                 .setTitle("Section 2: 自定义右侧 View")
-		                 .addItemView(itemWithCustom, onClickListener)
-		                 .addTo(mGroupListView);
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void fadeOut(MessageEvent event) {
+		if(event.getCode() != MessageEventConstant.HIDE_CHOOSE_WORDBOOK) {
+			return;
+		}
+		QMUIViewHelper.fadeOut(this.getView(),
+		                       UIConstant.CHOOSE_WORDBOOK_ANIMATOR_DURATION,
+		                       null,
+		                       true);
 	}
 
 	@Override
 	public boolean onBackPressedSupport() {
-		pop();
+		EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
 		return true;
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
+		if(! isChecked) {
+			EventBus.getDefault().post(MessageEventConstant.UPDATE_SELECT_WORDBOOK_NAME_EVENT);
+			return;
+		}
+		int size = mItemViewList.size();
+		for(int idx = 0; idx < size; ++ idx) {
+			mItemViewList.get(idx).getSwitch().setChecked(false);
+		}
+		buttonView.setChecked(true);
+		// 这边本来不应这样写的, 先这样临时写下
+		EventBus.getDefault()
+		        .post(new MessageEvent(MessageEventConstant.UPDATE_SELECT_WORDBOOK_NAME,
+		                               mWordbookDic.get(buttonView.getId()).getName()));
 	}
 }

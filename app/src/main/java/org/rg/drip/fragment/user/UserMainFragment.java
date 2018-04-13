@@ -45,8 +45,8 @@ public class UserMainFragment extends BaseMainFragment
 	}
 
 	private void loadFragment() {
-		loadRootFragment(R.id.fragment_wordbook_container_upper, AvatarFragment.newInstance());
-		loadRootFragment(R.id.fragment_wordbook_container_lower, MeFragment.newInstance());
+		loadRootFragment(R.id.fragment_user_container_upper, AvatarFragment.newInstance());
+		loadRootFragment(R.id.fragment_user_container_lower, MeFragment.newInstance());
 	}
 
 

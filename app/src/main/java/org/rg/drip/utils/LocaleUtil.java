@@ -6,8 +6,11 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 
+import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.DripApplication;
 import org.rg.drip.constant.ConfigConstant;
+import org.rg.drip.constant.MessageEventConstant;
+import org.rg.drip.event.MessageEvent;
 
 import java.util.Locale;
 
@@ -102,6 +105,9 @@ public class LocaleUtil {
 			case ConfigConstant.LANGUAGE_ENGLISH:
 				setLanguage(ConfigConstant.LOCALE_ENGLISH);
 				break;
+			default:
+				return;
 		}
+		EventBus.getDefault().post(new MessageEvent(MessageEventConstant.RESTART_ACTIVITY));
 	}
 }

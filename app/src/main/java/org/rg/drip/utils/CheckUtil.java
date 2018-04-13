@@ -39,6 +39,7 @@ public class CheckUtil {
 	}
 
 	public static boolean checkWordbook(Wordbook wordbook) {
+		if(wordbook == null) return false;
 		if(wordbook.getId() == WordbookConstant.WORDBOOK_ID_SPLIT
 		   || (wordbook.getId() < WordbookConstant.WORDBOOK_ID_SPLIT
 		       && wordbook.getUserId() != WordbookConstant.DEFAULT_WORDBOOK_USER_ID)) {

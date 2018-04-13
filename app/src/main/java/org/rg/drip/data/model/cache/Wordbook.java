@@ -4,6 +4,7 @@ import org.rg.drip.constant.WordbookConstant;
 import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.local.WordbookL;
 import org.rg.drip.data.model.remote.WordbookR;
+import org.rg.drip.utils.CheckUtil;
 
 /**
  * 单词本
@@ -32,15 +33,15 @@ public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.R
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public WordbookL convertToLocal() {
 		WordbookL wordbook = new WordbookL();
@@ -65,6 +66,25 @@ public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.R
 
 	public String getCode() {
 		return getCode(this.getId(), this.getUserId());
+	}
+
+	public static Wordbook ofCode(String code) {
+		String[] arr = code.split("_");
+		if(arr.length != 2) {
+			return null;
+		}
+		Integer id, userId;
+		try {
+			id = Integer.parseInt(arr[0]);
+			userId = Integer.parseInt(arr[1]);
+		} catch(Error error) {
+			return null;
+		}
+		Wordbook wordbook = new Wordbook(id, userId);
+		if(! CheckUtil.checkWordbook(wordbook)) {
+			return null;
+		}
+		return wordbook;
 	}
 
 	public String getDefaultCode() {

@@ -14,26 +14,26 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_wordbook_container_upper"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_user_container_upper"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
             app:titleTextAppearance="@style/Toolbar_TextAppearance_White"/>
 
         <FrameLayout
-            android:id="@+id/fragment_wordbook_container_upper"
+            android:id="@+id/fragment_user_container_upper"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_wordbook_container_lower"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_user_container_lower"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 
         <FrameLayout
-            android:id="@+id/fragment_wordbook_container_lower"
+            android:id="@+id/fragment_user_container_lower"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_wordbook_container_upper"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_user_container_upper"/>
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout

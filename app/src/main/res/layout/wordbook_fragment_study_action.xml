@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -94,13 +95,12 @@
         <TextView
             android:id="@+id/tv_describe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:layout_marginBottom="8dp"
-            android:text="今天需要学习999个单词, 复习999个单词"
             android:autoLink="all"
+            android:gravity="center"
             android:textColor="@color/grey"
             android:textSize="16sp"
-            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/bt_start_learn"/>
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

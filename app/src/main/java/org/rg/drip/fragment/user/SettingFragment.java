@@ -10,6 +10,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import org.rg.drip.R;
+import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.constant.ConfigConstant;
 import org.rg.drip.contract.SettingContract;
@@ -57,9 +58,9 @@ public class SettingFragment extends BaseSubFragment implements View.OnClickList
 		mLanguageItem = mGroupListView.createItemView(getString(R.string.language));
 		mLanguageItem.setDetailText("(" + getString(getLanguageStringId()) + ")");
 		mLanguageItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
-		mViewIdDic.put(R.string.language, View.generateViewId());
-		mLanguageItem.setId(mViewIdDic.get(R.string.language));
-		
+		mLanguageItem.setId(View.generateViewId());
+		mViewIdDic.put(R.string.language, mLanguageItem.getId());
+
 		QMUIGroupListView.newSection(getContext())
 		                 .addItemView(mLanguageItem, this)
 		                 .addTo(mGroupListView);

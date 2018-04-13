@@ -20,7 +20,9 @@ import com.github.mikephil.charting.utils.MPPointF;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseFragment;
 import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.constant.UIConstant;
 
+import java.text.Format;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -161,11 +163,13 @@ public class CompleteProgressFragment extends BaseSubFragment
 	}
 
 	private SpannableString generateCenterSpannableText(int wordCount) {
-		SpannableString s = new SpannableString("单词总数\n" + wordCount);
-		s.setSpan(new RelativeSizeSpan(1.5f), 0, 4, 0);
-		s.setSpan(new StyleSpan(Typeface.BOLD), 5, s.length(), 0);
-		s.setSpan(new RelativeSizeSpan(2f), 5, s.length(), 0);
-		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), 5, s.length(), 0);
+		String text = String.format(getString(R.string.tip_total_word), wordCount);
+		int idx = text.indexOf('\n');
+		SpannableString s = new SpannableString(text);
+		s.setSpan(new RelativeSizeSpan(1.5f), 0, idx, 0);
+		s.setSpan(new StyleSpan(Typeface.BOLD), idx + 1, s.length(), 0);
+		s.setSpan(new RelativeSizeSpan(2f), idx + 1, s.length(), 0);
+		s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), idx + 1, s.length(), 0);
 		return s;
 	}
 
@@ -174,7 +178,7 @@ public class CompleteProgressFragment extends BaseSubFragment
 		if(mPieChart == null) {
 			return;
 		}
-		mPieChart.animateXY(1500, 1500);
+		mPieChart.animateXY(UIConstant.CHART_ANIMATOR_DURATION, UIConstant.CHART_ANIMATOR_DURATION);
 	}
 
 	@Override

@@ -48,6 +48,13 @@ public abstract class BaseActivity extends SupportActivity {
 	 */
 	protected abstract void initView(Bundle savedInstanceState);
 
+	/**
+	 * 是否要注册 EventBus， 分别在 onCreate 和 onDestroy 时注册和取消注册
+	 */
+	protected boolean registerEventBus() {
+		return false;
+	}
+
 	@Override
 	public void setContentView(@LayoutRes int layoutResID) {
 		super.setContentView(layoutResID);
@@ -59,7 +66,9 @@ public abstract class BaseActivity extends SupportActivity {
 		super.onCreate(savedInstanceState);
 		initSystemBarTint();
 		beforeInit();
-		EventBus.getDefault().register(this);
+		if(registerEventBus()) {
+			EventBus.getDefault().register(this);
+		}
 		if(getContentViewLayoutID() != 0) {
 			setContentView(getContentViewLayoutID());
 			initView(savedInstanceState);
@@ -97,6 +106,8 @@ public abstract class BaseActivity extends SupportActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		EventBus.getDefault().unregister(this);
+		if(registerEventBus()) {
+			EventBus.getDefault().unregister(this);
+		}
 	}
 }

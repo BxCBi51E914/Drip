@@ -46,7 +46,7 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 	
 	private static WordbookRemoteSource mInstance = null;
 	
-	public WordbookRemoteSource getInstance() {
+	public static WordbookRemoteSource getInstance() {
 		if(mInstance == null) {
 			mInstance = new WordbookRemoteSource();
 		}
@@ -57,7 +57,7 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 	@Override
 	public Flowable<Wordbook> getWordbook(final Wordbook wordbook) {
 		if(! CheckUtil.checkWordbook(wordbook)) {
-			return Flowable.just(WordbookConstant.nullptr);
+			return Flowable.empty();
 		}
 		return Flowable.create(emitter -> {
 			new BmobQuery<WordbookR>().addWhereEqualTo(WordbookConstant.FIELD_ID, wordbook.getId())
@@ -71,9 +71,7 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 						                          emitter.onError(e);
 						                          return;
 					                          }
-					                          if(null == list || list.size() == 0) {
-						                          emitter.onNext(WordbookConstant.nullptr);
-					                          } else {
+					                          if(null != list && list.size() != 0) {
 						                          emitter.onNext(list.get(0).convertToCache());
 					                          }
 					                          emitter.onComplete();
@@ -110,7 +108,7 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 	public Flowable<Wordbook> createByDefault(final Wordbook defaultWordbook,
 	                                          final User currentUser) {
 		if(! CheckUtil.checkWordbook(defaultWordbook, WordbookConstant.TYPE_DEFAULT)) {
-			return Flowable.just(WordbookConstant.nullptr);
+			return Flowable.empty();
 		}
 		return Flowable.create(emitter -> {
 			WordbookR copyWordbook = defaultWordbook.convertToRemote();

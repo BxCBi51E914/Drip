@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseActivity;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.constant.MessageConstant;
+import org.rg.drip.constant.MessageEventConstant;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.event.MessageEvent;
 import org.rg.drip.event.TabSelectedEvent;
@@ -231,10 +231,15 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 		super.onDestroy();
 		RealmUtil.closeRealm();
 	}
-	
+
+	@Override
+	protected boolean registerEventBus() {
+		return true;
+	}
+
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void restartThis(MessageEvent event) {
-		if(event.getCode() != MessageConstant.RESTART_ACTIVITY) {
+		if(event.getCode() != MessageEventConstant.RESTART_ACTIVITY) {
 			return;
 		}
 		finish();

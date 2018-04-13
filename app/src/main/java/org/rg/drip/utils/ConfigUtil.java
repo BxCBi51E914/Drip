@@ -5,7 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.GlobalData;
 import org.rg.drip.constant.ConfigConstant;
-import org.rg.drip.constant.MessageConstant;
+import org.rg.drip.constant.MessageEventConstant;
+import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.event.MessageEvent;
 
 /**
@@ -13,7 +14,7 @@ import org.rg.drip.event.MessageEvent;
  * on 2018/4/10.
  */
 public class ConfigUtil {
-	
+
 	/**
 	 * 加载设置
 	 */
@@ -23,7 +24,7 @@ public class ConfigUtil {
 			applyLanguageConfig((String) json.get(ConfigConstant.LANGUAGE));
 		}
 	}
-	
+
 	/**
 	 * 获取默认设置
 	 */
@@ -33,14 +34,14 @@ public class ConfigUtil {
 		json.put(ConfigConstant.LANGUAGE, ConfigConstant.LANGUAGE_AUTO);
 		return json.toJSONString();
 	}
-	
+
 	private static String saveConfig(String key, Object value) {
 		JSONObject json = JSONObject.parseObject(GlobalData.config);
 		json.put(key, value);
 		GlobalData.config = json.toJSONString();
 		return GlobalData.config;
 	}
-	
+
 	private static String getConfigValue(String key) {
 		JSONObject json = JSONObject.parseObject(GlobalData.config);
 		if(json.containsKey(key)) {
@@ -48,18 +49,22 @@ public class ConfigUtil {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * 设置当前选择的单词
 	 */
-	public static String setCurrentWordBook(int currentWordBookId) {
-		if(currentWordBookId < 0) {
+	public static String setCurrentWordBook(Wordbook currentWordbook) {
+		if(! CheckUtil.checkWordbook(currentWordbook)) {
 			return GlobalData.config;
 		}
-		
-		return saveConfig(ConfigConstant.CURRENT_WORDBOOK, currentWordBookId);
+
+		return saveConfig(ConfigConstant.CURRENT_WORDBOOK, currentWordbook.getCode());
 	}
-	
+
+	public static Wordbook getCurrentWordBook() {
+		return Wordbook.ofCode(getConfigValue(ConfigConstant.CURRENT_WORDBOOK));
+	}
+
 	public static String getLanguage() {
 		String language = getConfigValue(ConfigConstant.LANGUAGE);
 		if(language.equals(ConfigConstant.LANGUAGE_AUTO)) {
@@ -72,7 +77,7 @@ public class ConfigUtil {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * 修改语言的设置
 	 */
@@ -85,11 +90,11 @@ public class ConfigUtil {
 			default:
 				return GlobalData.config;
 		}
-		
+
 		applyLanguageConfig(language);
 		return saveConfig(ConfigConstant.LANGUAGE, language);
 	}
-	
+
 	/**
 	 * 应用语言的设置
 	 */
@@ -100,9 +105,6 @@ public class ConfigUtil {
 			case ConfigConstant.LANGUAGE_ENGLISH:
 				LocaleUtil.setLanguage(language);
 				break;
-			default:
-				return;
 		}
-		EventBus.getDefault().post(new MessageEvent(MessageConstant.RESTART_ACTIVITY));
 	}
 }

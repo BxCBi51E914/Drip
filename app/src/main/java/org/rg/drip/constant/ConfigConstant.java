@@ -9,7 +9,7 @@ import java.util.Locale;
 public class ConfigConstant {
 	
 	public static final String CURRENT_WORDBOOK = "current_wordbook";
-	public static final int CURRENT_WORDBOOK_DEFAULT = 0;
+	public static final String CURRENT_WORDBOOK_DEFAULT = "0_0";
 	
 	public static final String LANGUAGE = "language";
 	public static final String LANGUAGE_AUTO = "language_auto";

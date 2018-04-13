@@ -44,7 +44,7 @@ public class WordbookLocalSource implements WordBookContract.Local {
 	@Override
 	public Flowable<Wordbook> getWordbook(final Wordbook wordbook) {
 		if(! CheckUtil.checkWordbook(wordbook)) {
-			return Flowable.just(WordbookConstant.nullptr);
+			return Flowable.empty();
 		}
 		return RealmUtil.getInstance()
 		                .where(WordbookL.class)
@@ -85,7 +85,8 @@ public class WordbookLocalSource implements WordBookContract.Local {
 				WordbookL wordbookL = realm.createObject(WordbookL.class);
 				wordbookL.setId(wordbook.getId());
 				wordbookL.setUserId(wordbook.getUserId());
-				wordbookL.generateCode();
+				wordbookL.setName(wordbook.getName());
+				wordbookL.setCode(wordbook.getCode());
 			}, () -> {
 				emitter.onNext(true);
 				emitter.onComplete();
