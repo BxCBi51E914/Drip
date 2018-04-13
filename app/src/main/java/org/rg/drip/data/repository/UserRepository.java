@@ -20,9 +20,9 @@ public class UserRepository implements UserContract.Repository {
 	@NonNull
 	private static UserContract.Local mUserLocalSource;
 	@Nullable
-	private static UserRepository mInstance = null;
+	private static UserContract.Repository mInstance = null;
 
-	private User mLoggedInUser = null;
+	private User mLoggedInUser;
 
 	private UserRepository(@NonNull UserContract.Remote userRemoteSource,
 	                       @NonNull UserContract.Local userLocalSource) {
@@ -31,7 +31,7 @@ public class UserRepository implements UserContract.Repository {
 		mLoggedInUser = mUserRemoteSource.getCurrentUser();
 	}
 
-	public static UserRepository getInstance(@NonNull UserContract.Remote userRemoteSource,
+	public static UserContract.Repository getInstance(@NonNull UserContract.Remote userRemoteSource,
 	                                         @NonNull UserContract.Local userLocalSource) {
 		if(mInstance == null) {
 			mInstance = new UserRepository(userRemoteSource, userLocalSource);
@@ -111,6 +111,8 @@ public class UserRepository implements UserContract.Repository {
 	
 	@Override
 	public Flowable<Boolean> saveUserConfig(String config) {
+		// 可能需要更新
+		mLoggedInUser = null;
 		return mUserRemoteSource.saveUserConfig(config);
 	}
 }

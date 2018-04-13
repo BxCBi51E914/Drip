@@ -2,14 +2,27 @@ package org.rg.drip.utils;
 
 import com.alibaba.fastjson.JSONObject;
 
+import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.GlobalData;
 import org.rg.drip.constant.ConfigConstant;
+import org.rg.drip.constant.MessageConstant;
+import org.rg.drip.event.MessageEvent;
 
 /**
  * Created by TankGq
  * on 2018/4/10.
  */
 public class ConfigUtil {
+	
+	/**
+	 * 加载设置
+	 */
+	public static void applyConfig() {
+		JSONObject json = JSONObject.parseObject(GlobalData.config);
+		if(json.containsKey(ConfigConstant.LANGUAGE)) {
+			applyLanguageConfig((String) json.get(ConfigConstant.LANGUAGE));
+		}
+	}
 	
 	/**
 	 * 获取默认设置
@@ -28,8 +41,16 @@ public class ConfigUtil {
 		return GlobalData.config;
 	}
 	
+	private static String getConfigValue(String key) {
+		JSONObject json = JSONObject.parseObject(GlobalData.config);
+		if(json.containsKey(key)) {
+			return (String) json.get(key);
+		}
+		return "";
+	}
+	
 	/**
-	 * 设置当前语言
+	 * 设置当前选择的单词
 	 */
 	public static String setCurrentWordBook(int currentWordBookId) {
 		if(currentWordBookId < 0) {
@@ -37,6 +58,19 @@ public class ConfigUtil {
 		}
 		
 		return saveConfig(ConfigConstant.CURRENT_WORDBOOK, currentWordBookId);
+	}
+	
+	public static String getLanguage() {
+		String language = getConfigValue(ConfigConstant.LANGUAGE);
+		if(language.equals(ConfigConstant.LANGUAGE_AUTO)) {
+			language = LocaleUtil.getSystemLanguage();
+		}
+		switch(language) {
+			case ConfigConstant.LANGUAGE_CHINESE:
+			case ConfigConstant.LANGUAGE_ENGLISH:
+				return language;
+		}
+		return "";
 	}
 	
 	/**
@@ -52,6 +86,23 @@ public class ConfigUtil {
 				return GlobalData.config;
 		}
 		
+		applyLanguageConfig(language);
 		return saveConfig(ConfigConstant.LANGUAGE, language);
+	}
+	
+	/**
+	 * 应用语言的设置
+	 */
+	public static void applyLanguageConfig(String language) {
+		switch(language) {
+			case ConfigConstant.LANGUAGE_AUTO:
+			case ConfigConstant.LANGUAGE_CHINESE:
+			case ConfigConstant.LANGUAGE_ENGLISH:
+				LocaleUtil.setLanguage(language);
+				break;
+			default:
+				return;
+		}
+		EventBus.getDefault().post(new MessageEvent(MessageConstant.RESTART_ACTIVITY));
 	}
 }

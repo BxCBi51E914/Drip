@@ -13,6 +13,8 @@ import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.rg.drip.R;
 import org.rg.drip.activity.SignInActivity;
 import org.rg.drip.base.BaseSubFragment;
@@ -22,6 +24,7 @@ import org.rg.drip.data.model.cache.User;
 import org.rg.drip.presenter.AvatarPresenter;
 import org.rg.drip.utils.CheckUtil;
 import org.rg.drip.utils.LoadingTipDialogUtil;
+import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.ToastUtil;
 
@@ -83,6 +86,7 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
+		LoggerUtil.d("qwe");
 		mPresenter = new AvatarPresenter(RepositoryUtil.getUserRepository(), this);
 		mPresenter.updateSignInUser();
 		List<String> popupItemData = Arrays.asList(getString(R.string.act_sign_out),
@@ -216,5 +220,10 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 	@Override
 	public void setPresenter(AvatarContract.Presenter presenter) {
 		mPresenter = CheckUtil.checkNotNull(presenter);
+	}
+	
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void Test() {
+		LoggerUtil.d("asd");
 	}
 }

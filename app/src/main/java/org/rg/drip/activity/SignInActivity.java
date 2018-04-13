@@ -41,7 +41,6 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 	
 	@OnClick({ R.id.fab_sign_up, R.id.bt_go, R.id.bt_forget_password })
 	void Click(View v) {
-		ToastUtil.showCustumToast(this, "OnClick()");
 		switch(v.getId()) {
 			case R.id.fab_sign_up:
 				getWindow().setExitTransition(null);

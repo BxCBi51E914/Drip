@@ -6,14 +6,6 @@ import android.support.annotation.Nullable;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.fragment.first.child.FirstHomeFragment;
-import org.rg.drip.fragment.second.ZhihuSecondFragment;
-import org.rg.drip.fragment.second.child.ViewPagerFragment;
-import org.rg.drip.fragment.user.MeFragment;
-import org.rg.drip.fragment.user.UserMainFragment;
-import org.rg.drip.fragment.wordbook.StudyActionFragment;
-import org.rg.drip.fragment.wordbook.WordBookMainFragment;
-
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by TankGq

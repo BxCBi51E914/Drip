@@ -3,11 +3,16 @@ package org.rg.drip;
 import android.app.Application;
 import android.content.Context;
 
+import org.rg.drip.constant.ConfigConstant;
+import org.rg.drip.data.contract.UserContract;
+import org.rg.drip.data.model.cache.User;
 import org.rg.drip.data.model.local.UserL;
 import org.rg.drip.utils.BmobUtil;
+import org.rg.drip.utils.ConfigUtil;
 import org.rg.drip.utils.FragmentationUtil;
 import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RealmUtil;
+import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.StethoUtil;
 
 /**
@@ -38,5 +43,23 @@ public class DripApplication extends Application {
 		super.onCreate();
 		mInstance = this;
 		initTools(DripApplication.this);
+		loadConfig();
+	}
+	
+	/**
+	 * 加载用户设置, 如果之前用户就登录了的话
+	 */
+	private void loadConfig() {
+		UserContract.Repository userRepository = RepositoryUtil.getUserRepository();
+		User user = userRepository.getCurrentUser();
+		if(user == null) {
+			return;
+		}
+		if(null == user.getConfig() || user.getConfig().isEmpty()) {
+			userRepository.saveUserConfig(ConfigUtil.getDefaultConfig());
+		} else {
+			GlobalData.config = user.getConfig();
+		}
+		ConfigUtil.applyConfig();
 	}
 }

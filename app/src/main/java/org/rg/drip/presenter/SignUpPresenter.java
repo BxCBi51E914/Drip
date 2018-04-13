@@ -7,6 +7,7 @@ import org.rg.drip.contract.SignUpContract;
 import org.rg.drip.data.contract.UserContract;
 import org.rg.drip.data.model.cache.User;
 import org.rg.drip.utils.CheckUtil;
+import org.rg.drip.utils.ConfigUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -24,8 +25,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 	
 	@NonNull private CompositeDisposable mCompositeDisposable;
 	
-	public SignUpPresenter(@NonNull UserContract.Repository userRepository,
-	                       @NonNull SignUpContract.View signUpView) {
+	public SignUpPresenter(@NonNull UserContract.Repository userRepository, @NonNull SignUpContract.View signUpView) {
 		mUserRepository = CheckUtil.checkNotNull(userRepository);
 		mView = CheckUtil.checkNotNull(signUpView);
 		
@@ -43,11 +43,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 	}
 	
 	@Override
-	public void signUp(String username,
-	                   String password,
-	                   String repeatPassword,
-	                   String nickname,
-	                   String email) {
+	public void signUp(String username, String password, String repeatPassword, String nickname, String email) {
 		if(username.length() == 0) {
 			mView.showTip(R.string.tip_username);
 			return;
@@ -81,25 +77,25 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 		user.setPassword(password);
 		user.setNickname(nickname);
 		user.setEmail(email);
-		mCompositeDisposable.add(mUserRepository
-				                         .signUp(user)
-				                         .subscribeOn(Schedulers.io())
-				                         .observeOn(AndroidSchedulers.mainThread())
-				                         .subscribe(
-						                         // onNext
-						                         result -> {
-							                         if(result) {
-								                         mView.signUpOk();
-							                         } else {
-								                         mView.showTip(R.string.tip_sign_up_failed);
-							                         }
-							                         mView.showLoadingTipDialog(false);
-						                         },
-						                         // onError
-						                         throwable -> {
-							                         mView.showTip(R.string.tip_sign_up_failed);
-							                         mView.showLoadingTipDialog(false);
-						                         }));
+		user.setConfig(ConfigUtil.getDefaultConfig());
+		mCompositeDisposable.add(mUserRepository.signUp(user)
+		                                        .subscribeOn(Schedulers.io())
+		                                        .observeOn(AndroidSchedulers.mainThread())
+		                                        .subscribe(
+				                                        // onNext
+				                                        result -> {
+					                                        if(result) {
+						                                        mView.signUpOk();
+					                                        } else {
+						                                        mView.showTip(R.string.tip_sign_up_failed);
+					                                        }
+					                                        mView.showLoadingTipDialog(false);
+				                                        },
+				                                        // onError
+				                                        throwable -> {
+					                                        mView.showTip(R.string.tip_sign_up_failed);
+					                                        mView.showLoadingTipDialog(false);
+				                                        }));
 		mView.showLoadingTipDialog(true);
 	}
 }

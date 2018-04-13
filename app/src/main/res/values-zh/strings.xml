@@ -26,6 +26,11 @@
     <string name="language_zh">中文</string>
     <string name="language_en">English</string>
     <string name="language_auto">自动</string>
+    <string name="error">错误</string>
+
+    <string name="holder_word">thumb</string>
+    <string name="holder_phonetic">[θʌm]</string>
+    <string name="holder_explain">n.(大)拇指</string>
 
     <string name="tip_unselected_wordbook">未选择单词本</string>
     <string name="tip_username_or_email">请输入你的用户名或者邮箱</string>
@@ -49,6 +54,10 @@
     <string name="tip_change_succeed">修改成功</string>
     <string name="tip_change_failed">修改失败</string>
     <string name="tip_unknown_error">未知错误</string>
+    <string name="tip_save_succeed">保存成功</string>
+    <string name="tip_save_failed">保存失败</string>
+    <string name="tip_default_wordbook">默认单词本</string>
+    <string name="tip_user_wordbook">用户的单词本</string>
     <string name="brackets_unverified">(未验证)</string>
 
     <string name="act_sign_out">退出登录</string>

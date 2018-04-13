@@ -26,6 +26,7 @@
         <FrameLayout
             android:id="@+id/fragment_wordbook_container_whole"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"/>
     </RelativeLayout>
 </FrameLayout>

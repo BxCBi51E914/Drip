@@ -26,7 +26,5 @@ public interface StartLearnContract {
 		 * 获取数据
 		 */
 		List<Word> getData();
-		
-		
 	}
 }

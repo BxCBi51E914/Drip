@@ -117,17 +117,14 @@ public class SignUpFragment extends BaseSubFragment implements SignUpContract.Vi
 			
 			@Override
 			public void onTransitionCancel(Transition transition) {
-			
 			}
 			
 			@Override
 			public void onTransitionPause(Transition transition) {
-			
 			}
 			
 			@Override
 			public void onTransitionResume(Transition transition) {
-			
 			}
 		});
 	}

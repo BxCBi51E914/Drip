@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import org.rg.drip.R;
 import org.rg.drip.adapter.StudyStateFragmentAdapter;
 import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.contract.StudyStateConstact;
 
 import butterknife.BindView;
 
@@ -14,7 +15,7 @@ import butterknife.BindView;
  * Author : TankGq
  * Time : 03/04/2018
  */
-public class StudyStateFragment extends BaseSubFragment {
+public class StudyStateFragment extends BaseSubFragment implements StudyStateConstact.View {
 
 	@BindView(R.id.tab) TabLayout mTabLayout;
 	@BindView(R.id.viewPager) ViewPager mViewPager;
@@ -42,5 +43,10 @@ public class StudyStateFragment extends BaseSubFragment {
 		                                                    getString(R.string.tab_learning_progress),
 		                                                    getString(R.string.tab_word_count)));
 		mTabLayout.setupWithViewPager(mViewPager);
+	}
+	
+	@Override
+	public void setPresenter(StudyStateConstact.Presenter presenter) {
+	
 	}
 }

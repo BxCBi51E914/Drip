@@ -19,7 +19,7 @@ public class MeFragment extends BaseSubFragment {
 	@BindView(R.id.tv_btn_settings) TextView mTvBtnSettings;
 	@OnClick(R.id.tv_btn_settings)
 	void onClick(View v) {
-		start(SettingsFragment.newInstance());
+		start(SettingFragment.newInstance());
 	}
 	
 	public static MeFragment newInstance() {

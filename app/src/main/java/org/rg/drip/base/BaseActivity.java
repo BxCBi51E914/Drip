@@ -15,6 +15,7 @@ import android.view.WindowManager;
 
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 
+import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.R;
 
 import butterknife.ButterKnife;
@@ -58,6 +59,7 @@ public abstract class BaseActivity extends SupportActivity {
 		super.onCreate(savedInstanceState);
 		initSystemBarTint();
 		beforeInit();
+		EventBus.getDefault().register(this);
 		if(getContentViewLayoutID() != 0) {
 			setContentView(getContentViewLayoutID());
 			initView(savedInstanceState);
@@ -90,5 +92,11 @@ public abstract class BaseActivity extends SupportActivity {
 	@ColorInt
 	protected int setStatusBarColor() {
 		return getColor(R.color.colorPrimary);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 }

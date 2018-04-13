@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.DripApplication;
 
 import butterknife.ButterKnife;
@@ -50,6 +51,13 @@ public abstract class BaseFragment extends SupportFragment {
 	 * 在调用 onActivityCreated 时进行初始化
 	 */
 	protected void initViewOnActivityCreated() {
+	}
+	
+	/**
+	 * 是否要注册 EventBus， 分别在 onResume 和 onPause 时注册和取消注册
+	 */
+	protected boolean registerEventBus() {
+		return false;
 	}
 
 	private Activity mActivity;
@@ -112,5 +120,21 @@ public abstract class BaseFragment extends SupportFragment {
 
 	public interface OnEnterAnimator {
 		void onEnterAnimator();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		if(registerEventBus()) {
+			EventBus.getDefault().register(this);
+		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		if(registerEventBus()) {
+			EventBus.getDefault().unregister(this);
+		}
 	}
 }

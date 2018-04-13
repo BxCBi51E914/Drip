@@ -27,6 +27,7 @@
     <string name="language_zh">中文</string>
     <string name="language_en">English</string>
     <string name="language_auto">Auto</string>
+    <string name="error">Error</string>
     
     <string name="holder_word">thumb</string>
     <string name="holder_phonetic">[θʌm]</string>
@@ -54,11 +55,17 @@
     <string name="tip_change_succeed">Change succeed</string>
     <string name="tip_change_failed">Change failed</string>
     <string name="tip_unknown_error">Unknown error</string>
+    <string name="tip_save_succeed">Save Succeed</string>
+    <string name="tip_save_failed">Save Failed</string>
     <string name="brackets_unverified">(Unverified)</string>
+
+    <string name="tip_default_wordbook">Default Wordbook</string>
+    <string name="tip_user_wordbook">User wordbook</string>
 
     <string name="act_sign_out">Sign Out</string>
     <string name="act_change_password">Change Password</string>
     <string name="act_change_email">Change Email</string>
+    <string name="act_verify_email">Verify Email</string>
     <string name="act_start_learn">Start Learn</string>
     <string name="act_browse_in_card">Browse In Card</string>
     <string name="act_word_list">Word List</string>
@@ -71,6 +78,7 @@
     <string name="tab_complete_progress">Complete Progress</string>
     <string name="tab_learning_progress">Learning Progress</string>
     <string name="tab_word_count">Word Count</string>
+    <string name="ask_verify_email">Verify Email</string>
 
     <string name="chk_yes">YES</string>
     <string name="chk_no">NO</string>

@@ -1,4 +1,4 @@
-package org.rg.drip.fragment.user;
+package org.rg.drip.fragment.wordbook;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,13 +21,13 @@ import butterknife.BindView;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class SettingsFragment extends BaseSubFragment {
+public class ChooseWordbookFragment extends BaseSubFragment {
 
 	@BindView(R.id.toolbarSettings) Toolbar mToolbar;
 	@BindView(R.id.groupListView) QMUIGroupListView mGroupListView;
 
-	public static SettingsFragment newInstance() {
-		SettingsFragment fragment = new SettingsFragment();
+	public static ChooseWordbookFragment newInstance() {
+		ChooseWordbookFragment fragment = new ChooseWordbookFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
@@ -35,7 +35,7 @@ public class SettingsFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.user_fragment_settings;
+		return R.layout.wordbook_fragment_choose_wordbook;
 	}
 
 	@Override
