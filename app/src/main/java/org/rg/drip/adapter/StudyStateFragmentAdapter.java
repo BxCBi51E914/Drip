@@ -4,8 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.rg.drip.base.BaseSubFragment;
-import org.rg.drip.fragment.second.child.childpager.OtherPagerFragment;
+import org.rg.drip.fragment.custom.child.childpager.OtherPagerFragment;
 import org.rg.drip.fragment.wordbook.CompleteProgressFragment;
 import org.rg.drip.fragment.wordbook.LearningProgressFragment;
 import org.rg.drip.fragment.wordbook.WordCountFragment;

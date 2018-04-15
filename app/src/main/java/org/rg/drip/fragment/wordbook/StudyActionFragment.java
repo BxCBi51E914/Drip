@@ -1,12 +1,17 @@
 package org.rg.drip.fragment.wordbook;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.R;
+import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.constant.MessageEventConstant;
+import org.rg.drip.utils.LoggerUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,20 +35,11 @@ public class StudyActionFragment extends BaseSubFragment {
 	void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.bt_start_learn:
-//				Fragment parentFragment = getParentFragment();
-//				StartLearningFragment toFragment = findFragment(StartLearningFragment.class);
-//				if(toFragment == null) {
-//					toFragment = StartLearningFragment.newInstance();
-//					ToastUtil.showCustumToast(getContext(), "StartLearningFragment.newInstance()");
-//				}
-//				if(parentFragment instanceof BaseMainFragment) {
-//					((BaseMainFragment) parentFragment).loadRootFragment(R.id.fragment_wordbook_container_whole,
-//					                                                     toFragment);
-//				}
+				EventBus.getDefault().post(MessageEventConstant.SHOW_START_LEARN_EVENT);
 				break;
 
 			case R.id.bt_browse_in_card:
-
+				EventBus.getDefault().post(MessageEventConstant.SHOW_BROWSE_IN_CARD_EVENT);
 				break;
 
 			case R.id.bt_word_list:

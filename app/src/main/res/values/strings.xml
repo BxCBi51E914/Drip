@@ -57,8 +57,11 @@
     <string name="tip_unknown_error">Unknown error</string>
     <string name="tip_save_succeed">Save Succeed</string>
     <string name="tip_save_failed">Save Failed</string>
+    <string name="tip_create_failed">Create Failed</string>
+    <string name="tip_create_succeed">Create Succeed</string>
     <string name="tip_total_word">Total Count\n%d</string>
     <string name="tip_current_target">Current Target: Learn %d Words, Review %d Words</string>
+    <string name="tip_Lexical_item">Lexical Item</string>
     <string name="brackets_unverified">(Unverified)</string>
 
     <string name="tip_default_wordbook">Default Wordbook</string>
@@ -72,6 +75,7 @@
     <string name="act_browse_in_card">Browse In Card</string>
     <string name="act_word_list">Word List</string>
     <string name="act_review_setting">Review Setting</string>
+    <string name="act_add_Lexical_item">Add Lexical Item</string>
 
     <string name="ask_sign_out">Sure want to sign out?</string>
     <string name="ask_change_password">Sure want to change you password?</string>
@@ -87,6 +91,7 @@
     <string name="chk_send">SEND</string>
     <string name="chk_out">OUT</string>
 
+    <string name="custom_learn">Custom Learn</string>
     <string name="reading">Reading</string>
     <string name="discover">Discover</string>
     <string name="shop">Shop</string>

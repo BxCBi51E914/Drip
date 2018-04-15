@@ -10,6 +10,7 @@ import org.rg.drip.R;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.utils.CheckUtil;
+import org.rg.drip.utils.TypefaceUtil;
 
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class StartLearnSwipeCardAdapter extends BaseCardAdapter {
 	
 	public StartLearnSwipeCardAdapter(Context context, List<Word> data) {
 		this.context = context;
+		this.data = data;
+	}
+
+	public void setData(List<Word> data) {
 		this.data = data;
 	}
 	
@@ -47,6 +52,7 @@ public class StartLearnSwipeCardAdapter extends BaseCardAdapter {
 		}
 		TextView wordTv = cardView.findViewById(R.id.tv_word);
 		TextView phoneticTv = cardView.findViewById(R.id.tv_phonetic);
+		phoneticTv.setTypeface(TypefaceUtil.TYPE_UNICODE_IPI_AC);
 		TextView explainTv = cardView.findViewById(R.id.tv_explain);
 		Word word = data.get(CheckUtil.checkElementIndex(position, data.size()));
 		wordTv.setText(word.getWord());

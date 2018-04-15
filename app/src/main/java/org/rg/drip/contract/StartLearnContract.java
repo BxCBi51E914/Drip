@@ -18,6 +18,11 @@ public interface StartLearnContract {
 		 * 更新卡片的数据
 		 */
 		void updateSwipeCardsView(List<Word> data);
+
+		/**
+		 * 显示或者隐藏加载对话框
+		 */
+		void showLoadingTipDialog(boolean bShow);
 	}
 	
 	interface Presenter extends BasePresenter {
@@ -25,6 +30,6 @@ public interface StartLearnContract {
 		/**
 		 * 获取数据
 		 */
-		List<Word> getData();
+		void updateCardsData();
 	}
 }

@@ -1,5 +1,7 @@
 package org.rg.drip.data.model.local;
 
+import android.support.annotation.NonNull;
+
 import org.rg.drip.data.contract.ModelContract;
 import org.rg.drip.data.model.cache.Word;
 
@@ -12,8 +14,8 @@ import io.realm.annotations.PrimaryKey;
  */
 public class WordL extends RealmObject implements ModelContract.Cache<Word> {
 
-	@PrimaryKey
 	private Integer id;         // 单词 id, 从1开始自增
+	@PrimaryKey
 	private String word;        // 单词名称
 	private String phonetic;    // 音标
 	private String explain;     // 中文释义

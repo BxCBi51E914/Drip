@@ -1,32 +1,30 @@
-package org.rg.drip.fragment.second;
+package org.rg.drip.fragment.custom;
 
 import android.os.Bundle;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.fragment.first.child.FirstHomeFragment;
-import org.rg.drip.fragment.second.child.ViewPagerFragment;
-import org.rg.drip.fragment.second.child.childpager.FirstPagerFragment;
+import org.rg.drip.fragment.custom.child.ViewPagerFragment;
 
 /**
  * Created by TankGq
  * on 2018/3/20.
  */
-public class ZhihuSecondFragment extends BaseMainFragment
+public class CustomMainFragment extends BaseMainFragment
 		implements BaseMainFragment.OnBackToFirstListener {
 
-	public static ZhihuSecondFragment newInstance() {
+	public static CustomMainFragment newInstance() {
 
 		Bundle args = new Bundle();
 
-		ZhihuSecondFragment fragment = new ZhihuSecondFragment();
+		CustomMainFragment fragment = new CustomMainFragment();
 		fragment.setArguments(args);
 		return fragment;
 	}
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.zhihu_fragment_second;
+		return R.layout.fragment_custom_main;
 	}
 
 	@Override
@@ -37,7 +35,7 @@ public class ZhihuSecondFragment extends BaseMainFragment
 	@Override
 	protected void initViewOnActivityCreated() {
 		if(findChildFragment(ViewPagerFragment.class) == null) {
-			loadRootFragment(R.id.fl_second_container, ViewPagerFragment.newInstance());
+			loadRootFragment(R.id.fragment_custom_container, ViewPagerFragment.newInstance());
 		}
 	}
 

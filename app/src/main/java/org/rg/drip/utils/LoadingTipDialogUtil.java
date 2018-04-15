@@ -12,10 +12,10 @@ import org.rg.drip.R;
  * on 2018/4/3.
  */
 public class LoadingTipDialogUtil {
-	
+
 	private static QMUITipDialog mLoadingTipDialog;
 	public static int mContextHashCode = 0;
-	
+
 	public static void show(Context context) {
 		if(context == null) {
 			LoggerUtil.e("Context is null");
@@ -23,14 +23,14 @@ public class LoadingTipDialogUtil {
 		}
 		int contextHashCode = context.hashCode();
 		if(mLoadingTipDialog == null || contextHashCode != mContextHashCode) {
-			if(mLoadingTipDialog != null)   dismiss();
+			if(mLoadingTipDialog != null) dismiss();
 			mLoadingTipDialog = new QMUITipDialog.CustomBuilder(context)
-					.setContent(R.layout.tip_loading)
-					.create();
+					                    .setContent(R.layout.tip_loading)
+					                    .create();
 		}
 		mLoadingTipDialog.show();
 	}
-	
+
 	public static void dismiss() {
 		if(null == mLoadingTipDialog || ! mLoadingTipDialog.isShowing()) {
 			return;

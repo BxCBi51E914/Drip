@@ -56,10 +56,13 @@
     <string name="tip_unknown_error">未知错误</string>
     <string name="tip_save_succeed">保存成功</string>
     <string name="tip_save_failed">保存失败</string>
+    <string name="tip_create_failed">创建失败</string>
+    <string name="tip_create_succeed">创建成功</string>
     <string name="tip_default_wordbook">默认单词本</string>
     <string name="tip_my_wordbook">用户的单词本</string>
     <string name="tip_total_word">单词总数\n%d</string>
     <string name="tip_current_target">今天需要学习 %d 个单词, 复习 %d 个单词</string>
+    <string name="tip_Lexical_item">词条</string>
     <string name="brackets_unverified">(未验证)</string>
 
     <string name="act_sign_out">退出登录</string>
@@ -70,6 +73,7 @@
     <string name="act_browse_in_card">卡片浏览</string>
     <string name="act_word_list">单词列表</string>
     <string name="act_review_setting">复习设置</string>
+    <string name="act_add_Lexical_item">添加词条</string>
 
     <string name="tab_complete_progress">完成进度</string>
     <string name="tab_learning_progress">学习进度</string>
@@ -85,6 +89,7 @@
     <string name="chk_send">发送</string>
     <string name="chk_out">退出</string>
 
+    <string name="custom_learn">自定义学习</string>
     <string name="reading">阅读</string>
     <string name="discover">发现</string>
     <string name="shop">商店</string>

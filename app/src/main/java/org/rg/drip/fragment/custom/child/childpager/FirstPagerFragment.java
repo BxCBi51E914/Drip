@@ -1,4 +1,4 @@
-package org.rg.drip.fragment.second.child.childpager;
+package org.rg.drip.fragment.custom.child.childpager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.R;
 import org.rg.drip.adapter.HomeAdapter;
 import org.rg.drip.entity.Article;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.listener.OnItemClickListener;
-import org.rg.drip.fragment.second.child.DetailFragment;
+import org.rg.drip.fragment.custom.child.DetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class FirstPagerFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FirstPagerFragment extends BaseSubFragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
     private HomeAdapter mAdapter;
@@ -46,7 +47,17 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
         return fragment;
     }
 
-    @Nullable
+	@Override
+	protected int getContentViewLayoutID() {
+		return 0;
+	}
+
+	@Override
+	protected void initView(Bundle savedInstanceState) {
+
+	}
+
+	@Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
 		    Bundle savedInstanceState) {
@@ -71,13 +82,10 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                // 这里的DetailFragment在flow包里
-                // 这里是父Fragment启动,要注意 栈层级
-                ((SupportFragment) getParentFragment()).start(DetailFragment.newInstance(mAdapter.getItem(position).getTitle()));
-            }
+        mAdapter.setOnItemClickListener((position, view1, vh) -> {
+            // 这里的DetailFragment在flow包里
+            // 这里是父Fragment启动,要注意 栈层级
+            ((SupportFragment) getParentFragment()).start(DetailFragment.newInstance(mAdapter.getItem(position).getTitle()));
         });
 
         // Init Datas
@@ -87,7 +95,7 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
             Article article = new Article(mTitles[index], mContents[index]);
             articleList.add(article);
         }
-        mAdapter.setDatas(articleList);
+        mAdapter.setData(articleList);
 
         mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

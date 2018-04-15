@@ -75,7 +75,7 @@ public class BmobUtil {
 		int batchCount = getBatchCount(size, maxSize);
 		
 		for(int idx = 0; idx < batchCount; ++ idx) {
-			result.add(data.subList(idx * maxSize, (idx + 1) * maxSize));
+			result.add(data.subList(idx * maxSize, Math.min((idx + 1) * maxSize, size)));
 		}
 		return result;
 	}
@@ -98,7 +98,7 @@ public class BmobUtil {
 	 * 获得需要多少批次
 	 */
 	public static int getBatchCount(int dataSize, int maxSize) {
-		maxSize = Math.min(maxSize, BmobConstant.BATCH_MAX_COUNT);
+//		maxSize = Math.min(maxSize, BmobConstant.BATCH_MAX_COUNT);
 		return (dataSize + maxSize - 1) / maxSize;
 	}
 	

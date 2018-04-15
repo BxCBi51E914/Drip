@@ -2,11 +2,10 @@ package org.rg.drip;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
-import org.rg.drip.constant.ConfigConstant;
 import org.rg.drip.data.contract.UserContract;
 import org.rg.drip.data.model.cache.User;
-import org.rg.drip.data.model.local.UserL;
 import org.rg.drip.utils.BmobUtil;
 import org.rg.drip.utils.ConfigUtil;
 import org.rg.drip.utils.FragmentationUtil;
@@ -14,6 +13,7 @@ import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RealmUtil;
 import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.StethoUtil;
+import org.rg.drip.utils.TypefaceUtil;
 
 /**
  * Created by TankGq
@@ -23,6 +23,7 @@ public class DripApplication extends Application {
 
 	private static DripApplication mInstance;
 
+	@NonNull
 	public static DripApplication getInstance() {
 		return mInstance;
 	}
@@ -36,6 +37,7 @@ public class DripApplication extends Application {
 		RealmUtil.initialize(context);
 		StethoUtil.initialize(context);
 		FragmentationUtil.initialize();
+		TypefaceUtil.initialize(context);
 	}
 
 	@Override

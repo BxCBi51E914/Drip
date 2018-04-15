@@ -15,6 +15,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseFragment;
 import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.constant.UIConstant;
 import org.rg.drip.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class WordCountFragment extends BaseSubFragment implements BaseFragment.O
 		l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
 		l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
 		l.setDrawInside(false);
-		l.setFormSize(8f);
+		l.setFormSize(13f);
 		l.setFormToTextSpace(4f);
 		l.setXEntrySpace(6f);
 	}
@@ -118,6 +119,7 @@ public class WordCountFragment extends BaseSubFragment implements BaseFragment.O
 
 			BarData data = new BarData(dataSets);
 			data.setValueTextColor(getResources().getColor(R.color.colorPrimary));
+			data.setValueTextSize(10f);
 
 			mBarChart.setData(data);
 		}
@@ -146,7 +148,7 @@ public class WordCountFragment extends BaseSubFragment implements BaseFragment.O
 		if(mBarChart == null) {
 			return;
 		}
-		mBarChart.animateXY(1500, 1500);
+		mBarChart.animateXY(UIConstant.CHART_ANIMATOR_DURATION, UIConstant.CHART_ANIMATOR_DURATION);
 	}
 
 	@Override

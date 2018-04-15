@@ -5,48 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <com.qmuiteam.qmui.widget.QMUIAppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
+        android:layout_height="256dp"
         android:background="@android:color/white"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:fitsSystemWindows="true"
         app:elevation="0dp">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:qmui_collapsedTitleGravity="center"
+            app:qmui_contentScrim="?attr/qmui_config_color_blue"
+            app:qmui_expandedTitleGravity="center_horizontal|bottom"
+            app:qmui_expandedTitleTextAppearance="@style/Toolbar_TextAppearance_Expanded"
+            app:qmui_collapsedTitleTextAppearance="@style/Toolbar_TextAppearance_White"
+            app:qmui_expandedTitleMarginBottom="16dp"
+            app:qmui_expandedTitleMarginEnd="16dp"
+            app:qmui_expandedTitleMarginStart="16dp"
+            app:qmui_statusBarScrim="?attr/qmui_config_color_blue">
 
             <ImageView
                 android:id="@+id/img_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fitsSystemWindows="false"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_second"
-                android:transitionName="@string/image_transition"/>
+                android:transitionName="@string/image_transition"
+                app:qmui_layout_collapseMode="parallax"
+                app:qmui_layout_collapseParallaxMultiplier="0.7"/>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <com.qmuiteam.qmui.widget.QMUITopBar
+                android:id="@+id/top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                android:fitsSystemWindows="true"
+                app:qmui_layout_collapseMode="pin"
+                app:qmui_topbar_bg_color="@color/qmui_config_color_transparent"
+                app:qmui_topbar_need_separator="false"/>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+        </com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout>
+    </com.qmuiteam.qmui.widget.QMUIAppBarLayout>
 
-    <include layout="@layout/content_detail"/>
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/fragment_detail">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="mini"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_arrow_forward_white_24dp"/>
+        <com.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textColor="@color/qmui_config_color_pure_black"
+            android:textSize="18sp"
+            android:transitionName="tv"/>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

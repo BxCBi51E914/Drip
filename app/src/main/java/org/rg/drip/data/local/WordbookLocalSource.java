@@ -1,17 +1,13 @@
 package org.rg.drip.data.local;
 
-import org.reactivestreams.Publisher;
-import org.rg.drip.constant.BmobConstant;
 import org.rg.drip.constant.RealmConstant;
-import org.rg.drip.constant.WordConstant;
 import org.rg.drip.constant.WordbookConstant;
-import org.rg.drip.data.contract.WordBookContract;
+import org.rg.drip.data.contract.WordbookContract;
 import org.rg.drip.data.model.cache.WordLink;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.local.WordLinkL;
 import org.rg.drip.data.model.local.WordbookL;
 import org.rg.drip.data.model.remote.WordLinkR;
-import org.rg.drip.utils.BmobUtil;
 import org.rg.drip.utils.CheckUtil;
 import org.rg.drip.utils.RealmUtil;
 
@@ -20,16 +16,13 @@ import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Author : TankGq
  * Time : 2018/4/12
  */
-public class WordbookLocalSource implements WordBookContract.Local {
+public class WordbookLocalSource implements WordbookContract.Local {
 
 	private static WordbookLocalSource mInstance = null;
 
@@ -54,7 +47,8 @@ public class WordbookLocalSource implements WordBookContract.Local {
 		                .findFirstAsync()
 		                .asFlowable()
 		                .filter(WordbookL::isLoaded)
-		                .map(wordbookL -> ((WordbookL) wordbookL).convertToCache());
+		                .map(wordbookL -> ((WordbookL) wordbookL).convertToCache())
+		                .observeOn(AndroidSchedulers.mainThread());
 	}
 
 	@Override

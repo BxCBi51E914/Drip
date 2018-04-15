@@ -21,6 +21,12 @@ public class CheckUtil {
 			return reference;
 		}
 	}
+	private static final String NAME_REGEX = "^[a-zA-Z0-9_]+[a-zA-Z0-9_ ]*$";
+	private static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);
+
+	public static boolean checkName(String name) {
+		return ! (null == name || name.length() == 0) && NAME_PATTERN.matcher(name).matches();
+	}
 
 	public static int checkElementIndex(int index, int size) {
 		if(index >= 0 && index < size) {

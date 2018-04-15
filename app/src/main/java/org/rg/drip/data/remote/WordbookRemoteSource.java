@@ -4,13 +4,12 @@ import org.rg.drip.constant.BmobConstant;
 import org.rg.drip.constant.WordConstant;
 import org.rg.drip.constant.WordLinkConstant;
 import org.rg.drip.constant.WordbookConstant;
-import org.rg.drip.data.contract.WordBookContract;
+import org.rg.drip.data.contract.WordbookContract;
 import org.rg.drip.data.model.cache.User;
 import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.data.model.cache.WordLink;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.data.model.remote.WordLinkR;
-import org.rg.drip.data.model.remote.WordR;
 import org.rg.drip.data.model.remote.WordbookR;
 import org.rg.drip.utils.BmobQueryUtil;
 import org.rg.drip.utils.BmobUtil;
@@ -42,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by TankGq
  * on 2018/4/10.
  */
-public class WordbookRemoteSource implements WordBookContract.Remote {
+public class WordbookRemoteSource implements WordbookContract.Remote {
 	
 	private static WordbookRemoteSource mInstance = null;
 	
@@ -296,9 +295,9 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 						return;
 					}
 					int size = list.size();
-					List<WordLink> wordLinks = new ArrayList<>(size);
+					List<WordLink> wordLinks = new ArrayList<>();
 					for(int idx = 0; idx < size; ++ idx) {
-						wordLinks.set(idx, list.get(idx).convertToCache());
+						wordLinks.add(list.get(idx).convertToCache());
 					}
 					emitter.onNext(wordLinks);
 					emitter.onComplete();
@@ -414,7 +413,7 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 			LoggerUtil.e(limit + " > BmobConstant.LIMIT_MAX_COUNT");
 			return Flowable.empty();
 		}
-		return Flowable.create(emitter -> {
+		return Flowable.<List<WordLink>>create(emitter -> {
 			new BmobQueryUtil<WordLinkR>().add(new BmobQuery<WordLinkR>().addWhereEqualTo(
 					WordLinkConstant.FIELD_WORDBOOK_CODE,
 					wordbook.getCode()))
@@ -428,7 +427,6 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 				                              @Override
 				                              public void done(List<WordLinkR> list,
 				                                               BmobException e) {
-					
 					                              if(e != null) {
 						                              BmobUtil.logErrorInfo(e);
 						                              emitter.onError(e);
@@ -437,14 +435,19 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 					                              int size = list.size();
 					                              List<WordLink> wordLinks = new ArrayList<>(size);
 					                              for(int idx = 0; idx < size; ++ idx) {
-						                              wordLinks.set(idx,
-						                                            list.get(idx).convertToCache());
+						                              wordLinks.add(list.get(idx).convertToCache());
 					                              }
 					                              emitter.onNext(wordLinks);
 					                              emitter.onComplete();
 				                              }
 			                              });
-		}, BackpressureStrategy.BUFFER);
+		}, BackpressureStrategy.BUFFER).retryWhen(attempts -> attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
+			LoggerUtil.d("skip: " + skip + ", error: " + throwable.getMessage());
+			if(throwable.getMessage().contains("Qps beyond the limit")) {
+				return Flowable.just(1).delay(BmobConstant.QPS_WAIT_TIME, TimeUnit.SECONDS);
+			}
+			return Flowable.error(throwable);
+		}));
 	}
 	
 	/**
@@ -462,20 +465,10 @@ public class WordbookRemoteSource implements WordBookContract.Remote {
 		final int limit = BmobConstant.BATCH_MAX_COUNT;
 		// 因为是 zipWith, 如果这边直接赋值成 Flowable.empty() 的话就会导致 zip 后不发送任何数据
 		Flowable<List<WordLink>> zipFlowable = Flowable.just(new ArrayList<>());
-		Flowable<List<WordLink>> flowable;
 		for(int idx = 0; idx < zipCount; ++ idx) {
 			final int curSkip = skip + idx * limit;
 			// 如果因为 QPS 导致请求失败, 则等待 BmobConstant.QPS_WAIT_TIME 秒后重试
-			flowable = getWordsPiece(wordbook,
-			                         limit,
-			                         curSkip).retryWhen(attempts -> attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
-				LoggerUtil.d("curSkip: " + curSkip + ", error: " + throwable.getMessage());
-				if(throwable.getMessage().contains("Qps beyond the limit")) {
-					return Flowable.just(1).delay(BmobConstant.QPS_WAIT_TIME, TimeUnit.SECONDS);
-				}
-				return Flowable.error(throwable);
-			}));
-			zipFlowable = zipFlowable.zipWith(flowable, (wordLinks, wordLinks2) -> {
+			zipFlowable = zipFlowable.zipWith(getWordsPiece(wordbook, limit, curSkip), (wordLinks, wordLinks2) -> {
 				wordLinks.addAll(wordLinks2);
 				return wordLinks;
 			});

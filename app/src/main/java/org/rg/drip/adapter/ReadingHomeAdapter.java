@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,14 +20,15 @@ import java.util.List;
  * Created by TankGq
  * on 16/6/5.
  */
-public class FirstHomeAdapter extends RecyclerView.Adapter<FirstHomeAdapter.VH> {
+public class ReadingHomeAdapter extends RecyclerView.Adapter<ReadingHomeAdapter.VH> {
+
     private List<Article> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
 
 
-    public FirstHomeAdapter(Context context) {
+    public ReadingHomeAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
@@ -36,13 +36,10 @@ public class FirstHomeAdapter extends RecyclerView.Adapter<FirstHomeAdapter.VH> 
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_zhihu_home_first, parent, false);
         final VH holder = new VH(view);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (mClickListener != null) {
-                    mClickListener.onItemClick(position, v, holder);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            int position = holder.getAdapterPosition();
+            if (mClickListener != null) {
+                mClickListener.onItemClick(position, v, holder);
             }
         });
         return holder;
@@ -85,8 +82,8 @@ public class FirstHomeAdapter extends RecyclerView.Adapter<FirstHomeAdapter.VH> 
 
         public VH(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            img = (ImageView) itemView.findViewById(R.id.img);
+            tvTitle = itemView.findViewById(R.id.tv_title);
+            img = itemView.findViewById(R.id.img);
         }
     }
 }

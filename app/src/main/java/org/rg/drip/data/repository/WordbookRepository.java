@@ -3,9 +3,7 @@ package org.rg.drip.data.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.reactivestreams.Publisher;
-import org.rg.drip.constant.ConfigConstant;
-import org.rg.drip.data.contract.WordBookContract;
+import org.rg.drip.data.contract.WordbookContract;
 import org.rg.drip.data.model.cache.User;
 import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.data.model.cache.WordLink;
@@ -16,31 +14,29 @@ import org.rg.drip.utils.ConfigUtil;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by TankGq
  * on 2018/4/13.
  */
-public class WordbookRepository implements WordBookContract.Repository {
+public class WordbookRepository implements WordbookContract.Repository {
 
-	@NonNull private static WordBookContract.Remote mWordbookRemoteSource;
-	@NonNull private static WordBookContract.Local mWordbookLocalSource;
-	@Nullable private static WordBookContract.Repository mInstance = null;
+	@NonNull private static WordbookContract.Remote mWordbookRemoteSource;
+	@NonNull private static WordbookContract.Local mWordbookLocalSource;
+	@Nullable private static WordbookContract.Repository mInstance = null;
 
 	private Wordbook mCurrentWordbook = null;
 
-	private WordbookRepository(@NonNull WordBookContract.Remote wordbookRemoteSource,
-	                           @NonNull WordBookContract.Local wordbookLocalSource) {
+	private WordbookRepository(@NonNull WordbookContract.Remote wordbookRemoteSource,
+	                           @NonNull WordbookContract.Local wordbookLocalSource) {
 		mWordbookRemoteSource = CheckUtil.checkNotNull(wordbookRemoteSource);
 		mWordbookLocalSource = CheckUtil.checkNotNull(wordbookLocalSource);
 	}
 
-	public static WordBookContract.Repository getInstance(
-			                                                     @NonNull WordBookContract.Remote wordbookRemoteSource,
-			                                                     @NonNull WordBookContract.Local wordbookLocalSource) {
+	public static WordbookContract.Repository getInstance(@NonNull WordbookContract.Remote wordbookRemoteSource,
+	                                                      @NonNull WordbookContract.Local wordbookLocalSource) {
 		if(mInstance == null) {
 			mInstance = new WordbookRepository(wordbookRemoteSource, wordbookLocalSource);
 		}
@@ -58,24 +54,20 @@ public class WordbookRepository implements WordBookContract.Repository {
 
 	@Override
 	public Flowable<Wordbook> getCurrentWordBook() {
-		Flowable<Wordbook> cache = Flowable.just(mCurrentWordbook)
-		                                   .flatMap(wordbook -> {
-			                                   if(wordbook == null) {
-				                                   return Flowable.empty();
-			                                   }
-			                                   return Flowable.just(wordbook);
-		                                   });
+		if(mCurrentWordbook != null) {
+			return Flowable.just(mCurrentWordbook);
+		}
 		Wordbook currentWordbook = ConfigUtil.getCurrentWordBook();
-		Flowable<Wordbook> local = mWordbookLocalSource.getWordbook(currentWordbook)
-		                                               .doOnNext(wordbook -> mCurrentWordbook = wordbook);
-		Flowable<Wordbook> remote = mWordbookRemoteSource.getWordbook(currentWordbook).doOnNext(
-				wordbook -> mWordbookLocalSource.storeWordbook(wordbook)
-				                                .subscribeOn(Schedulers.io())
-				                                .observeOn(Schedulers.io())
-				                                .subscribe()
-		);
-		return cache.switchIfEmpty(local)
-		            .switchIfEmpty(remote);
+//		Flowable<Wordbook> local = mWordbookLocalSource.getWordbook(currentWordbook)
+//		                                               .doOnNext(wordbook -> mCurrentWordbook = wordbook);
+		Flowable<Wordbook> local = Flowable.empty();
+		Flowable<Wordbook> remote = mWordbookRemoteSource.getWordbook(currentWordbook);//.doOnNext(
+//				wordbook -> mWordbookLocalSource.storeWordbook(wordbook)
+//				                                .subscribeOn(Schedulers.io())
+//				                                .observeOn(AndroidSchedulers.mainThread())
+//				                                .subscribe()
+//		);
+		return local.switchIfEmpty(remote);
 	}
 
 	@Override
@@ -91,10 +83,11 @@ public class WordbookRepository implements WordBookContract.Repository {
 		Flowable<Wordbook> local = mWordbookLocalSource.getWordbook(currentWordbook)
 		                                               .doOnNext(wordbook2 -> mCurrentWordbook = wordbook);
 		Flowable<Wordbook> remote = mWordbookRemoteSource.getWordbook(currentWordbook).doOnNext(
-				wordbook3 -> mWordbookLocalSource.storeWordbook(wordbook)
-				                                 .subscribeOn(Schedulers.io())
-				                                 .observeOn(Schedulers.io())
-				                                 .subscribe()
+//				wordbook3 -> mWordbookLocalSource.storeWordbook(wordbook)
+//				                                 .subscribeOn(Schedulers.io())
+//				                                 .observeOn(Schedulers.io())
+//				                                 .subscribe()
+				wordbook3 -> mCurrentWordbook = wordbook3
 		);
 		return cache.switchIfEmpty(local)
 		            .switchIfEmpty(remote);
@@ -130,7 +123,7 @@ public class WordbookRepository implements WordBookContract.Repository {
 	                                              int state,
 	                                              int skip,
 	                                              int limit) {
-		return null;
+		return mWordbookRemoteSource.getWordsByState(wordbook, state, skip, limit);
 	}
 
 	@Override

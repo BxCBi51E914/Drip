@@ -21,8 +21,32 @@ public class MessageEventConstant {
 	public static final MessageEvent UPDATE_SELECT_WORDBOOK_NAME_EVENT = new MessageEvent(UPDATE_SELECT_WORDBOOK_NAME);
 
 	/**
-	 * 隐藏选择单词本的 UI
+	 * 隐藏选择单词本的界面
 	 */
 	public static final int HIDE_CHOOSE_WORDBOOK = 3;
 	public static final MessageEvent HIDE_CHOOSE_WORDBOOK_EVENT = new MessageEvent(HIDE_CHOOSE_WORDBOOK);
+
+	/**
+	 * 显示开始学习的界面
+	 */
+	public static final int SHOW_START_LEARN = 4;
+	public static final MessageEvent SHOW_START_LEARN_EVENT = new MessageEvent(SHOW_START_LEARN);
+
+	/**
+	 * 隐藏开始学习的界面
+	 */
+	public static final int HIDE_START_LEARN = 5;
+	public static final MessageEvent HIDE_START_LEARN_EVENT = new MessageEvent(HIDE_START_LEARN);
+
+	/**
+	 * 显示卡片浏览的界面
+	 */
+	public static final int SHOW_BROWSE_IN_CARD = 6;
+	public static final MessageEvent SHOW_BROWSE_IN_CARD_EVENT = new MessageEvent(SHOW_BROWSE_IN_CARD);
+
+	/**
+	 * 隐藏卡片浏览的界面
+	 */
+	public static final int HIDE_BROWSE_IN_CARD = 7;
+	public static final MessageEvent HIDE_BROWSE_IN_CARD_EVENT = new MessageEvent(HIDE_BROWSE_IN_CARD);
 }

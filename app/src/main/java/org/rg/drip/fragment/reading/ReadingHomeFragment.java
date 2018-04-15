@@ -1,4 +1,4 @@
-package org.rg.drip.fragment.first.child;
+package org.rg.drip.fragment.reading;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 import org.greenrobot.eventbus.Subscribe;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.R;
-import org.rg.drip.adapter.FirstHomeAdapter;
+import org.rg.drip.adapter.ReadingHomeAdapter;
 import org.rg.drip.entity.Article;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.helper.DetailTransition;
@@ -31,13 +31,13 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Created by TankGq
  * on 2018/3/20.
  */
-public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ReadingHomeFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
     private Toolbar mToolbar;
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
     private FloatingActionButton mFab;
 
-    private FirstHomeAdapter mAdapter;
+    private ReadingHomeAdapter mAdapter;
 
     private boolean mInAtTop = true;
     private int mScrollTotal;
@@ -55,11 +55,11 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
     };
 
 
-    public static FirstHomeFragment newInstance() {
+    public static ReadingHomeFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        FirstHomeFragment fragment = new FirstHomeFragment();
+        ReadingHomeFragment fragment = new ReadingHomeFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,13 +85,13 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRefreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new FirstHomeAdapter(_mActivity);
+        mAdapter = new ReadingHomeAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener((position, view1, vh) -> {
-            FirstDetailFragment fragment = FirstDetailFragment.newInstance(mAdapter.getItem(position));
+            ReadingDetailFragment fragment = ReadingDetailFragment.newInstance(mAdapter.getItem(position));
 
             // 这里是使用SharedElement的用例
             // LOLLIPOP(5.0)系统的 SharedElement支持有 系统BUG， 这里判断大于 > LOLLIPOP
@@ -103,8 +103,8 @@ public class FirstHomeFragment extends SupportFragment implements SwipeRefreshLa
             // 25.1.0以下的support包,Material过渡动画只有在进栈时有,返回时没有;
             // 25.1.0+的support包，SharedElement正常
             extraTransaction()
-                    .addSharedElement(((FirstHomeAdapter.VH) vh).img, getString(R.string.image_transition))
-                    .addSharedElement(((FirstHomeAdapter.VH) vh).tvTitle, "tv")
+                    .addSharedElement(((ReadingHomeAdapter.VH) vh).img, getString(R.string.image_transition))
+                    .addSharedElement(((ReadingHomeAdapter.VH) vh).tvTitle, "tv")
                     .replace(fragment);
         });
 

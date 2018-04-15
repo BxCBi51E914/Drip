@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YoKeyword on 16/2/10.
+ * Created by TankGq
+ * word on 18/2/10.
  */
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> {
     private LayoutInflater mInflater;
@@ -45,13 +46,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.item_menu, parent, false);
         final MyViewHolder holder = new MyViewHolder(view);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                if (mClickListener != null) {
-                    mClickListener.onItemClick(position, v, holder);
-                }
+        holder.itemView.setOnClickListener(v -> {
+            int position = holder.getAdapterPosition();
+            if (mClickListener != null) {
+                mClickListener.onItemClick(position, v, holder);
             }
         });
         return holder;
@@ -95,7 +93,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
         public MyViewHolder(View itemView) {
             super(itemView);
             viewLine = itemView.findViewById(R.id.view_line);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
+            tvName = itemView.findViewById(R.id.tv_name);
         }
     }
 

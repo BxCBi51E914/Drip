@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.rg.drip.R;
+import org.rg.drip.base.BaseFragment;
 import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.MessageEventConstant;
 import org.rg.drip.constant.UIConstant;
@@ -19,6 +20,7 @@ import org.rg.drip.event.MessageEvent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
  * Author : TankGq
@@ -90,7 +92,7 @@ public class WordbookMainFragment extends BaseMainFragment
 		} else {
 //			popToChild(ChooseWordbookFragment.class, false);
 			QMUIViewHelper.fadeIn(chooseWordbookFragment.getView(),
-			                      UIConstant.CHOOSE_WORDBOOK_ANIMATOR_DURATION,
+			                      UIConstant.FADE_ANIMATOR_DURATION,
 			                      null,
 			                      true);
 		}
@@ -125,6 +127,42 @@ public class WordbookMainFragment extends BaseMainFragment
 			return;
 		}
 		showChooseWordbookBt(true);
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void showStartLearnFragment(MessageEvent event) {
+		if(event.getCode() != MessageEventConstant.SHOW_START_LEARN) {
+			return;
+		}
+
+		Fragment startLearnFragment = findChildFragment(StartLearningFragment.class);
+		if(startLearnFragment == null) {
+			loadRootFragment(R.id.fragment_wordbook_container_full, StartLearningFragment.newInstance());
+		} else {
+//			popToChild(StartLearningFragment.class, false);
+			QMUIViewHelper.fadeIn(startLearnFragment.getView(),
+			                      UIConstant.FADE_ANIMATOR_DURATION,
+			                      null,
+			                      true);
+		}
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void showBrowseInCardFragment(MessageEvent event) {
+		if(event.getCode() != MessageEventConstant.SHOW_BROWSE_IN_CARD) {
+			return;
+		}
+
+		BaseFragment browseInCardFragment = findChildFragment(BrowseInCardFragment.class);
+		if(browseInCardFragment == null) {
+			loadRootFragment(R.id.fragment_wordbook_container_full, BrowseInCardFragment.newInstance());
+		} else {
+//			popToChild(StartLearningFragment.class, false);
+			QMUIViewHelper.fadeIn(browseInCardFragment.getView(),
+			                      UIConstant.FADE_ANIMATOR_DURATION,
+			                      null,
+			                      true);
+		}
 	}
 
 	/**

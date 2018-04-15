@@ -1,4 +1,4 @@
-package org.rg.drip.fragment.second.child.childpager;
+package org.rg.drip.fragment.custom.child.childpager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

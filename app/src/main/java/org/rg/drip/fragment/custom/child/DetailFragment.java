@@ -1,4 +1,4 @@
-package org.rg.drip.fragment.second.child;
+package org.rg.drip.fragment.custom.child;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

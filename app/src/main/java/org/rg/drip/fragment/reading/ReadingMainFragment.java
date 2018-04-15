@@ -1,21 +1,20 @@
-package org.rg.drip.fragment.first;
+package org.rg.drip.fragment.reading;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
-import org.rg.drip.fragment.first.child.FirstHomeFragment;
 
 /**
  * Created by TankGq
  * on 2018/3/20.
  */
-public class ZhihuFirstFragment extends BaseMainFragment
+public class ReadingMainFragment extends BaseMainFragment
 		implements BaseMainFragment.OnBackToFirstListener {
 
-	public static ZhihuFirstFragment newInstance() {
-		ZhihuFirstFragment fragment = new ZhihuFirstFragment();
+	public static ReadingMainFragment newInstance() {
+		ReadingMainFragment fragment = new ReadingMainFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
@@ -34,15 +33,15 @@ public class ZhihuFirstFragment extends BaseMainFragment
 	public void onLazyInitView(@Nullable Bundle savedInstanceState) {
 		super.onLazyInitView(savedInstanceState);
 
-		if(findChildFragment(FirstHomeFragment.class) == null) {
-			loadRootFragment(R.id.fl_first_container, FirstHomeFragment.newInstance());
+		if(findChildFragment(ReadingHomeFragment.class) == null) {
+			loadRootFragment(R.id.fl_first_container, ReadingHomeFragment.newInstance());
 		}
 	}
 
 	@Override
 	public void onBackToFirstFragment() {
 		if(this.getChildFragmentManager().getBackStackEntryCount() > 1) {
-			this.popToChild(FirstHomeFragment.class, false);
+			this.popToChild(ReadingHomeFragment.class, false);
 		}
 	}
 }

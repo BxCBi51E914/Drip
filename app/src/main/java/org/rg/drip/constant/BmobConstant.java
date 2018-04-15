@@ -19,7 +19,7 @@ public class BmobConstant {
 	/**
 	 * 批量操作最多能执行的条数
 	 */
-	public static final int BATCH_MAX_COUNT = 50;
+	public static final int BATCH_MAX_COUNT = 64;
 	
 	/**
 	 * 每次查询能获得的数据的最大个数

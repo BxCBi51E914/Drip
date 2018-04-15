@@ -15,7 +15,7 @@ import io.reactivex.Single;
  * Created by TankGq
  * on 2018/4/10.
  */
-public class WordBookContract {
+public class WordbookContract {
 
 	public interface Local {
 

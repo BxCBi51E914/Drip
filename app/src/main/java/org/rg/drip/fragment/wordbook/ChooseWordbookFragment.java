@@ -132,7 +132,7 @@ public class ChooseWordbookFragment extends BaseSubFragment implements CompoundB
 			return;
 		}
 		QMUIViewHelper.fadeOut(this.getView(),
-		                       UIConstant.CHOOSE_WORDBOOK_ANIMATOR_DURATION,
+		                       UIConstant.FADE_ANIMATOR_DURATION,
 		                       null,
 		                       true);
 	}

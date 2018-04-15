@@ -86,7 +86,6 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		LoggerUtil.d("qwe");
 		mPresenter = new AvatarPresenter(RepositoryUtil.getUserRepository(), this);
 		mPresenter.updateSignInUser();
 		List<String> popupItemData = Arrays.asList(getString(R.string.act_sign_out),
@@ -94,7 +93,7 @@ public class AvatarFragment extends BaseSubFragment implements AvatarContract.Vi
 		                                           getString(R.string.act_change_email));
 		mListPopup = new QMUIListPopup(getContext(),
 		                               QMUIPopup.DIRECTION_BOTTOM,
-		                               new ArrayAdapter<>(getActivity(),
+		                               new ArrayAdapter<>(getContext(),
 		                                                  R.layout.popup_list_item,
 		                                                  popupItemData));
 		mListPopup.create(QMUIDisplayHelper.dp2px(getContext(), UIConstant.AVATAR_POPUP_WIDTH),

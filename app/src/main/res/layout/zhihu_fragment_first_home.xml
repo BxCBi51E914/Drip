@@ -15,8 +15,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recy"
             android:clipChildren="false"
-            android:paddingLeft="-12dp"
-            android:paddingRight="-12dp"
+            android:paddingLeft="-4dp"
+            android:paddingRight="-4dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -28,6 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
         android:src="@drawable/ic_search_white"/>
 </FrameLayout>
