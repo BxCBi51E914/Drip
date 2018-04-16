@@ -58,10 +58,9 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		if(! CheckUtil.checkWordbook(wordbook)) {
 			return Flowable.empty();
 		}
-		return Flowable.create(emitter -> {
+		return Flowable.<Wordbook>create(emitter -> {
 			new BmobQuery<WordbookR>().addWhereEqualTo(WordbookConstant.FIELD_ID, wordbook.getId())
-			                          .addWhereEqualTo(WordbookConstant.FIELD_USER_ID,
-			                                           wordbook.getUserId())
+			                          .addWhereEqualTo(WordbookConstant.FIELD_USER_ID, wordbook.getUserId())
 			                          .findObjects(new FindListener<WordbookR>() {
 				                          @Override
 				                          public void done(List<WordbookR> list, BmobException e) {
@@ -71,12 +70,23 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 						                          return;
 					                          }
 					                          if(null != list && list.size() != 0) {
-						                          emitter.onNext(list.get(0).convertToCache());
+						                          emitter.onNext(list.get(0)
+						                                             .convertToCache());
 					                          }
 					                          emitter.onComplete();
 				                          }
 			                          });
-		}, BackpressureStrategy.BUFFER);
+		}, BackpressureStrategy.BUFFER).retryWhen(attempts -> {
+			return attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
+				LoggerUtil.d("error: " + throwable.getMessage());
+				if(throwable.getMessage()
+				            .contains("Qps beyond the limit")) {
+					return Flowable.just(1)
+					               .delay(BmobConstant.QPS_WAIT_TIME, TimeUnit.SECONDS);
+				}
+				return Flowable.error(throwable);
+			});
+		});
 	}
 	
 	@Override
@@ -86,8 +96,7 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		}
 		return Flowable.create(emitter -> {
 			new BmobQuery<WordbookR>().addWhereEqualTo(WordbookConstant.FIELD_ID, wordbook.getId())
-			                          .addWhereEqualTo(WordbookConstant.FIELD_USER_ID,
-			                                           wordbook.getUserId())
+			                          .addWhereEqualTo(WordbookConstant.FIELD_USER_ID, wordbook.getUserId())
 			                          .count(WordbookR.class, new CountListener() {
 				                          @Override
 				                          public void done(Integer integer, BmobException e) {
@@ -104,8 +113,7 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	}
 	
 	@Override
-	public Flowable<Wordbook> createByDefault(final Wordbook defaultWordbook,
-	                                          final User currentUser) {
+	public Flowable<Wordbook> createByDefault(final Wordbook defaultWordbook, final User currentUser) {
 		if(! CheckUtil.checkWordbook(defaultWordbook, WordbookConstant.TYPE_DEFAULT)) {
 			return Flowable.empty();
 		}
@@ -163,31 +171,35 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		for(int idx = 0; idx < size; ++ idx) {
 			wordLink = new WordLinkR();
 			wordLink.setState(WordConstant.STATE_UNKNOWN);
-			wordLink.setWord(words.get(idx).getWord());
+			wordLink.setWord(words.get(idx)
+			                      .getWord());
 			wordLink.setWordBookCode(wordbookCode);
 			workLinks.set(idx, wordLink);
 		}
 		return Flowable.create(emitter -> {
-			new BmobBatch().insertBatch(workLinks).doBatch(new QueryListListener<BatchResult>() {
-				@Override
-				public void done(List<BatchResult> list, BmobException e) {
-					if(e != null) {
-						BmobUtil.logErrorInfo(e);
-						emitter.onError(e);
-						return;
-					}
-					int size = list.size(), count = 0;
-					for(int idx = 0; idx < size; ++ idx) {
-						if(list.get(idx).isSuccess()) {
-							++ count;
-						} else {
-							BmobUtil.logErrorInfo(list.get(idx).getError());
-						}
-					}
-					emitter.onNext(count);
-					emitter.onComplete();
-				}
-			});
+			new BmobBatch().insertBatch(workLinks)
+			               .doBatch(new QueryListListener<BatchResult>() {
+				               @Override
+				               public void done(List<BatchResult> list, BmobException e) {
+					               if(e != null) {
+						               BmobUtil.logErrorInfo(e);
+						               emitter.onError(e);
+						               return;
+					               }
+					               int size = list.size(), count = 0;
+					               for(int idx = 0; idx < size; ++ idx) {
+						               if(list.get(idx)
+						                      .isSuccess()) {
+							               ++ count;
+						               } else {
+							               BmobUtil.logErrorInfo(list.get(idx)
+							                                         .getError());
+						               }
+					               }
+					               emitter.onNext(count);
+					               emitter.onComplete();
+				               }
+			               });
 		}, BackpressureStrategy.BUFFER);
 	}
 	
@@ -209,33 +221,35 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	/**
 	 * 在确保 words.size() <= BmobConstant.BATCH_MAX_COUNT 的前提下批量删除数据
 	 */
-	private Flowable<Integer> deleteWordsPiece(final Wordbook wordbook,
-	                                           final List<BmobObject> wordLinks) {
+	private Flowable<Integer> deleteWordsPiece(final Wordbook wordbook, final List<BmobObject> wordLinks) {
 		if(wordLinks.size() > BmobConstant.BATCH_MAX_COUNT) {
 			LoggerUtil.e("size > BmobConstant.BATCH_MAX_COUNT, size: " + wordLinks.size());
 			return Flowable.empty();
 		}
 		return Flowable.create(emitter -> {
-			new BmobBatch().insertBatch(wordLinks).doBatch(new QueryListListener<BatchResult>() {
-				@Override
-				public void done(List<BatchResult> list, BmobException e) {
-					if(e != null) {
-						BmobUtil.logErrorInfo(e);
-						emitter.onError(e);
-						return;
-					}
-					int size = list.size(), count = 0;
-					for(int idx = 0; idx < size; ++ idx) {
-						if(list.get(idx).isSuccess()) {
-							++ count;
-						} else {
-							BmobUtil.logErrorInfo(list.get(idx).getError());
-						}
-					}
-					emitter.onNext(count);
-					emitter.onComplete();
-				}
-			});
+			new BmobBatch().insertBatch(wordLinks)
+			               .doBatch(new QueryListListener<BatchResult>() {
+				               @Override
+				               public void done(List<BatchResult> list, BmobException e) {
+					               if(e != null) {
+						               BmobUtil.logErrorInfo(e);
+						               emitter.onError(e);
+						               return;
+					               }
+					               int size = list.size(), count = 0;
+					               for(int idx = 0; idx < size; ++ idx) {
+						               if(list.get(idx)
+						                      .isSuccess()) {
+							               ++ count;
+						               } else {
+							               BmobUtil.logErrorInfo(list.get(idx)
+							                                         .getError());
+						               }
+					               }
+					               emitter.onNext(count);
+					               emitter.onComplete();
+				               }
+			               });
 		}, BackpressureStrategy.BUFFER);
 	}
 	
@@ -248,21 +262,16 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		return getWordLinks(wordbook, wordLinks).observeOn(Schedulers.io())
 		                                        .subscribeOn(Schedulers.io())
 		                                        .flatMap(wordLinkRs -> {
-			                                        List<BmobObject>
-					                                        bmobObjects
-					                                        = new ArrayList<>();
+			                                        List<BmobObject> bmobObjects = new ArrayList<>();
 			                                        bmobObjects.addAll(wordLinkRs);
-			                                        List<List<BmobObject>> data = BmobUtil.split(
-					                                        bmobObjects,
-					                                        BmobConstant.BATCH_MAX_COUNT);
-			                                        Flowable<Integer> flowable = deleteWordsPiece(
-					                                        wordbook,
-					                                        data.get(0));
+			                                        List<List<BmobObject>> data = BmobUtil.split(bmobObjects,
+			                                                                                     BmobConstant.BATCH_MAX_COUNT);
+			                                        Flowable<Integer> flowable = deleteWordsPiece(wordbook,
+			                                                                                      data.get(0));
 			                                        int batchCount = data.size();
 			                                        for(int idx = 1; idx < batchCount; ++ idx) {
-				                                        flowable = flowable.concatWith(
-						                                        deleteWordsPiece(wordbook,
-						                                                         data.get(idx)));
+				                                        flowable = flowable.concatWith(deleteWordsPiece(wordbook,
+				                                                                                        data.get(idx)));
 			                                        }
 			                                        return flowable;
 		                                        });
@@ -276,34 +285,47 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		if(! CheckUtil.checkWordbook(wordbook)) {
 			return Flowable.just(new ArrayList<>());
 		}
-		return Flowable.create(emitter -> {
+		return Flowable.<List<WordLink>>create(emitter -> {
 			BmobQuery<WordLinkR> query = new BmobQuery<>();
 			query.addWhereEqualTo(WordLinkConstant.FIELD_STATE, state);
 			if(state == WordConstant.STATE_UNKNOWN) {
-				query.addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
-				                      wordbook.getDefaultCode()).order(WordLinkConstant.FIELD_ID);
+				query.addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE, wordbook.getDefaultCode())
+				     .order(WordLinkConstant.FIELD_ID);
 				
 			} else {
 				query.addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE, wordbook.getCode());
 			}
-			query.setSkip(skip).setLimit(limit).findObjects(new FindListener<WordLinkR>() {
-				@Override
-				public void done(List<WordLinkR> list, BmobException e) {
-					if(e != null) {
-						BmobUtil.logErrorInfo(e);
-						emitter.onError(e);
-						return;
-					}
-					int size = list.size();
-					List<WordLink> wordLinks = new ArrayList<>();
-					for(int idx = 0; idx < size; ++ idx) {
-						wordLinks.add(list.get(idx).convertToCache());
-					}
-					emitter.onNext(wordLinks);
-					emitter.onComplete();
+			query.setSkip(skip)
+			     .setLimit(limit)
+			     .findObjects(new FindListener<WordLinkR>() {
+				     @Override
+				     public void done(List<WordLinkR> list, BmobException e) {
+					     if(e != null) {
+						     BmobUtil.logErrorInfo(e);
+						     emitter.onError(e);
+						     return;
+					     }
+					     int size = list.size();
+					     List<WordLink> wordLinks = new ArrayList<>();
+					     for(int idx = 0; idx < size; ++ idx) {
+						     wordLinks.add(list.get(idx)
+						                       .convertToCache());
+					     }
+					     emitter.onNext(wordLinks);
+					     emitter.onComplete();
+				     }
+			     });
+		}, BackpressureStrategy.BUFFER).retryWhen(attempts -> {
+			return attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
+				LoggerUtil.d("error: " + throwable.getMessage());
+				if(throwable.getMessage()
+				            .contains("Qps beyond the limit")) {
+					return Flowable.just(1)
+					               .delay(BmobConstant.QPS_WAIT_TIME, TimeUnit.SECONDS);
 				}
+				return Flowable.error(throwable);
 			});
-		}, BackpressureStrategy.BUFFER);
+		});
 	}
 	
 	private Flowable<Integer> changeWordsStatePiece(final Wordbook wordbook,
@@ -326,7 +348,8 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 			wordLinkR.setState(state);
 			// 如果是 WordConstant.STATE_UNKNOWN 则表示该单词本使用的是默认单词本中对应的 WordLink
 			// 还没为这个单词创建相应 WordLink, 所以这边需要插入数据
-			if(wordLinks.get(idx).getState() == WordConstant.STATE_UNKNOWN) {
+			if(wordLinks.get(idx)
+			            .getState() == WordConstant.STATE_UNKNOWN) {
 				wordLinkR.setWord(tmp.getWord());
 				wordLinkR.setWordBookCode(wordbookCode);
 				insertList.add(wordLinkR);
@@ -352,10 +375,12 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 					}
 					int size = list.size(), count = 0;
 					for(int idx = 0; idx < size; ++ idx) {
-						if(list.get(idx).isSuccess()) {
+						if(list.get(idx)
+						       .isSuccess()) {
 							++ count;
 						} else {
-							BmobUtil.logErrorInfo(list.get(idx).getError());
+							BmobUtil.logErrorInfo(list.get(idx)
+							                          .getError());
 						}
 					}
 					emitter.onNext(count);
@@ -366,30 +391,24 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	}
 	
 	@Override
-	public Single<Integer> changeWordsState(final Wordbook wordbook,
-	                                        final List<WordLink> wordLinks,
-	                                        final int state) {
-		if(! CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_USER_CREATE)
-		   && ! CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_USER_COPY)) {
+	public Single<Integer> changeWordsState(final Wordbook wordbook, final List<WordLink> wordLinks, final int state) {
+		if(! CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_USER_CREATE) &&
+		   ! CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_USER_COPY)) {
 			return Single.just(0);
 		}
 		return getWordLinks(wordbook, wordLinks).subscribeOn(Schedulers.io())
 		                                        .observeOn(Schedulers.io())
 		                                        .flatMap(wordLinkRs -> {
-			                                        List<List<WordLinkR>>
-					                                        data
-					                                        = BmobUtil.batchSplit(wordLinkRs);
-			                                        Flowable<Integer>
-					                                        flowable
-					                                        = changeWordsStatePiece(wordbook,
-					                                                                data.get(0),
-					                                                                state);
+			                                        List<List<WordLinkR>> data = BmobUtil.batchSplit(wordLinkRs);
+			                                        Flowable<Integer> flowable = changeWordsStatePiece(wordbook,
+			                                                                                           data.get(0),
+			                                                                                           state);
 			                                        int batchCount = data.size();
 			                                        for(int idx = 1; idx < batchCount; ++ idx) {
-				                                        flowable = flowable.concatWith(
-						                                        changeWordsStatePiece(wordbook,
-						                                                              data.get(idx),
-						                                                              state));
+				                                        flowable = flowable.concatWith(changeWordsStatePiece(wordbook,
+				                                                                                             data.get(
+						                                                                                             idx),
+				                                                                                             state));
 			                                        }
 			                                        return flowable;
 		                                        })
@@ -406,45 +425,44 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	/**
 	 * 最小的查询模块, 大小的限制为 BmobConstant.LIMIT_MAX_COUNT
 	 */
-	private Flowable<List<WordLink>> getWordsPiece(final Wordbook wordbook,
-	                                               final int limit,
-	                                               final int skip) {
+	private Flowable<List<WordLink>> getWordsPiece(final Wordbook wordbook, final int limit, final int skip) {
 		if(limit > BmobConstant.LIMIT_MAX_COUNT) {
 			LoggerUtil.e(limit + " > BmobConstant.LIMIT_MAX_COUNT");
 			return Flowable.empty();
 		}
 		return Flowable.<List<WordLink>>create(emitter -> {
-			new BmobQueryUtil<WordLinkR>().add(new BmobQuery<WordLinkR>().addWhereEqualTo(
-					WordLinkConstant.FIELD_WORDBOOK_CODE,
-					wordbook.getCode()))
-			                              .add(new BmobQuery<WordLinkR>().addWhereEqualTo(
-					                              WordLinkConstant.FIELD_WORDBOOK_CODE,
-					                              wordbook.getDefaultCode()))
-			                              .compileWithOr()
-			                              .setLimit(limit)
-			                              .setSkip(skip)
-			                              .findObjects(new FindListener<WordLinkR>() {
-				                              @Override
-				                              public void done(List<WordLinkR> list,
-				                                               BmobException e) {
-					                              if(e != null) {
-						                              BmobUtil.logErrorInfo(e);
-						                              emitter.onError(e);
-						                              return;
-					                              }
-					                              int size = list.size();
-					                              List<WordLink> wordLinks = new ArrayList<>(size);
-					                              for(int idx = 0; idx < size; ++ idx) {
-						                              wordLinks.add(list.get(idx).convertToCache());
-					                              }
-					                              emitter.onNext(wordLinks);
-					                              emitter.onComplete();
-				                              }
-			                              });
-		}, BackpressureStrategy.BUFFER).retryWhen(attempts -> attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
+			                                       new BmobQueryUtil<WordLinkR>().add(new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
+			                                                                                                                     wordbook.getCode()))
+			                                                                     .add(new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
+			                                                                                                                     wordbook.getDefaultCode()))
+			                                                                     .compileWithOr()
+			                                                                     .setLimit(limit)
+			                                                                     .setSkip(skip)
+			                                                                     .findObjects(new FindListener<WordLinkR>() {
+				                                                                     @Override
+				                                                                     public void done(List<WordLinkR> list, BmobException e) {
+					                                                                     if(e != null) {
+						                                                                     BmobUtil.logErrorInfo(e);
+						                                                                     emitter.onError(e);
+						                                                                     return;
+					                                                                     }
+					                                                                     int size = list.size();
+					                                                                     List<WordLink> wordLinks = new ArrayList<>(size);
+					                                                                     for(int idx = 0; idx < size; ++ idx) {
+						                                                                     wordLinks.add(list.get(idx)
+						                                                                                       .convertToCache());
+					                                                                     }
+					                                                                     emitter.onNext(wordLinks);
+					                                                                     emitter.onComplete();
+				                                                                     }
+			                                                                     });
+		                                       },
+		                                       BackpressureStrategy.BUFFER).retryWhen(attempts -> attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
 			LoggerUtil.d("skip: " + skip + ", error: " + throwable.getMessage());
-			if(throwable.getMessage().contains("Qps beyond the limit")) {
-				return Flowable.just(1).delay(BmobConstant.QPS_WAIT_TIME, TimeUnit.SECONDS);
+			if(throwable.getMessage()
+			            .contains("Qps beyond the limit")) {
+				return Flowable.just(1)
+				               .delay(BmobConstant.QPS_WAIT_TIME, TimeUnit.SECONDS);
 			}
 			return Flowable.error(throwable);
 		}));
@@ -454,9 +472,7 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	 * 次最小的查询模块, count 的限制为 BmobConstant.BATCH_MAX_COUNT * BmobConstant.QPS_MAX_COUNT,
 	 * 会将查询分拆成一个个 Flowable, 通过 zipWith 进行组合起来进行并发查询
 	 */
-	private Flowable<List<WordLink>> getWords(final Wordbook wordbook,
-	                                          final int count,
-	                                          final int skip) {
+	private Flowable<List<WordLink>> getWords(final Wordbook wordbook, final int count, final int skip) {
 		if(count > BmobConstant.BATCH_MAX_COUNT * BmobConstant.QPS_MAX_COUNT) {
 			LoggerUtil.e(count + " > BmobConstant.BATCH_MAX_COUNT * BmobConstant.QPS_MAX_COUNT");
 			return Flowable.empty();
@@ -503,17 +519,14 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		// 先查询到单词本的总个数
 		if(CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_USER_COPY)) {
 			total = Flowable.create(emitter -> {
-				new BmobQueryUtil<WordLinkR>().add(new BmobQuery<WordLinkR>().addWhereEqualTo(
-						WordLinkConstant.FIELD_WORDBOOK_CODE,
-						wordbook.getCode()))
-				                              .add(new BmobQuery<WordLinkR>().addWhereEqualTo(
-						                              WordLinkConstant.FIELD_WORDBOOK_CODE,
-						                              wordbook.getDefaultCode()))
+				new BmobQueryUtil<WordLinkR>().add(new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
+				                                                                              wordbook.getCode()))
+				                              .add(new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
+				                                                                              wordbook.getDefaultCode()))
 				                              .compileWithOr()
 				                              .count(WordLinkR.class, new CountListener() {
 					                              @Override
-					                              public void done(Integer integer,
-					                                               BmobException e) {
+					                              public void done(Integer integer, BmobException e) {
 						                              if(e != null) {
 							                              BmobUtil.logErrorInfo(e);
 							                              emitter.onError(e);
@@ -527,26 +540,27 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		} else {
 			total = getCount(wordbook);
 		}
-		return total.flatMap(integer -> getWords(wordbook, integer)).map(wordLinks -> {
-			HashMap<String, WordLink> dict = new HashMap<>();
-			int size = wordLinks.size();
-			WordLink wordLink;
-			String word;
-			for(int idx = 0; idx < size; ++ idx) {
-				wordLink = wordLinks.get(idx);
-				word = wordLink.getWord();
-				// 如果已经存了一个状态是 WordConstant.STATE_UNKNOWN 的单词
-				// 且现在有不是这个状态的相同单词, 则表示当前才是正确的数据
-				if(dict.containsKey(wordLink.getWord()) && (dict.get(word).getState()
-				                                            != WordConstant.STATE_UNKNOWN
-				                                            || wordLink.getState()
-				                                               == WordConstant.STATE_UNKNOWN)) {
-					continue;
-				}
-				dict.put(word, wordLink);
-			}
-			return dict;
-		});
+		return total.flatMap(integer -> getWords(wordbook, integer))
+		            .map(wordLinks -> {
+			            HashMap<String, WordLink> dict = new HashMap<>();
+			            int size = wordLinks.size();
+			            WordLink wordLink;
+			            String word;
+			            for(int idx = 0; idx < size; ++ idx) {
+				            wordLink = wordLinks.get(idx);
+				            word = wordLink.getWord();
+				            // 如果已经存了一个状态是 WordConstant.STATE_UNKNOWN 的单词
+				            // 且现在有不是这个状态的相同单词, 则表示当前才是正确的数据
+				            if(dict.containsKey(wordLink.getWord()) &&
+				               (dict.get(word)
+				                    .getState() != WordConstant.STATE_UNKNOWN ||
+				                wordLink.getState() == WordConstant.STATE_UNKNOWN)) {
+					            continue;
+				            }
+				            dict.put(word, wordLink);
+			            }
+			            return dict;
+		            });
 	}
 	
 	@Override
@@ -562,8 +576,7 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 			} else {
 				wordbookCode = wordbook.getCode();
 			}
-			new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
-			                                           wordbookCode)
+			new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE, wordbookCode)
 			                          .count(WordLinkR.class, new CountListener() {
 				                          @Override
 				                          public void done(Integer integer, BmobException e) {
@@ -584,17 +597,14 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		if(! CheckUtil.checkWordbook(wordbook)) {
 			return Flowable.just(0);
 		}
-		if(CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_DEFAULT)
-		   && state != WordConstant.STATE_UNKNOWN) {
+		if(CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_DEFAULT) && state != WordConstant.STATE_UNKNOWN) {
 			return Flowable.just(0);
 		}
-		final boolean isUserCopyType = CheckUtil.checkWordbook(wordbook,
-		                                                       WordbookConstant.TYPE_USER_COPY);
+		final boolean isUserCopyType = CheckUtil.checkWordbook(wordbook, WordbookConstant.TYPE_USER_COPY);
 		// 如果是用户从默认单词本中拷贝出来的单词本, 而且查询的未知状态,
 		// 那么就先计算单词总个数, 然后扣去状态为非未知状态的单词个数
 		if(isUserCopyType && state == WordConstant.STATE_UNKNOWN) {
-			final Wordbook defaultWordbook = new Wordbook(wordbook.getId(),
-			                                              WordbookConstant.DEFAULT_WORDBOOK_USER_ID);
+			final Wordbook defaultWordbook = new Wordbook(wordbook.getId(), WordbookConstant.DEFAULT_WORDBOOK_USER_ID);
 			return getCount(defaultWordbook).zipWith(Flowable.create(emitter -> {
 				                                         new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
 				                                                                                    defaultWordbook.getCode())
@@ -612,13 +622,11 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 					                                                                   }
 				                                                                   });
 			                                         }, BackpressureStrategy.BUFFER),
-			                                         (BiFunction<Integer, Integer, Integer>) (total, noEqual) ->
-					                                         total
-					                                         - noEqual);
+			                                         (BiFunction<Integer, Integer, Integer>) (total, noEqual) -> total -
+			                                                                                                     noEqual);
 		}
 		return Flowable.create(emitter -> {
-			new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
-			                                           wordbook.getCode())
+			new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE, wordbook.getCode())
 			                          .addWhereEqualTo(WordLinkConstant.FIELD_STATE, state)
 			                          .count(WordLinkR.class, new CountListener() {
 				                          @Override
@@ -635,15 +643,13 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 		}, BackpressureStrategy.BUFFER);
 	}
 	
-	private Flowable<List<WordLinkR>> getWordLinksPiece(final Wordbook wordbook,
-	                                                    final List<String> words) {
+	private Flowable<List<WordLinkR>> getWordLinksPiece(final Wordbook wordbook, final List<String> words) {
 		if(words.size() > BmobConstant.BATCH_MAX_COUNT) {
 			LoggerUtil.e("size > BmobConstant.BATCH_MAX_COUNT, size: " + words.size());
 			return Flowable.empty();
 		}
 		return Flowable.create(emitter -> {
-			new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE,
-			                                           wordbook.getCode())
+			new BmobQuery<WordLinkR>().addWhereEqualTo(WordLinkConstant.FIELD_WORDBOOK_CODE, wordbook.getCode())
 			                          .addWhereContainedIn(WordLinkConstant.FIELD_WORD, words)
 			                          .findObjects(new FindListener<WordLinkR>() {
 				                          @Override
@@ -663,16 +669,17 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	/**
 	 * 获得单词对应的 WordLinkR, 主要是为了获得 objectId 给 Bmob 用
 	 */
-	private Flowable<List<WordLinkR>> getWordLinks(final Wordbook wordbook,
-	                                               final List<WordLink> wordLinks) {
+	private Flowable<List<WordLinkR>> getWordLinks(final Wordbook wordbook, final List<WordLink> wordLinks) {
 		if(! CheckUtil.checkWordbook(wordbook)) {
 			return Flowable.just(new ArrayList<>());
 		}
 		int size = wordLinks.size();
 		List<String> words = new ArrayList<>();
 		for(int idx = 0; idx < size; ++ idx) {
-			if(wordLinks.get(idx).getState() != WordConstant.STATE_UNKNOWN) {
-				words.add(wordLinks.get(idx).getWord());
+			if(wordLinks.get(idx)
+			            .getState() != WordConstant.STATE_UNKNOWN) {
+				words.add(wordLinks.get(idx)
+				                   .getWord());
 			}
 		}
 		

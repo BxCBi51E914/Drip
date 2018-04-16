@@ -57,7 +57,7 @@ public class ReadingDetailFragment extends BaseSubFragment {
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.zhihu_fragment_first_detail;
+		return R.layout.reading_fragment_detail;
 	}
 
 	@Override

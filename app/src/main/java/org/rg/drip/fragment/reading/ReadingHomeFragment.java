@@ -68,7 +68,7 @@ public class ReadingHomeFragment extends SupportFragment implements SwipeRefresh
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
 		    Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_first_home, container, false);
+        View view = inflater.inflate(R.layout.reading_fragment_home, container, false);
         EventBusActivityScope.getDefault(_mActivity).register(this);
         initView(view);
         return view;
@@ -76,7 +76,7 @@ public class ReadingHomeFragment extends SupportFragment implements SwipeRefresh
 
     private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mRecy = (RecyclerView) view.findViewById(R.id.recy);
+        mRecy = (RecyclerView) view.findViewById(R.id.recycle_view);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         mFab = (FloatingActionButton) view.findViewById(R.id.fab);
 

@@ -44,6 +44,7 @@
             android:background="@drawable/ripple_color_accent_mask"
             android:gravity="center"
             android:text="@string/act_start_learn"
+            android:drawablePadding="20dp"
             app:layout_constraintBottom_toTopOf="@+id/bt_word_list"
             app:layout_constraintEnd_toStartOf="@+id/bt_browse_in_card"
             app:layout_constraintHorizontal_bias="0.5"
@@ -99,7 +100,7 @@
             android:layout_marginBottom="8dp"
             android:autoLink="all"
             android:gravity="center"
-            android:textColor="@color/grey"
+            android:textColor="@color/grey_light"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/bt_start_learn"/>
     </android.support.constraint.ConstraintLayout>

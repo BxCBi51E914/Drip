@@ -24,7 +24,7 @@
             android:scaleType="centerCrop"/>
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"

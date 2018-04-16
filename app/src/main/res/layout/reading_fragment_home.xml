@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recy"
+            android:id="@+id/recycle_view"
             android:clipChildren="false"
             android:paddingLeft="-4dp"
             android:paddingRight="-4dp"

@@ -1,4 +1,4 @@
-package org.rg.drip.fragment.custom.child;
+package org.rg.drip.fragment.lexical;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -83,7 +83,7 @@ public class ModifyDetailFragment extends BaseSubFragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString(DetailFragment.KEY_RESULT_TITLE, mEtModiyTitle.getText().toString());
+                bundle.putString(LexicalItemDetailFragment.KEY_RESULT_TITLE, mEtModiyTitle.getText().toString());
                 setFragmentResult(RESULT_OK, bundle);
 
                 Toast.makeText(_mActivity, R.string.modify_success, Toast.LENGTH_SHORT).show();

@@ -34,7 +34,7 @@ public class ReadingHomeAdapter extends RecyclerView.Adapter<ReadingHomeAdapter.
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_zhihu_home_first, parent, false);
+        View view = mInflater.inflate(R.layout.reading_fragment_item, parent, false);
         final VH holder = new VH(view);
         holder.itemView.setOnClickListener(v -> {
             int position = holder.getAdapterPosition();
@@ -82,7 +82,7 @@ public class ReadingHomeAdapter extends RecyclerView.Adapter<ReadingHomeAdapter.
 
         public VH(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvTitle = itemView.findViewById(R.id.tv_key);
             img = itemView.findViewById(R.id.img);
         }
     }

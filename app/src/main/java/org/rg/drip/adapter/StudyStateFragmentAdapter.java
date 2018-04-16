@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.rg.drip.fragment.custom.child.childpager.OtherPagerFragment;
+import org.rg.drip.fragment.DefaultFragment;
 import org.rg.drip.fragment.wordbook.CompleteProgressFragment;
 import org.rg.drip.fragment.wordbook.LearningProgressFragment;
 import org.rg.drip.fragment.wordbook.WordCountFragment;
@@ -37,7 +37,7 @@ public class StudyStateFragmentAdapter extends FragmentPagerAdapter {
 			case 2:
 				return WordCountFragment.newInstance();
 			default:
-				return OtherPagerFragment.newInstance(mTitles.get(position));
+				return DefaultFragment.newInstance(mTitles.get(position));
 		}
 	}
 

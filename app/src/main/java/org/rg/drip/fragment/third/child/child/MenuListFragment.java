@@ -69,7 +69,7 @@ public class MenuListFragment extends SupportFragment {
     }
 
     private void initView(View view) {
-        mRecy = (RecyclerView) view.findViewById(R.id.recy);
+        mRecy = (RecyclerView) view.findViewById(R.id.recycle_view);
     }
 
     @Override

@@ -21,14 +21,14 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Time : 08/03/2018
  */
 public abstract class BaseFragment extends SupportFragment {
-
+	
 	private Unbinder mUnbinder;
-
+	
 	/**
 	 * 获取布局ID
 	 */
 	protected abstract int getContentViewLayoutID();
-
+	
 	/**
 	 * 界面初始化
 	 */
@@ -39,14 +39,14 @@ public abstract class BaseFragment extends SupportFragment {
 	 */
 	protected void initViewOnCreateView(View view) {
 	}
-
+	
 	/**
 	 * 在调用 onLazyInitView 时进行的初始化
 	 */
 	protected void initViewOnLazyInitView() {
-
+	
 	}
-
+	
 	/**
 	 * 在调用 onActivityCreated 时进行初始化
 	 */
@@ -59,7 +59,7 @@ public abstract class BaseFragment extends SupportFragment {
 	protected boolean registerEventBus() {
 		return false;
 	}
-
+	
 	private Activity mActivity;
 	
 	@Nullable
@@ -70,14 +70,14 @@ public abstract class BaseFragment extends SupportFragment {
 		}
 		return mActivity;
 	}
-
+	
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         @Nullable ViewGroup container,
 	                         @Nullable Bundle savedInstanceState) {
 		View view;
-		if (getContentViewLayoutID() != 0) {
+		if(getContentViewLayoutID() != 0) {
 			view = inflater.inflate(getContentViewLayoutID(), container, false);
 		} else {
 			view = super.onCreateView(inflater, container, savedInstanceState);
@@ -92,32 +92,32 @@ public abstract class BaseFragment extends SupportFragment {
 		super.onAttach(context);
 		mActivity = getActivity();
 	}
-
+	
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mUnbinder = ButterKnife.bind(this, view);
 		initView(savedInstanceState);
 	}
-
+	
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		if(mUnbinder != null)   mUnbinder.unbind();
+		if(mUnbinder != null) mUnbinder.unbind();
 	}
-
+	
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		initViewOnActivityCreated();
 	}
-
+	
 	@Override
 	public void onLazyInitView(@Nullable Bundle savedInstanceState) {
 		super.onLazyInitView(savedInstanceState);
 		initViewOnLazyInitView();
 	}
-
+	
 	public interface OnEnterAnimator {
 		void onEnterAnimator();
 	}
@@ -126,7 +126,8 @@ public abstract class BaseFragment extends SupportFragment {
 	public void onResume() {
 		super.onResume();
 		if(registerEventBus()) {
-			EventBus.getDefault().register(this);
+			EventBus.getDefault()
+			        .register(this);
 		}
 	}
 	
@@ -134,7 +135,8 @@ public abstract class BaseFragment extends SupportFragment {
 	public void onPause() {
 		super.onPause();
 		if(registerEventBus()) {
-			EventBus.getDefault().unregister(this);
+			EventBus.getDefault()
+			        .unregister(this);
 		}
 	}
 }

@@ -7,6 +7,7 @@ import com.huxq17.swipecardsview.SwipeCardsView;
 import com.loopeer.cardstack.AllMoveDownAnimatorAdapter;
 import com.loopeer.cardstack.CardStackView;
 import com.loopeer.cardstack.UpDownStackAnimatorAdapter;
+import com.qmuiteam.qmui.util.QMUIDirection;
 import com.qmuiteam.qmui.util.QMUIViewHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,27 +43,27 @@ import butterknife.BindView;
 public class BrowseInCardFragment extends BaseSubFragment implements BrowseInCardContract.View,
                                                                      CardStackView.ItemExpendListener,
                                                                      View.OnScrollChangeListener {
-
+	
 	@BindView(R.id.card_stack_view) CardStackView mCardStackView;
+	
 	private BrowseInCardStackCardAdapter mAdapter;
-
+	
 	private BrowseInCardContract.Presenter mPresenter;
-
-	private int mCurrentIndex;
+	
 	private int mDataSize;
-
+	
 	public static BrowseInCardFragment newInstance() {
 		BrowseInCardFragment fragment = new BrowseInCardFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
-
+	
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.wordbook_fragment_browse_in_card;
 	}
-
+	
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		mPresenter = new BrowseInCardPresenter(RepositoryUtil.getWordbookRepository(),
@@ -73,64 +74,53 @@ public class BrowseInCardFragment extends BaseSubFragment implements BrowseInCar
 		mCardStackView.setAnimatorAdapter(new AllMoveDownAnimatorAdapter(mCardStackView));
 		mCardStackView.setItemExpendListener(this);
 		mCardStackView.setAdapter(mAdapter);
-		mCurrentIndex = 0;
 		mCardStackView.setOnScrollChangeListener(this);
 	}
-
+	
 	@Override
 	public boolean onBackPressedSupport() {
-		EventBus.getDefault().post(MessageEventConstant.HIDE_BROWSE_IN_CARD_EVENT);
+		EventBus.getDefault()
+		        .post(MessageEventConstant.HIDE_BROWSE_IN_CARD_EVENT);
 		return true;
 	}
-
+	
 	@Override
 	protected boolean registerEventBus() {
 		return true;
 	}
-
+	
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void fadeOut(MessageEvent event) {
 		if(event.getCode() != MessageEventConstant.HIDE_BROWSE_IN_CARD) {
 			return;
 		}
-		QMUIViewHelper.fadeOut(this.getView(),
-		                       UIConstant.FADE_ANIMATOR_DURATION,
-		                       null,
-		                       true);
+		QMUIViewHelper.fadeOut(this.getView(), UIConstant.FADE_ANIMATOR_DURATION, null, true);
 	}
-
-//	@Override
-//	public void onShow(int index) {
-//		mCurrentIndex = index;
-//		if(mDataSize - mCurrentIndex < UIConstant.LOAD_DATA_CARD_NUMBER) {
-//			mPresenter.updateCardsData();
-//		}
-//	}
 
 	@Override
 	public void setPresenter(BrowseInCardContract.Presenter presenter) {
 		mPresenter = presenter;
 	}
-
+	
 	@Override
 	public void onResume() {
 		super.onResume();
 		mPresenter.subscribe();
 		mPresenter.updateCardsData();
 	}
-
+	
 	@Override
 	public void onPause() {
 		super.onPause();
 		mPresenter.unSubscribe();
 	}
-
+	
 	@Override
 	public void updateSwipeCardsView(List<Word> data) {
 		mDataSize = data.size();
 		mAdapter.updateData(data);
 	}
-
+	
 	@Override
 	public void showLoadingTipDialog(boolean bShow) {
 		// 初次加载才显示
@@ -143,18 +133,15 @@ public class BrowseInCardFragment extends BaseSubFragment implements BrowseInCar
 			LoadingTipDialogUtil.dismiss();
 		}
 	}
-
+	
 	@Override
 	public void onItemExpend(boolean expend) {
-
 	}
-
+	
 	@Override
 	public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-		LoggerUtil.d("scrollX: %d, scrollY: %d, oldScrollX: %d, oldScrollY: %d",
-		             scrollX,
-		             scrollY,
-		             oldScrollX,
-		             oldScrollY);
+		if(! mCardStackView.canScrollVertically(1)) {
+			mPresenter.updateCardsData();
+		}
 	}
 }

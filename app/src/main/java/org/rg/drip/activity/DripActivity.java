@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.rg.drip.R;
@@ -16,8 +17,8 @@ import org.rg.drip.event.MessageEvent;
 import org.rg.drip.event.TabSelectedEvent;
 import org.rg.drip.fragment.reading.ReadingMainFragment;
 import org.rg.drip.fragment.reading.ReadingHomeFragment;
-import org.rg.drip.fragment.custom.CustomMainFragment;
-import org.rg.drip.fragment.custom.child.ViewPagerFragment;
+import org.rg.drip.fragment.lexical.LexicalMainFragment;
+import org.rg.drip.fragment.lexical.LexicalListFragment;
 import org.rg.drip.fragment.user.MeFragment;
 import org.rg.drip.fragment.user.UserMainFragment;
 import org.rg.drip.fragment.wordbook.StudyActionFragment;
@@ -39,26 +40,26 @@ import me.yokeyword.fragmentation.SupportFragment;
  * on 2018/3/20.
  */
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {
-
+	
 	private List<SupportFragment> mMainFragments = new ArrayList<>(4);
-
+	
 	@BindView(R.id.bottomBar) BottomBar mBottomBar;
-
+	
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.activity_drip_main;
 	}
-
+	
 	@DebugLog
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		BaseFragment firstFragment = findFragment(WordbookMainFragment.class);
 		if(firstFragment == null) {
 			mMainFragments.add(UIConstant.WORDBOOK, WordbookMainFragment.newInstance());
-			mMainFragments.add(UIConstant.CUSTOM, CustomMainFragment.newInstance());
+			mMainFragments.add(UIConstant.CUSTOM, LexicalMainFragment.newInstance());
 			mMainFragments.add(UIConstant.READING, ReadingMainFragment.newInstance());
 			mMainFragments.add(UIConstant.SETTING, UserMainFragment.newInstance());
-
+			
 			loadMultipleRootFragment(R.id.fl_container,
 			                         UIConstant.WORDBOOK,
 			                         mMainFragments.get(UIConstant.WORDBOOK),
@@ -68,15 +69,15 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 		} else {
 			mMainFragments.add(UIConstant.WORDBOOK, firstFragment);
 			mMainFragments.add(UIConstant.CUSTOM, findFragment(ReadingMainFragment.class));
-			mMainFragments.add(UIConstant.READING, findFragment(CustomMainFragment.class));
+			mMainFragments.add(UIConstant.READING, findFragment(LexicalMainFragment.class));
 			mMainFragments.add(UIConstant.SETTING, findFragment(UserMainFragment.class));
 		}
-
+		
 		mBottomBar.addItem(new BottomBarTab(this, R.drawable.ic_folder_open))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_discover_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_message_white_24dp))
 		          .addItem(new BottomBarTab(this, R.drawable.ic_account_circle_white_24dp));
-
+		
 		mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
 			@Override
 			public void onTabSelected(int position, int prePosition) {
@@ -102,24 +103,24 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 					                                                    (float) Math.sqrt(w * w + y * y));
 				}
 			}
-
+			
 			@Override
 			public void onTabUnselected(int position) {
-
+			
 			}
-
+			
 			@Override
 			public void onTabReselected(int position) {
 				final SupportFragment currentFragment = mMainFragments.get(position);
 				int count = currentFragment.getChildFragmentManager()
 				                           .getBackStackEntryCount();
-
+				
 				// 如果不在该类别Fragment的主页,则回到主页;
 				if(count > 1) {
 					if(currentFragment instanceof WordbookMainFragment) {
 						currentFragment.popToChild(StudyActionFragment.class, false);
-					} else if(currentFragment instanceof CustomMainFragment) {
-						currentFragment.popToChild(ViewPagerFragment.class, false);
+					} else if(currentFragment instanceof LexicalMainFragment) {
+						currentFragment.popToChild(LexicalListFragment.class, false);
 					} else if(currentFragment instanceof ReadingMainFragment) {
 						currentFragment.popToChild(ReadingHomeFragment.class, false);
 					} else if(currentFragment instanceof UserMainFragment) {
@@ -127,93 +128,24 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 					}
 					return;
 				}
-
+				
 				// 这里推荐使用EventBus来实现 -> 解耦
 				if(count == 1) {
 					// 在FirstPagerFragment中接收, 因为是嵌套的孙子Fragment 所以用EventBus比较方便
 					// 主要为了交互: 重选tab 如果列表不在顶部则移动到顶部,如果已经在顶部,则刷新
-					EventBusActivityScope.getDefault(DripActivity.this)
-					                     .post(new TabSelectedEvent(position));
+//					EventBusActivityScope.getDefault(DripActivity.this)
+//					                     .post(new TabSelectedEvent(position));
+//					EventBus.getDefault().post();
 				}
 			}
 		});
-//
-//		final int limit = 1;
-//		final long delayTime = 1;
-//		final int zipCount = 10, concatCount = 100;
-//		final List<Word> data = new ArrayList<>();
-//		Flowable<List<Word>> concatFlowable = Flowable.empty();
-//		for(int i = 0; i < concatCount; ++ i) {
-//			Flowable<List<Word>> zipFlowable = Flowable.just(new ArrayList<>());
-//			for(int j = 0; j < zipCount; ++ j) {
-//				final int skip = (i * zipCount + j) * limit;
-//				Flowable<List<Word>> flowable = getWords(skip, limit).retryWhen(
-//						attempts -> attempts.flatMap((Function<Throwable, Flowable<?>>) throwable -> {
-//							LoggerUtil.d("error: " + throwable.getMessage());
-//							if(throwable.getMessage().contains("Qps beyond the limit")) {
-//								LoggerUtil.d("retry: skip = " + skip);
-//								return Flowable.just(1).delay(2, TimeUnit.SECONDS);
-//							}
-//							return Flowable.error(throwable);
-//						}));
-//				zipFlowable = zipFlowable.zipWith(flowable, (words, words2) -> {
-//					words.addAll(words2);
-//					return words;
-//				});
-//			}
-//			zipFlowable = zipFlowable.zipWith(Flowable.just(1).delay(delayTime, TimeUnit.SECONDS),
-//			                                  (words, integer) -> words);
-//			concatFlowable = concatFlowable.concatWith(zipFlowable);
-//		}
-//
-//		final long start = System.currentTimeMillis();
-//		Disposable disposable = concatFlowable.observeOn(Schedulers.io())
-//		                                      .subscribeOn(Schedulers.io())
-//		                                      .subscribe(words -> {
-//			                                      LoggerUtil.d("size = "
-//			                                                   + words.size()
-//			                                                   + ", time = "
-//			                                                   + (System.currentTimeMillis()
-//			                                                      - start));
-//			                                      data.addAll(words);
-//		                                      });
-//		LocaleUtil.setLanguage(ConfigConstant.LOCALE_ENGLISH);
-//		ConfigUtil.loadLanguageConfig("");
-
 	}
-
-//	private Flowable<List<Word>> getWords(final int skip, final int limit) {
-//		return Flowable.create(emitter -> {
-//			new BmobQuery<WordR>().setSkip(skip)
-//			                      .setLimit(limit)
-//			                      .findObjects(new FindListener<WordR>() {
-//				                      @Override
-//				                      public void done(List<WordR> list, BmobException e) {
-//					                      if(e != null) {
-////						                      BmobUtil.logErrorInfo(e);
-//						                      emitter.onError(e);
-//						                      return;
-//					                      }
-//					                      int size = list.size();
-//					                      if(size == 0) {
-//						                      return;
-//					                      }
-//					                      List<Word> data = new ArrayList<>(size);
-//					                      for(int idx = 0; idx < size; ++ idx) {
-//						                      data.add(list.get(idx).convertToCache());
-//					                      }
-//					                      emitter.onNext(data);
-//					                      emitter.onComplete();
-//				                      }
-//			                      });
-//		}, BackpressureStrategy.BUFFER);
-//	}
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
 	}
-
+	
 	@Override
 	public void onBackPressedSupport() {
 		if(getSupportFragmentManager().getBackStackEntryCount() > 1) {
@@ -222,23 +154,23 @@ public class DripActivity extends BaseActivity implements BaseMainFragment.OnBac
 			ActivityCompat.finishAfterTransition(this);
 		}
 	}
-
+	
 	@Override
 	public void onBackToFirstFragment() {
 		mBottomBar.setCurrentItem(0);
 	}
-
+	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		RealmUtil.closeRealm();
 	}
-
+	
 	@Override
 	protected boolean registerEventBus() {
 		return true;
 	}
-
+	
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void restartThis(MessageEvent event) {
 		if(event.getCode() != MessageEventConstant.RESTART_ACTIVITY) {

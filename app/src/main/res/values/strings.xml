@@ -59,9 +59,13 @@
     <string name="tip_save_failed">Save Failed</string>
     <string name="tip_create_failed">Create Failed</string>
     <string name="tip_create_succeed">Create Succeed</string>
+    <string name="tip_delete_succeed">Delete Succeed</string>
+    <string name="tip_delete_failed">Delete Failed</string>
     <string name="tip_total_word">Total Count\n%d</string>
     <string name="tip_current_target">Current Target: Learn %d Words, Review %d Words</string>
     <string name="tip_Lexical_item">Lexical Item</string>
+    <string name="tip_value">Value</string>
+    <string name="tip_key">Key</string>
     <string name="brackets_unverified">(Unverified)</string>
 
     <string name="tip_default_wordbook">Default Wordbook</string>
@@ -76,6 +80,7 @@
     <string name="act_word_list">Word List</string>
     <string name="act_review_setting">Review Setting</string>
     <string name="act_add_Lexical_item">Add Lexical Item</string>
+    <string name="act_delete_Lexical_item">Delete Lexical Item</string>
 
     <string name="ask_sign_out">Sure want to sign out?</string>
     <string name="ask_change_password">Sure want to change you password?</string>
@@ -231,16 +236,17 @@
     <string name="new_tip_start_dont_hide">Customize the animation between the Fragments, and do not hide self</string>
     <string name="new_tip_start">Customize the animation between the Fragments</string>
 
-    <string-array name="array_title">
-        <item>Andorid O Developer Preview</item>
-        <item>Build for a Multi-Screen World</item>
-        <item>Build Beautiful Apps</item>
+
+    <string-array name="tutorial_title">
+        <item>Click \'+\' upper can add a lexical</item>
+        <item>按蓝色的加号按钮可以添加一个词条项</item>
+        <item>Double click the lexical name can delete this lexical</item>
     </string-array>
 
-    <string-array name="array_content">
-        <item>An early look at the next version of Android for testing, development, and feedback. Get your apps ready for Android O!</item>
-        <item>Android runs on billions of handheld devices around the world, and it now supports these exciting, new form-factors.</item>
-        <item>Resources to get you started with designing and developing for Android.</item>
+    <string-array name="tutorial_content">
+        <item>按上面的 \'+\' 可以添加一个词条</item>
+        <item>Click blue plus button can add a lexical item</item>
+        <item>双击词条的名称可以删除该词条</item>
     </string-array>
 
     <string-array name="array_menu">

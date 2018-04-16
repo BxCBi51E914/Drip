@@ -12,5 +12,4 @@
         android:clipToPadding="false"
         android:padding="6dp">
     </com.loopeer.cardstack.CardStackView>
-
 </FrameLayout>

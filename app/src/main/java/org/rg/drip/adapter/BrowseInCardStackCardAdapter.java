@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.loopeer.cardstack.CardStackView;
 import com.loopeer.cardstack.StackAdapter;
+import com.qmuiteam.qmui.util.QMUIDirection;
+import com.qmuiteam.qmui.util.QMUIViewHelper;
 
 import org.rg.drip.R;
 import org.rg.drip.constant.UIConstant;
@@ -59,8 +61,20 @@ public class BrowseInCardStackCardAdapter extends StackAdapter<Word> {
 		}
 
 		@Override
-		public void onItemExpand(boolean b) {
-			mContainerContent.setVisibility(b ? View.VISIBLE : View.GONE);
+		public void onItemExpand(boolean expend) {
+			if(expend) {
+				QMUIViewHelper.slideIn(mContainerContent,
+				                       UIConstant.SLIDE_ANIMATOR_DURATION,
+				                       null,
+				                       true,
+				                       QMUIDirection.BOTTOM_TO_TOP);
+			} else {
+				QMUIViewHelper.slideOut(mContainerContent,
+				                        UIConstant.SLIDE_ANIMATOR_DURATION,
+				                        null,
+				                        true,
+				                        QMUIDirection.TOP_TO_BOTTOM);
+			}
 		}
 
 		public void onBind(Word data, int position) {

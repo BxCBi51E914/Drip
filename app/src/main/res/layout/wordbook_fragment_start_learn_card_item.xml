@@ -21,8 +21,10 @@
             android:text="@string/holder_word"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
             android:textColor="@color/colorPrimary"
-            android:textSize="40sp"/>
+            android:textSize="32sp"/>
 
         <TextView
             android:id="@+id/tv_phonetic"

@@ -22,7 +22,7 @@ public class ReadingMainFragment extends BaseMainFragment
 
 	@Override
 	protected int getContentViewLayoutID() {
-		return R.layout.zhihu_fragment_first;
+		return R.layout.reading_fragment_main;
 	}
 
 	@Override

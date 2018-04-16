@@ -8,16 +8,16 @@
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_gravity="center|start"
-        android:src="@drawable/ic_folder"
+        android:src="@drawable/wiki_copy"
         android:layout_marginStart="16dp"
-        android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_width="32dp"
+        android:layout_height="32dp"/>
 
     <TextView
         android:id="@+id/tv_wordbook_name"
         android:layout_gravity="center|start"
         android:text="@string/tip_unselected_wordbook"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="48dp"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:layout_width="wrap_content"

@@ -35,6 +35,11 @@ public interface AvatarContract {
 		void showConfirmSignOutDialog();
 		
 		/**
+		 * 显示验证邮箱对话框
+		 */
+		void showVerifyEmailDialog();
+		
+		/**
 		 * 显示修改邮箱对话框
 		 */
 		void showChangeEmailDialog();
@@ -56,6 +61,11 @@ public interface AvatarContract {
 		 * 退出登录
 		 */
 		void signOut();
+		
+		/**
+		 * 验证邮箱
+		 */
+		void verifyEmail();
 		
 		/**
 		 * 修改邮箱

@@ -10,12 +10,12 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recy"
+            android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:paddingLeft="-12dp"
-            android:paddingRight="-12dp"/>
+            android:paddingLeft="-8dp"
+            android:paddingRight="-8dp"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

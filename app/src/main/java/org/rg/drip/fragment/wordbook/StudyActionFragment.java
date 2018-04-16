@@ -1,17 +1,14 @@
 package org.rg.drip.fragment.wordbook;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.rg.drip.R;
-import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.constant.MessageEventConstant;
-import org.rg.drip.utils.LoggerUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;

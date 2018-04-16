@@ -58,11 +58,15 @@
     <string name="tip_save_failed">保存失败</string>
     <string name="tip_create_failed">创建失败</string>
     <string name="tip_create_succeed">创建成功</string>
+    <string name="tip_delete_succeed">删除成功</string>
+    <string name="tip_delete_failed">删除失败</string>
     <string name="tip_default_wordbook">默认单词本</string>
     <string name="tip_my_wordbook">用户的单词本</string>
     <string name="tip_total_word">单词总数\n%d</string>
     <string name="tip_current_target">今天需要学习 %d 个单词, 复习 %d 个单词</string>
     <string name="tip_Lexical_item">词条</string>
+    <string name="tip_value">键</string>
+    <string name="tip_key">值</string>
     <string name="brackets_unverified">(未验证)</string>
 
     <string name="act_sign_out">退出登录</string>
@@ -74,6 +78,7 @@
     <string name="act_word_list">单词列表</string>
     <string name="act_review_setting">复习设置</string>
     <string name="act_add_Lexical_item">添加词条</string>
+    <string name="act_delete_Lexical_item">删除词条</string>
 
     <string name="tab_complete_progress">完成进度</string>
     <string name="tab_learning_progress">学习进度</string>
@@ -233,16 +238,16 @@
     <string name="new_tip_start_dont_hide">自定义两者之间的动画启动一个Fragment，并且不隐藏自己</string>
     <string name="new_tip_start">自定义两者之间的动画启动一个Fragment</string>
 
-    <string-array name="array_title">
-        <item>Andorid O Developer Preview</item>
-        <item>Build for a Multi-Screen World</item>
-        <item>Build Beautiful Apps</item>
+    <string-array name="tutorial_title">
+        <item>按上面的 \'+\' 可以添加一个词条</item>
+        <item>Click blue plus button can add a lexical item</item>
+        <item>双击词条的名称可以删除该词条</item>
     </string-array>
 
-    <string-array name="array_content">
-        <item>An early look at the next version of Android for testing, development, and feedback. Get your apps ready for Android O!</item>
-        <item>Android runs on billions of handheld devices around the world, and it now supports these exciting, new form-factors.</item>
-        <item>Resources to get you started with designing and developing for Android.</item>
+    <string-array name="tutorial_content">
+        <item>Click \'+\' upper can add a lexical</item>
+        <item>按蓝色的加号按钮可以添加一个词条项</item>
+        <item>Double click the lexical name can delete this lexical</item>
     </string-array>
 
     <string-array name="array_menu">

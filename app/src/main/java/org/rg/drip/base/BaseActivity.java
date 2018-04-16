@@ -29,52 +29,53 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 
 public abstract class BaseActivity extends SupportActivity {
-
+	
 	/**
 	 * 获取布局ID
 	 *
 	 * @return 布局id
 	 */
 	protected abstract int getContentViewLayoutID();
-
+	
 	/**
 	 * 界面初始化前期准备
 	 */
 	protected void beforeInit() {
 	}
-
+	
 	/**
 	 * 初始化布局以及View控件
 	 */
 	protected abstract void initView(Bundle savedInstanceState);
-
+	
 	/**
 	 * 是否要注册 EventBus， 分别在 onCreate 和 onDestroy 时注册和取消注册
 	 */
 	protected boolean registerEventBus() {
 		return false;
 	}
-
+	
 	@Override
 	public void setContentView(@LayoutRes int layoutResID) {
 		super.setContentView(layoutResID);
 		ButterKnife.bind(this);
 	}
-
+	
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initSystemBarTint();
 		beforeInit();
 		if(registerEventBus()) {
-			EventBus.getDefault().register(this);
+			EventBus.getDefault()
+			        .register(this);
 		}
 		if(getContentViewLayoutID() != 0) {
 			setContentView(getContentViewLayoutID());
 			initView(savedInstanceState);
 		}
 	}
-
+	
 	/**
 	 * 设置状态栏颜色
 	 */
@@ -94,7 +95,7 @@ public abstract class BaseActivity extends SupportActivity {
 		QMUIStatusBarHelper.translucent(this);
 		getWindow().setStatusBarColor(setStatusBarColor());
 	}
-
+	
 	/**
 	 * 子类可以重写改变状态栏颜色
 	 */
@@ -107,7 +108,8 @@ public abstract class BaseActivity extends SupportActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		if(registerEventBus()) {
-			EventBus.getDefault().unregister(this);
+			EventBus.getDefault()
+			        .unregister(this);
 		}
 	}
 }

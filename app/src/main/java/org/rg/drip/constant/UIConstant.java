@@ -44,6 +44,11 @@ public class UIConstant {
 	 * 界面 Fade 动画的时长
 	 */
 	public static final int FADE_ANIMATOR_DURATION = 600;
+	
+	/**
+	 * 界面 Slide 动画的时长
+	 */
+	public static final int SLIDE_ANIMATOR_DURATION = 600;
 
 	/**
 	 * 一次加载多少张卡片, 开始学习界面中
@@ -90,4 +95,9 @@ public class UIConstant {
 		index = index % COLOR_LIST.size();
 		return COLOR_LIST.get(index);
 	}
+	
+	/**
+	 * 预加载的距离
+	 */
+	public static final int SCROLL_VIEW_PRE_LOAD_DISTANCE = 512;
 }

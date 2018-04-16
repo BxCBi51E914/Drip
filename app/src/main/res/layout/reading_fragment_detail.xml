@@ -60,7 +60,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/fragment_detail">
+        tools:showIn="@layout/lexical_fragment_lexical_item_detail">
 
         <com.qmuiteam.qmui.widget.textview.QMUISpanTouchFixTextView
             android:id="@+id/tv_content"
