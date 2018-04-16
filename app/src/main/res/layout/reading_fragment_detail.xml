@@ -48,6 +48,11 @@
                 app:qmui_topbar_bg_color="@color/qmui_config_color_transparent"
                 app:qmui_topbar_need_separator="false"/>
 
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </com.qmuiteam.qmui.widget.QMUICollapsingTopBarLayout>
     </com.qmuiteam.qmui.widget.QMUIAppBarLayout>
 

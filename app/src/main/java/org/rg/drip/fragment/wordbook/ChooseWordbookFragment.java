@@ -140,11 +140,13 @@ public class ChooseWordbookFragment extends BaseSubFragment implements CompoundB
 	@Override
 	public boolean onBackPressedSupport() {
 		EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
+		EventBus.getDefault().post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
 		return true;
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		EventBus.getDefault().post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
 		EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
 		if(! isChecked) {
 			EventBus.getDefault().post(MessageEventConstant.UPDATE_SELECT_WORDBOOK_NAME_EVENT);

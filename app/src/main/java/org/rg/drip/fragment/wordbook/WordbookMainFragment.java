@@ -17,6 +17,7 @@ import org.rg.drip.base.BaseMainFragment;
 import org.rg.drip.constant.MessageEventConstant;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.event.MessageEvent;
+import org.rg.drip.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +42,9 @@ public class WordbookMainFragment extends BaseMainFragment
 				loadChooseWordbookFragment();
 				break;
 			case R.id.bt_back:
-				EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
+				EventBus.getDefault().post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
+//				EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
+				updateTopBar(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
 				break;
 		}
 	}
@@ -157,12 +160,25 @@ public class WordbookMainFragment extends BaseMainFragment
 		if(browseInCardFragment == null) {
 			loadRootFragment(R.id.fragment_wordbook_container_full, BrowseInCardFragment.newInstance());
 		} else {
-//			popToChild(StartLearningFragment.class, false);
-			QMUIViewHelper.fadeIn(browseInCardFragment.getView(),
-			                      UIConstant.FADE_ANIMATOR_DURATION,
-			                      null,
-			                      true);
+			if(browseInCardFragment.getView() == null) {
+				popToChild(BrowseInCardFragment.class, false);
+				ToastUtil.showCustumToast(getContext(), "null");
+			} else {
+				QMUIViewHelper.fadeIn(browseInCardFragment.getView(),
+				                      UIConstant.FADE_ANIMATOR_DURATION,
+				                      null,
+				                      true);
+			}
 		}
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void backToWordbookMainFragment(MessageEvent event) {
+		if(event.getCode() != MessageEventConstant.BACK_TO_WORDBOOK_MAIN) {
+			return;
+		}
+
+		popToChild(StudyActionFragment.class, false);
 	}
 
 	/**

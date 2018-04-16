@@ -72,8 +72,8 @@ public class LexicalMainFragment extends BaseMainFragment implements BaseMainFra
 		if(createLexicalItemFragment == null) {
 			loadRootFragment(R.id.fragment_lexical_container, CreateLexicalItemFragment.newInstance());
 		} else {
-//			popToChild(CreateLexicalItemFragment.class, false);
-			QMUIViewHelper.fadeIn(createLexicalItemFragment.getView(), UIConstant.FADE_ANIMATOR_DURATION, null, true);
+			popToChild(LexicalListFragment.class, false);
+//			QMUIViewHelper.fadeIn(createLexicalItemFragment.getView(), UIConstant.FADE_ANIMATOR_DURATION, null, true);
 			EventBus.getDefault().post(MessageEventConstant.CREATE_LEXICAL_ITEM_REFRESH_EVENT);
 		}
 	}

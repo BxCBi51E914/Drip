@@ -73,7 +73,7 @@ public class StartLearningFragment extends BaseSubFragment implements SwipeCards
 
 	@Override
 	public boolean onBackPressedSupport() {
-		EventBus.getDefault().post(MessageEventConstant.HIDE_START_LEARN_EVENT);
+		EventBus.getDefault().post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
 		return true;
 	}
 

@@ -59,6 +59,15 @@ public abstract class BaseFragment extends SupportFragment {
 	protected boolean registerEventBus() {
 		return false;
 	}
+
+	/**
+	 * 是否要在 onPause 的时候取消注册 EventBus,
+	 * 如果为否, 且有注册 EventBus 那么就在 OnDestroy 的时候取消注册
+	 */
+	protected boolean unregisterWhenOnPause() {
+		return true;
+	}
+	private boolean mIsUnregisterEventBus = false;
 	
 	private Activity mActivity;
 	
@@ -82,8 +91,8 @@ public abstract class BaseFragment extends SupportFragment {
 		} else {
 			view = super.onCreateView(inflater, container, savedInstanceState);
 		}
-		
-		initViewOnCreateView(view);
+		mUnbinder = ButterKnife.bind(this, view);
+		initView(savedInstanceState);
 		return view;
 	}
 	
@@ -91,13 +100,6 @@ public abstract class BaseFragment extends SupportFragment {
 	public void onAttach(Context context) {
 		super.onAttach(context);
 		mActivity = getActivity();
-	}
-	
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		mUnbinder = ButterKnife.bind(this, view);
-		initView(savedInstanceState);
 	}
 	
 	@Override
@@ -121,22 +123,31 @@ public abstract class BaseFragment extends SupportFragment {
 	public interface OnEnterAnimator {
 		void onEnterAnimator();
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(registerEventBus()) {
-			EventBus.getDefault()
-			        .register(this);
+		if(registerEventBus() && ! mIsUnregisterEventBus) {
+			EventBus.getDefault().register(this);
+			mIsUnregisterEventBus = true;
 		}
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
-		if(registerEventBus()) {
-			EventBus.getDefault()
-			        .unregister(this);
+		if(registerEventBus() && unregisterWhenOnPause()) {
+			EventBus.getDefault().unregister(this);
+			mIsUnregisterEventBus = false;
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if(registerEventBus() && ! unregisterWhenOnPause()) {
+			EventBus.getDefault().unregister(this);
+			mIsUnregisterEventBus = false;
 		}
 	}
 }

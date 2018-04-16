@@ -80,6 +80,7 @@
     <string name="act_word_list">Word List</string>
     <string name="act_review_setting">Review Setting</string>
     <string name="act_add_Lexical_item">Add Lexical Item</string>
+    <string name="act_delete_Lexical">Delete Lexical</string>
     <string name="act_delete_Lexical_item">Delete Lexical Item</string>
 
     <string name="ask_sign_out">Sure want to sign out?</string>
@@ -96,7 +97,7 @@
     <string name="chk_send">SEND</string>
     <string name="chk_out">OUT</string>
 
-    <string name="custom_learn">Custom Learn</string>
+    <string name="Lexical">Lexical</string>
     <string name="reading">Reading</string>
     <string name="discover">Discover</string>
     <string name="shop">Shop</string>
@@ -238,15 +239,19 @@
 
 
     <string-array name="tutorial_title">
+        <item>词条的个数超过 3 个的时候 tab 是可以滑动的</item>
         <item>Click \'+\' upper can add a lexical</item>
         <item>按蓝色的加号按钮可以添加一个词条项</item>
         <item>Double click the lexical name can delete this lexical</item>
+        <item>长按词条项可以将其删除</item>
     </string-array>
 
     <string-array name="tutorial_content">
+        <item>You can slide the tab when the number of lexical more than 3</item>
         <item>按上面的 \'+\' 可以添加一个词条</item>
         <item>Click blue plus button can add a lexical item</item>
         <item>双击词条的名称可以删除该词条</item>
+        <item>Long click the lexical item can delete this lexical item</item>
     </string-array>
 
     <string-array name="array_menu">

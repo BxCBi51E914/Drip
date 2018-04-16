@@ -69,4 +69,16 @@ public class MessageEventConstant {
 	 */
 	public static final int CREATE_LEXICAL_ITEM_REFRESH = ++ code;
 	public static final MessageEvent CREATE_LEXICAL_ITEM_REFRESH_EVENT = new MessageEvent(CREATE_LEXICAL_ITEM_REFRESH);
+
+	/**
+	 * 返回单词本主界面
+	 */
+	public static final int BACK_TO_WORDBOOK_MAIN = ++ code;
+	public static final MessageEvent BACK_TO_WORDBOOK_MAIN_EVENT = new MessageEvent(BACK_TO_WORDBOOK_MAIN);
+
+	/**
+	 * 更新词条的数据
+	 */
+	public static final int UPDATE_LEXICAL_DATA = ++ code;
+	public static final MessageEvent UPDATE_LEXICAL_DATA_EVENT = new MessageEvent(UPDATE_LEXICAL_DATA);
 }

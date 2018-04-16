@@ -12,23 +12,35 @@ import org.rg.drip.R;
 import org.rg.drip.constant.LexicalItemConstant;
 import org.rg.drip.data.model.cache.LexicalItem;
 import org.rg.drip.listener.OnItemClickListener;
+import org.rg.drip.listener.OnItemLongClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomLexicalItemAdapter extends RecyclerView.Adapter<CustomLexicalItemAdapter.MyViewHolder> {
+public class LexicalItemAdapter extends RecyclerView.Adapter<LexicalItemAdapter.MyViewHolder> {
 	private List<LexicalItem> mItems = new ArrayList<>();
 	private LayoutInflater mInflater;
 	
 	private OnItemClickListener mClickListener;
+	private OnItemLongClickListener mLongClickListener;
 	
-	public CustomLexicalItemAdapter(Context context) {
+	public LexicalItemAdapter(Context context) {
 		this.mInflater = LayoutInflater.from(context);
 	}
 	
 	public void setData(List<LexicalItem> items) {
 		mItems.clear();
 		mItems.addAll(items);
+	}
+
+	public void addData(int index, LexicalItem item) {
+		mItems.add(index, item);
+		this.notifyItemInserted(index);
+	}
+
+	public void removeData(int index) {
+		mItems.remove(index);
+		this.notifyItemRemoved(index);
 	}
 	
 	@Override
@@ -40,6 +52,13 @@ public class CustomLexicalItemAdapter extends RecyclerView.Adapter<CustomLexical
 			if(mClickListener != null) {
 				mClickListener.onItemClick(position, v, holder);
 			}
+		});
+		holder.itemView.setOnLongClickListener(v -> {
+			int position = holder.getAdapterPosition();
+			if(mLongClickListener != null) {
+				return mLongClickListener.onItemLongClick(position, v, holder);
+			}
+			return false;
 		});
 		return holder;
 	}
@@ -64,7 +83,7 @@ public class CustomLexicalItemAdapter extends RecyclerView.Adapter<CustomLexical
 		return mItems.get(position);
 	}
 	
-	class MyViewHolder extends RecyclerView.ViewHolder {
+	class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 		private TextView mKeyTv;
 		private TextView mValueTv;
 		private ImageView mAddIv;
@@ -75,8 +94,17 @@ public class CustomLexicalItemAdapter extends RecyclerView.Adapter<CustomLexical
 			mValueTv = itemView.findViewById(R.id.tv_value);
 			mAddIv = itemView.findViewById(R.id.iv_add);
 		}
+
+		@Override
+		public boolean onLongClick(View v) {
+			return false;
+		}
 	}
-	
+
+	public void setOnLongClickListener(OnItemLongClickListener itemLongClickListener) {
+		this.mLongClickListener = itemLongClickListener;
+	}
+
 	public void setOnItemClickListener(OnItemClickListener itemClickListener) {
 		this.mClickListener = itemClickListener;
 	}

@@ -73,4 +73,5 @@ dependencies {
     implementation "com.loopeer.library:cardstack:$rootProject.ext.cardStackVersion"
     implementation "com.huxq17.android:SwipeCardsView:$rootProject.ext.swipeCardsViewVersion"
     implementation "com.alibaba:fastjson:$rootProject.ext.fastjsonVersion"
+    implementation "com.miguelcatalan:materialsearchview:$rootProject.ext.materialSearchViewVersion"
 }

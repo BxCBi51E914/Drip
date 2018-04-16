@@ -2,45 +2,73 @@ package org.rg.drip.fragment.lexical;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.nineoldandroids.view.ViewHelper;
 
 import org.rg.drip.R;
 import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.utils.Rotatable;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by TankGq
  * on 2018/3/20.
  */
 public class LexicalItemDetailFragment extends BaseSubFragment {
+
+	@BindView(R.id.container) FrameLayout mContainer;
+	@BindView(R.id.front) CardView mFront;
+	@BindView(R.id.back) CardView mBack;
+
+	@OnClick({R.id.front, R.id.bar_chart})
+	void onClick(View v) {
+		switch(v.getId()) {
+			case R.id.front:
+			case R.id.back:
+
+				break;
+		}
+	}
 	
-	public static final String TAG = LexicalItemDetailFragment.class.getSimpleName();
-	private static final String ARG_TITLE = "arg_title";
-	
-	static final String KEY_RESULT_TITLE = "title";
-	
-	@BindView(R.id.toolbar) Toolbar mToolbar;
-	@BindView(R.id.tv_content) TextView mTvContent;
-	private String mTitle;
-	
-	public static LexicalItemDetailFragment newInstance(String title) {
+	public static LexicalItemDetailFragment newInstance() {
 		LexicalItemDetailFragment fragment = new LexicalItemDetailFragment();
 		Bundle bundle = new Bundle();
-		bundle.putString(ARG_TITLE, title);
 		fragment.setArguments(bundle);
 		return fragment;
 	}
-	
-	@Override
-	public void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		Bundle bundle = getArguments();
-		if(bundle != null) {
-			mTitle = bundle.getString(ARG_TITLE);
+
+	public void cardTurnover() {
+		if (View.VISIBLE == mBack.getVisibility()) {
+			ViewHelper.setRotationY(mFront, 180f);//先翻转180，转回来时就不是反转的了
+			Rotatable rotatable = new Rotatable.Builder(mContainer)
+					                      .sides(R.id.back, R.id.front)
+					                      .direction(Rotatable.ROTATE_Y)
+					                      .rotationCount(1)
+					                      .build();
+			rotatable.setTouchEnable(false);
+			rotatable.rotate(Rotatable.ROTATE_Y, -180, 1500);
+		} else if (View.VISIBLE == mFront.getVisibility()) {
+			Rotatable rotatable = new Rotatable.Builder(mContainer)
+					                      .sides(R.id.back, R.id.front)
+					                      .direction(Rotatable.ROTATE_Y)
+					                      .rotationCount(1)
+					                      .build();
+			rotatable.setTouchEnable(false);
+			rotatable.rotate(Rotatable.ROTATE_Y, 0, 1500);
 		}
+	}
+
+	private void setCameraDistance() {
+		int distance = 10000;
+		float scale = getResources().getDisplayMetrics().density * distance;
+		mContainer.setCameraDistance(scale);
 	}
 	
 	@Override
@@ -50,27 +78,11 @@ public class LexicalItemDetailFragment extends BaseSubFragment {
 	
 	@Override
 	protected void initView(Bundle savedInstanceState) {
-		mToolbar.setTitle(mTitle);
-		mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-		mToolbar.setNavigationOnClickListener(v -> this.onBackPressedSupport());
+		mFront.setVisibility(View.VISIBLE);
+		mBack.setVisibility(View.INVISIBLE);
+		setCameraDistance();
 	}
-	
-	/**
-	 * 比较复杂的Fragment页面会在第一次start时,导致动画卡顿
-	 * Fragmentation提供了onEnterAnimationEnd()方法,该方法会在 入栈动画 结束时回调
-	 * 所以在onCreateView进行一些简单的View初始化(比如 toolbar设置标题,返回按钮; 显示加载数据的进度条等),
-	 * 然后在onEnterAnimationEnd()方法里进行 复杂的耗时的初始化 (比如FragmentPagerAdapter的初始化 加载数据等)
-	 */
-	@Override
-	public void onEnterAnimationEnd(Bundle savedInstanceState) {
-		super.onEnterAnimationEnd(savedInstanceState);
-		initDelayView();
-	}
-	
-	private void initDelayView() {
-		mTvContent.setText(R.string.large_text);
-	}
-	
+
 	@Override
 	public boolean onBackPressedSupport() {
 		pop();

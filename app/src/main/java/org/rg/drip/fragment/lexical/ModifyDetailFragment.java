@@ -83,8 +83,8 @@ public class ModifyDetailFragment extends BaseSubFragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString(LexicalItemDetailFragment.KEY_RESULT_TITLE, mEtModiyTitle.getText().toString());
-                setFragmentResult(RESULT_OK, bundle);
+//                bundle.putString(LexicalItemDetailFragment.KEY_RESULT_TITLE, mEtModiyTitle.getText().toString());
+//                setFragmentResult(RESULT_OK, bundle);
 
                 Toast.makeText(_mActivity, R.string.modify_success, Toast.LENGTH_SHORT).show();
             }

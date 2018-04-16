@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import org.rg.drip.GlobalData;
 import org.rg.drip.fragment.lexical.LexicalItemListFragment;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CustomPagerFragmentAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public Fragment getItem(int position) {
-		return LexicalItemListFragment.newInstance();
+		return LexicalItemListFragment.newInstance(GlobalData.lexicalPositionDic.get(position));
 	}
 	
 	public void setData(List<String> data) {
