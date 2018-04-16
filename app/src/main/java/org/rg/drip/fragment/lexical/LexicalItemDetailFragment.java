@@ -27,12 +27,12 @@ public class LexicalItemDetailFragment extends BaseSubFragment {
 	@BindView(R.id.front) CardView mFront;
 	@BindView(R.id.back) CardView mBack;
 
-	@OnClick({R.id.front, R.id.bar_chart})
+	@OnClick({R.id.front, R.id.back})
 	void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.front:
 			case R.id.back:
-
+				cardTurnover();
 				break;
 		}
 	}
