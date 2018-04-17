@@ -1,5 +1,7 @@
 package org.rg.drip.constant;
 
+import org.rg.drip.data.model.cache.Word;
+
 /**
  * Created by TankGq
  * on 2018/3/16.
@@ -16,4 +18,6 @@ public class WordConstant {
 	public static final int STATE_GENERAL = 0x2;          // 一般
 	public static final int STATE_FAMILIAR = 0x03;        // 熟悉
 	public static final int STATE_MASTER = 0x05;          // 掌握
+
+	public static final Word empty = new Word();
 }

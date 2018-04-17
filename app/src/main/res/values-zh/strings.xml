@@ -67,6 +67,8 @@
     <string name="tip_Lexical_item">词条</string>
     <string name="tip_key">键</string>
     <string name="tip_value">值</string>
+    <string name="tip_in_the_query">查询中</string>
+    <string name="tip_query_failed">查询失败</string>
     <string name="brackets_unverified">(未验证)</string>
 
     <string name="act_sign_out">退出登录</string>

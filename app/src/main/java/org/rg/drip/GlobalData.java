@@ -20,7 +20,7 @@ public class GlobalData {
 	
 	public static String config = ConfigUtil.getDefaultConfig();
 	
-	public static final Boolean isDebug = true;
+	public static final Boolean isDebug = false;//BuildConfig.DEBUG;
 
 	public static int currentLexicalId = 0;
 	public static int currentLexicalItemId = 0;

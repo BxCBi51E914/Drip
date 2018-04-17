@@ -120,12 +120,15 @@ public class WordLocalSource implements WordContract.Local {
 
 	@Override
 	public Flowable<Word> getWord(String word) {
-		return RealmUtil.getInstance().where(WordL.class)
-		                .equalTo(WordConstant.FIELD_WORD, word)
-		                .findFirstAsync()
-		                .asFlowable()
-		                .filter(wordL -> wordL.isLoaded())
-		                .map(wordL -> ((WordL) wordL).convertToCache());
+		return Flowable.create(emitter -> {
+			WordL wordL = RealmUtil.getInstance().where(WordL.class)
+			                       .equalTo(WordConstant.FIELD_WORD, word)
+			                       .findFirst();
+			if(wordL != null) {
+				emitter.onNext(wordL.convertToCache());
+			}
+			emitter.onComplete();
+		}, BackpressureStrategy.BUFFER);
 	}
 
 	@Override

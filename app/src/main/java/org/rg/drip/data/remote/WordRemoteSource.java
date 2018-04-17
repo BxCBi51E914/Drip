@@ -27,24 +27,24 @@ import io.reactivex.functions.Function;
  */
 
 public class WordRemoteSource implements WordContract.Remote {
-	
+
 	private static WordRemoteSource mInstance = null;
-	
+
 	public static WordRemoteSource getInstance() {
 		if(mInstance == null) {
 			mInstance = new WordRemoteSource();
 		}
-		
+
 		return mInstance;
 	}
-	
+
 	private Flowable<List<Word>> getWordsCombineUnit(final List<String> words) {
 		int size = words.size();
 		if(size > BmobConstant.BATCH_MAX_COUNT) {
 			LoggerUtil.e(size + " > BmobConstant.BATCH_MAX_COUNT");
 			return Flowable.empty();
 		}
-		return Flowable.<List<Word>>create(emitter -> {
+		return Flowable.<List<Word>> create(emitter -> {
 			new BmobQuery<WordR>().addWhereContainedIn(WordConstant.FIELD_WORD, words)
 			                      .findObjects(new FindListener<WordR>() {
 				                      @Override
@@ -76,7 +76,7 @@ public class WordRemoteSource implements WordContract.Remote {
 			});
 		});
 	}
-	
+
 	private Flowable<List<Word>> getWordsParallelUnit(final List<String> words) {
 		int size = words.size();
 		if(size > BmobConstant.BATCH_MAX_COUNT * BmobConstant.QPS_MAX_COUNT) {
@@ -86,7 +86,7 @@ public class WordRemoteSource implements WordContract.Remote {
 		int maxSize = BmobConstant.QPS_MAX_COUNT;
 		List<List<String>> data = BmobUtil.split(words, maxSize);
 		int parallelCount = data.size();
-		
+
 		Flowable<List<Word>> zipFlowable = Flowable.just(new ArrayList<>());
 		for(int idx = 0; idx < parallelCount; ++ idx) {
 			zipFlowable = zipFlowable.zipWith(getWordsCombineUnit(data.get(idx)), (result, result2) -> {
@@ -99,7 +99,7 @@ public class WordRemoteSource implements WordContract.Remote {
 		                                   .delay(BmobConstant.MIN_TIME_ONCE, TimeUnit.SECONDS),
 		                           (result, integer) -> result);
 	}
-	
+
 	@Override
 	public Maybe<List<Word>> getWords(final List<WordLink> wordLinks) {
 		int maxCount = BmobConstant.BATCH_MAX_COUNT * BmobConstant.QPS_MAX_COUNT;
@@ -115,7 +115,7 @@ public class WordRemoteSource implements WordContract.Remote {
 		for(int idx = 0; idx < size1; ++ idx) {
 			flowable = flowable.concatWith(getWordsParallelUnit(data.get(idx)));
 		}
-		
+
 		return flowable.toList()
 		               .flatMapMaybe(lists -> {
 			               int length = lists.size();
@@ -131,12 +131,28 @@ public class WordRemoteSource implements WordContract.Remote {
 			               return Maybe.just(result);
 		               });
 	}
-	
+
 	@Override
-	public Flowable<Word> getWord(String word) {
-		return null;
+	public Flowable<Word> getWord(final String word) {
+		return Flowable.create(emitter -> {
+			new BmobQuery<WordR>().addWhereEqualTo(WordConstant.FIELD_WORD, word)
+			                      .findObjects(new FindListener<WordR>() {
+				                      @Override
+				                      public void done(List<WordR> list, BmobException e) {
+					                      if(e != null) {
+						                      BmobUtil.logErrorInfo(e);
+						                      emitter.onError(e);
+						                      return;
+					                      }
+					                      if(list.size() > 0) {
+						                      emitter.onNext(list.get(0).convertToCache());
+					                      }
+					                      emitter.onComplete();
+				                      }
+			                      });
+		}, BackpressureStrategy.BUFFER);
 	}
-	
+
 	@Override
 	public Flowable<List<Word>> getWords(String startWith) {
 		return null;

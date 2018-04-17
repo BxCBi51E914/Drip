@@ -3,6 +3,7 @@ package org.rg.drip.data.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.rg.drip.constant.WordConstant;
 import org.rg.drip.data.contract.WordContract;
 import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.data.model.cache.WordLink;
@@ -11,9 +12,11 @@ import org.rg.drip.utils.CheckUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -25,6 +28,8 @@ public class WordRepository implements WordContract.Repository {
 	@NonNull private static WordContract.Remote mWordRemoteSource;
 	@NonNull private static WordContract.Local mWordLocalSource;
 	@Nullable private static WordContract.Repository mInstance = null;
+
+	private onTimeoutListener mTimeoutListener;
 
 	private static HashMap<String, Word> mWordDic = new HashMap<>();
 
@@ -94,8 +99,33 @@ public class WordRepository implements WordContract.Repository {
 	}
 
 	@Override
+	public void setOnTimeoutListener(onTimeoutListener listener) {
+		mTimeoutListener = listener;
+	}
+
+	@Override
 	public Flowable<Word> getWord(String word) {
-		return null;
+		if(mWordDic.containsKey(word)) {
+			return Flowable.just(mWordDic.get(word));
+		}
+		Flowable<Word> local = mWordLocalSource.getWord(word).doOnNext(word1 -> {
+			mWordDic.put(word1.getWord(), word1);
+		});
+		Flowable<Word> remote = mWordRemoteSource.getWord(word).doOnNext(word1 -> {
+			mWordDic.put(word1.getWord(), word1);
+			mWordLocalSource.saveWord(word1);
+		});
+		// 加入超时的判断
+		remote = remote.mergeWith(Flowable.just(WordConstant.empty)
+		                                  .delay(3, TimeUnit.SECONDS))
+		               .take(1)
+		               .observeOn(AndroidSchedulers.mainThread())
+		               .doOnNext(word2 -> {
+		               	    if(word2 == WordConstant.empty && mTimeoutListener != null) {
+		               	    	mTimeoutListener.onGetWordTimeout();
+		                    }
+		               });
+		return local.concatWith(remote).take(1);
 	}
 
 	@Override

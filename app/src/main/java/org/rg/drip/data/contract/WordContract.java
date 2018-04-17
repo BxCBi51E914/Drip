@@ -62,6 +62,18 @@ public interface WordContract {
 		 */
 		Flowable<List<Word>> getWords(List<WordLink> wordLinks);
 
+		interface onTimeoutListener {
+
+			default void onGetWordTimeout() {
+			}
+		}
+
+		/**
+		 * 设置超时处理的监听器
+		 */
+		default void setOnTimeoutListener(onTimeoutListener listener) {
+		}
+
 		/**
 		 * 查询单词
 		 */

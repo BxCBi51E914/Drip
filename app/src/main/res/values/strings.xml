@@ -66,6 +66,8 @@
     <string name="tip_Lexical_item">Lexical Item</string>
     <string name="tip_value">Value</string>
     <string name="tip_key">Key</string>
+    <string name="tip_in_the_query">In the Query</string>
+    <string name="tip_query_failed">Query Failed</string>
     <string name="brackets_unverified">(Unverified)</string>
 
     <string name="tip_default_wordbook">Default Wordbook</string>
