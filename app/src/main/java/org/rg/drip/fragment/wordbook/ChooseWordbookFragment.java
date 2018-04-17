@@ -18,37 +18,42 @@ import org.rg.drip.constant.MessageEventConstant;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.event.MessageEvent;
+import org.rg.drip.utils.LoggerUtil;
+import org.rg.drip.utils.RepositoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by TankGq
  * on 2018/3/20.
  */
 public class ChooseWordbookFragment extends BaseSubFragment implements CompoundButton.OnCheckedChangeListener {
-
+	
 	@BindView(R.id.groupListView) QMUIGroupListView mGroupListView;
 	private QMUIGroupListView.Section mDefaultWordbookList;
 	private QMUIGroupListView.Section mMyWordbookList;
-
+	
 	private List<QMUICommonListItemView> mItemViewList;
 	private SparseArray<Wordbook> mWordbookDic;
-
+	
 	public static ChooseWordbookFragment newInstance() {
 		ChooseWordbookFragment fragment = new ChooseWordbookFragment();
 		Bundle args = new Bundle();
 		fragment.setArguments(args);
 		return fragment;
 	}
-
+	
 	@Override
 	protected int getContentViewLayoutID() {
 		return R.layout.wordbook_fragment_choose_wordbook;
 	}
-
+	
 	@Override
 	protected void initView(Bundle savedInstanceState) {
 		mItemViewList = new ArrayList<>();
@@ -57,7 +62,7 @@ public class ChooseWordbookFragment extends BaseSubFragment implements CompoundB
 		mMyWordbookList.setTitle(getString(R.string.tip_my_wordbook));
 		mDefaultWordbookList = QMUIGroupListView.newSection(getContext());
 		mDefaultWordbookList.setTitle(getString(R.string.tip_default_wordbook));
-
+		
 		// 自己的单词本
 		List<Wordbook> wordbooks = new ArrayList<>();
 		Wordbook wordbook = new Wordbook();
@@ -78,88 +83,113 @@ public class ChooseWordbookFragment extends BaseSubFragment implements CompoundB
 		QMUICommonListItemView itemView;
 		int size = wordbooks.size();
 		for(int idx = 0; idx < size; ++ idx) {
-			itemView = mGroupListView.createItemView(wordbooks.get(idx).getName());
+			itemView = mGroupListView.createItemView(wordbooks.get(idx)
+			                                                  .getName());
 			itemView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-			itemView.getSwitch().setOnCheckedChangeListener(this);
-			itemView.getSwitch().setChecked(false);
-			itemView.getSwitch().setId(View.generateViewId());
+			itemView.getSwitch()
+			        .setOnCheckedChangeListener(this);
+			itemView.getSwitch()
+			        .setChecked(false);
+			itemView.getSwitch()
+			        .setId(View.generateViewId());
 			mItemViewList.add(itemView);
-			mWordbookDic.put(itemView.getSwitch().getId(), wordbooks.get(idx));
+			mWordbookDic.put(itemView.getSwitch()
+			                         .getId(), wordbooks.get(idx));
 			mMyWordbookList.addItemView(itemView, null);
 		}
 		mMyWordbookList.addTo(mGroupListView);
-
+		
 		// 默认的单词本
-		wordbook = new Wordbook();
-		wordbook.setId(- 1);
-		wordbook.setUserId(0);
-		wordbook.setName("默认单词本1");
-		wordbooks = new ArrayList<>();
-		wordbooks.add(wordbook);
-		wordbook = new Wordbook();
-		wordbook.setId(- 2);
-		wordbook.setUserId(0);
-		wordbook.setName("默认单词本2");
-		wordbooks.add(wordbook);
-		wordbook = new Wordbook();
-		wordbook.setId(- 3);
-		wordbook.setUserId(0);
-		wordbook.setName("默认单词本3");
-		wordbooks.add(wordbook);
-
-		size = wordbooks.size();
-		for(int idx = 0; idx < size; ++ idx) {
-			itemView = mGroupListView.createItemView(wordbooks.get(idx).getName());
-			itemView.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
-			itemView.getSwitch().setOnCheckedChangeListener(this);
-			itemView.getSwitch().setChecked(false);
-			itemView.getSwitch().setId(View.generateViewId());
-			mItemViewList.add(itemView);
-			mWordbookDic.put(itemView.getSwitch().getId(), wordbooks.get(idx));
-			mDefaultWordbookList.addItemView(itemView, null);
-		}
-		mDefaultWordbookList.addTo(mGroupListView);
+//		wordbook = new Wordbook();
+//		wordbook.setId(- 1);
+//		wordbook.setUserId(0);
+//		wordbook.setName("默认单词本1");
+//		wordbooks = new ArrayList<>();
+//		wordbooks.add(wordbook);
+//		wordbook = new Wordbook();
+//		wordbook.setId(- 2);
+//		wordbook.setUserId(0);
+//		wordbook.setName("默认单词本2");
+//		wordbooks.add(wordbook);
+//		wordbook = new Wordbook();
+//		wordbook.setId(- 3);
+//		wordbook.setUserId(0);
+//		wordbook.setName("默认单词本3");
+//		wordbooks.add(wordbook);
+		
+		Disposable disposable = RepositoryUtil.getWordbookRepository()
+		                                      .getDefaultWordbook()
+		                                      .observeOn(AndroidSchedulers.mainThread())
+		                                      .subscribeOn(Schedulers.io())
+		                                      .subscribe(wordbooks1 -> {
+			                                      int length = wordbooks1.size();
+			                                      QMUICommonListItemView itemView1;
+			                                      for(int idx = 0; idx < length; ++ idx) {
+				                                      itemView1 = mGroupListView.createItemView(wordbooks1.get(idx)
+				                                                                                          .getName());
+				                                      itemView1.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_SWITCH);
+				                                      itemView1.getSwitch()
+				                                               .setOnCheckedChangeListener(this);
+				                                      itemView1.getSwitch()
+				                                               .setChecked(false);
+				                                      itemView1.getSwitch()
+				                                               .setId(View.generateViewId());
+				                                      mItemViewList.add(itemView1);
+				                                      mWordbookDic.put(itemView1.getSwitch()
+				                                                                .getId(), wordbooks1.get(idx));
+				                                      mDefaultWordbookList.addItemView(itemView1, null);
+				                                      mDefaultWordbookList.addTo(mGroupListView);
+				                                      LoggerUtil.d("Succeed");
+			                                      }
+		                                      }, throwable -> {
+		                                      }, () -> {
+		                                      });
 	}
-
+	
 	@Override
 	protected boolean registerEventBus() {
 		return true;
 	}
-
+	
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void fadeOut(MessageEvent event) {
 		if(event.getCode() != MessageEventConstant.HIDE_CHOOSE_WORDBOOK) {
 			return;
 		}
-		QMUIViewHelper.fadeOut(this.getView(),
-		                       UIConstant.FADE_ANIMATOR_DURATION,
-		                       null,
-		                       true);
+		QMUIViewHelper.fadeOut(this.getView(), UIConstant.FADE_ANIMATOR_DURATION, null, true);
 	}
-
+	
 	@Override
 	public boolean onBackPressedSupport() {
-		EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
-		EventBus.getDefault().post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
+		EventBus.getDefault()
+		        .post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
+		EventBus.getDefault()
+		        .post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
 		return true;
 	}
-
+	
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		EventBus.getDefault().post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
-		EventBus.getDefault().post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
+		EventBus.getDefault()
+		        .post(MessageEventConstant.BACK_TO_WORDBOOK_MAIN_EVENT);
+		EventBus.getDefault()
+		        .post(MessageEventConstant.HIDE_CHOOSE_WORDBOOK_EVENT);
 		if(! isChecked) {
-			EventBus.getDefault().post(MessageEventConstant.UPDATE_SELECT_WORDBOOK_NAME_EVENT);
+			EventBus.getDefault()
+			        .post(MessageEventConstant.UPDATE_SELECT_WORDBOOK_NAME_EVENT);
 			return;
 		}
 		int size = mItemViewList.size();
 		for(int idx = 0; idx < size; ++ idx) {
-			mItemViewList.get(idx).getSwitch().setChecked(false);
+			mItemViewList.get(idx)
+			             .getSwitch()
+			             .setChecked(false);
 		}
 		buttonView.setChecked(true);
 		// 这边本来不应这样写的, 先这样临时写下
 		EventBus.getDefault()
 		        .post(new MessageEvent(MessageEventConstant.UPDATE_SELECT_WORDBOOK_NAME,
-		                               mWordbookDic.get(buttonView.getId()).getName()));
+		                               mWordbookDic.get(buttonView.getId())
+		                                           .getName()));
 	}
 }

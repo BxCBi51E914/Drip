@@ -14,8 +14,6 @@ import org.rg.drip.utils.ConfigUtil;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by TankGq
@@ -48,10 +46,10 @@ public class WordbookRepository implements WordbookContract.Repository {
 	}
 
 	@Override
-	public Wordbook getWordbook(int wordbookId) {
-		return null;
+	public Flowable<List<Wordbook>> getDefaultWordbook() {
+		return mWordbookRemoteSource.getDefaulfWordbook();
 	}
-
+	
 	@Override
 	public Flowable<Wordbook> getCurrentWordBook() {
 		if(mCurrentWordbook != null) {

@@ -54,6 +54,34 @@ public class WordbookRemoteSource implements WordbookContract.Remote {
 	}
 	
 	@Override
+	public Flowable<List<Wordbook>> getDefaulfWordbook() {
+		return Flowable.create(emitter -> {
+			new BmobQuery<WordbookR>().addWhereEqualTo(WordbookConstant.FIELD_USER_ID,
+			                                           WordbookConstant.DEFAULT_WORDBOOK_USER_ID)
+			                          .findObjects(new FindListener<WordbookR>() {
+				                          @Override
+				                          public void done(List<WordbookR> list, BmobException e) {
+					                          if(e != null) {
+						                          BmobUtil.logErrorInfo(e);
+						                          emitter.onError(e);
+						                          return;
+					                          }
+					                          if(null != list && list.size() != 0) {
+						                          int size = list.size();
+						                          List<Wordbook> result = new ArrayList<>(size);
+						                          for(int idx = 0; idx < size; ++ idx) {
+							                          result.add(list.get(idx)
+							                                         .convertToCache());
+						                          }
+						                          emitter.onNext(result);
+					                          }
+					                          emitter.onComplete();
+				                          }
+			                          });
+		}, BackpressureStrategy.BUFFER);
+	}
+	
+	@Override
 	public Flowable<Wordbook> getWordbook(final Wordbook wordbook) {
 		if(! CheckUtil.checkWordbook(wordbook)) {
 			return Flowable.empty();

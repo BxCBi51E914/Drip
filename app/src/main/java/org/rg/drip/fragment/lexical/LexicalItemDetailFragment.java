@@ -10,9 +10,14 @@ import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
 
+import org.rg.drip.GlobalData;
 import org.rg.drip.R;
 import org.rg.drip.base.BaseSubFragment;
+import org.rg.drip.data.model.cache.LexicalItem;
 import org.rg.drip.utils.Rotatable;
+import org.rg.drip.utils.ToastUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,12 +27,14 @@ import butterknife.OnClick;
  * on 2018/3/20.
  */
 public class LexicalItemDetailFragment extends BaseSubFragment {
-
+	
 	@BindView(R.id.container) FrameLayout mContainer;
 	@BindView(R.id.front) CardView mFront;
 	@BindView(R.id.back) CardView mBack;
-
-	@OnClick({R.id.front, R.id.back})
+	@BindView(R.id.tv_key) TextView mKeyTv;
+	@BindView(R.id.tv_value) TextView mValue;
+	
+	@OnClick({ R.id.front, R.id.back })
 	void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.front:
@@ -37,34 +44,26 @@ public class LexicalItemDetailFragment extends BaseSubFragment {
 		}
 	}
 	
+	private Rotatable mRotatable;
+	
 	public static LexicalItemDetailFragment newInstance() {
 		LexicalItemDetailFragment fragment = new LexicalItemDetailFragment();
 		Bundle bundle = new Bundle();
 		fragment.setArguments(bundle);
 		return fragment;
 	}
-
+	
 	public void cardTurnover() {
+		if(mRotatable == null) {
+			return;
+		}
 		if (View.VISIBLE == mBack.getVisibility()) {
-			ViewHelper.setRotationY(mFront, 180f);//先翻转180，转回来时就不是反转的了
-			Rotatable rotatable = new Rotatable.Builder(mContainer)
-					                      .sides(R.id.back, R.id.front)
-					                      .direction(Rotatable.ROTATE_Y)
-					                      .rotationCount(1)
-					                      .build();
-			rotatable.setTouchEnable(false);
-			rotatable.rotate(Rotatable.ROTATE_Y, -180, 1500);
+			mRotatable.rotate(Rotatable.ROTATE_Y, 0);
 		} else if (View.VISIBLE == mFront.getVisibility()) {
-			Rotatable rotatable = new Rotatable.Builder(mContainer)
-					                      .sides(R.id.back, R.id.front)
-					                      .direction(Rotatable.ROTATE_Y)
-					                      .rotationCount(1)
-					                      .build();
-			rotatable.setTouchEnable(false);
-			rotatable.rotate(Rotatable.ROTATE_Y, 0, 1500);
+			mRotatable.rotate(Rotatable.ROTATE_Y, 180);
 		}
 	}
-
+	
 	private void setCameraDistance() {
 		int distance = 10000;
 		float scale = getResources().getDisplayMetrics().density * distance;
@@ -81,8 +80,29 @@ public class LexicalItemDetailFragment extends BaseSubFragment {
 		mFront.setVisibility(View.VISIBLE);
 		mBack.setVisibility(View.INVISIBLE);
 		setCameraDistance();
+		mRotatable = new Rotatable.Builder(mContainer).sides(R.id.front, R.id.back)
+		                                              .direction(Rotatable.ROTATE_Y)
+		                                              .build();
+		List<LexicalItem> lexicalItems = GlobalData.getCurrentLexicalItemList();
+		int size = lexicalItems.size();
+		LexicalItem lexicalItem = null;
+		for(int idx = 0; idx < size; ++ idx) {
+			if(lexicalItems.get(idx).getId() == GlobalData.currentLexicalItemId) {
+				lexicalItem = lexicalItems.get(idx);
+				break;
+			}
+		}
+		if(lexicalItem != null) {
+			mKeyTv.setText(lexicalItem.getKey());
+			mValue.setText(lexicalItem.getValue());
+		} else {
+			String error = getString(R.string.error);
+			mKeyTv.setText(error);
+			mValue.setText(error);
+			ToastUtil.showCustumToast(getContext(), error);
+		}
 	}
-
+	
 	@Override
 	public boolean onBackPressedSupport() {
 		pop();

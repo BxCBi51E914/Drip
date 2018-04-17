@@ -19,13 +19,13 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:qmui_collapsedTitleGravity="center"
+            app:qmui_collapsedTitleTextAppearance="@style/Toolbar_TextAppearance_White"
             app:qmui_contentScrim="?attr/qmui_config_color_blue"
             app:qmui_expandedTitleGravity="center_horizontal|bottom"
-            app:qmui_expandedTitleTextAppearance="@style/Toolbar_TextAppearance_Expanded"
-            app:qmui_collapsedTitleTextAppearance="@style/Toolbar_TextAppearance_White"
             app:qmui_expandedTitleMarginBottom="16dp"
             app:qmui_expandedTitleMarginEnd="16dp"
             app:qmui_expandedTitleMarginStart="16dp"
+            app:qmui_expandedTitleTextAppearance="@style/Toolbar_TextAppearance_Expanded"
             app:qmui_statusBarScrim="?attr/qmui_config_color_blue">
 
             <ImageView
@@ -57,10 +57,10 @@
     </com.qmuiteam.qmui.widget.QMUIAppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
@@ -77,5 +77,10 @@
             android:transitionName="tv"/>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/position"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -71,6 +71,11 @@ public class WordbookContract {
 	}
 
 	public interface Remote {
+		
+		/**
+		 * 获得所有默认单词本
+		 */
+		Flowable<List<Wordbook>> getDefaulfWordbook();
 
 		/**
 		 * 获得相应单词本
@@ -129,12 +134,12 @@ public class WordbookContract {
 	}
 
 	public interface Repository {
-
+		
 		/**
-		 * 获得相应单词本
+		 * 获得所有默认单词本
 		 */
-		Wordbook getWordbook(int wordbookId);
-
+		Flowable<List<Wordbook>> getDefaultWordbook();
+		
 		/**
 		 * 获得当前选择的单词本
 		 */

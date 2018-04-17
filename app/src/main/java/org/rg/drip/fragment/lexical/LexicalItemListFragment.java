@@ -41,9 +41,7 @@ public class LexicalItemListFragment extends BaseSubFragment implements OnItemCl
 	private LexicalItemAdapter mAdapter;
 	private int mLexicalId;
 	private List<LexicalItem> mLexicalItems;
-	private String[] mKeys;
-	private String[] mValues;
-
+	
 	public static LexicalItemListFragment newInstance(int lexicalId) {
 		LexicalItemListFragment fragment = new LexicalItemListFragment();
 		Bundle args = new Bundle();
@@ -61,8 +59,8 @@ public class LexicalItemListFragment extends BaseSubFragment implements OnItemCl
 	protected void initView(Bundle savedInstanceState) {
 		mLexicalId = getArguments().getInt(TAG_LEXICAL_ID);
 		LoggerUtil.d("mLexicalId = %d", mLexicalId);
-		mKeys = getResources().getStringArray(R.array.tutorial_title);
-		mValues = getResources().getStringArray(R.array.tutorial_content);
+		String[] mKeys = getResources().getStringArray(R.array.tutorial_title);
+		String[] mValues = getResources().getStringArray(R.array.tutorial_content);
 
 //		mAdapter.setOnItemClickListener((position, view1, vh) -> {
 //			// 这里的DetailFragment在flow包里
