@@ -17,9 +17,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.rg.drip.constant.UIConstant;
 import org.rg.drip.R;
 import org.rg.drip.adapter.ReadingHomeAdapter;
-import org.rg.drip.entity.Article;
+import org.rg.drip.data.model.cache.Article;
 import org.rg.drip.event.TabSelectedEvent;
-import org.rg.drip.helper.DetailTransition;
+import org.rg.drip.utils.DetailTransition;
 
 import java.util.ArrayList;
 import java.util.List;

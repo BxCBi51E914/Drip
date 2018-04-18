@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,20 +26,14 @@ import org.rg.drip.R;
 import org.rg.drip.base.BaseSubFragment;
 import org.rg.drip.constant.WordConstant;
 import org.rg.drip.data.contract.WordContract;
-import org.rg.drip.data.model.cache.Word;
-import org.rg.drip.entity.Article;
+import org.rg.drip.data.model.cache.Article;
 import org.rg.drip.utils.LoggerUtil;
 import org.rg.drip.utils.RepositoryUtil;
 import org.rg.drip.utils.ToastUtil;
 
-import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
