@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.rg.drip.R;
-import org.rg.drip.entity.Article;
+import org.rg.drip.data.model.cache.Article;
 import org.rg.drip.listener.OnItemClickListener;
 
 import java.util.ArrayList;

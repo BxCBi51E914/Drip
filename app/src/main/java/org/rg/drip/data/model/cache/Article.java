@@ -1,4 +1,4 @@
-package org.rg.drip.entity;
+package org.rg.drip.data.model.cache;
 
 import android.os.Parcel;
 import android.os.Parcelable;

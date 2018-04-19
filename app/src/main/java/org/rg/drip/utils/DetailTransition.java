@@ -1,4 +1,4 @@
-package org.rg.drip.helper;
+package org.rg.drip.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
