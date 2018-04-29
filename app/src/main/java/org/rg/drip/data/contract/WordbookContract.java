@@ -15,9 +15,9 @@ import io.reactivex.Single;
  * Created by TankGq
  * on 2018/4/10.
  */
-public class WordbookContract {
+public interface WordbookContract {
 
-	public interface Local {
+	interface Local {
 
 		/**
 		 * 获得相应单词本
@@ -70,7 +70,7 @@ public class WordbookContract {
 		Flowable<Integer> getStateCount(Wordbook wordbook, int state);
 	}
 
-	public interface Remote {
+	interface Remote {
 		
 		/**
 		 * 获得所有默认单词本
@@ -133,7 +133,7 @@ public class WordbookContract {
 		Flowable<Integer> getStateCount(Wordbook wordbook, int state);
 	}
 
-	public interface Repository {
+	interface Repository {
 		
 		/**
 		 * 获得所有默认单词本
