@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * 单词本
  * <p>
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class WordbookL extends RealmObject implements ModelContract.Cache<Wordbook> {

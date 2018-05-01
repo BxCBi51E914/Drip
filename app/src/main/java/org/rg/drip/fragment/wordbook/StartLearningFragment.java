@@ -31,7 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/9
  */
 public class StartLearningFragment extends BaseSubFragment implements SwipeCardsView.CardsSlideListener,

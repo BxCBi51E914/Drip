@@ -11,7 +11,7 @@ import org.rg.drip.constant.UIConstant;
 import org.rg.drip.utils.ToastUtil;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public abstract class BaseMainFragment extends BaseFragment {

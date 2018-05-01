@@ -3,7 +3,7 @@ package org.rg.drip.constant;
 import org.rg.drip.data.model.cache.Word;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class WordConstant {

@@ -36,7 +36,7 @@ import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class DripActivity extends BaseActivity implements BaseMainFragment.OnBackToFirstListener {

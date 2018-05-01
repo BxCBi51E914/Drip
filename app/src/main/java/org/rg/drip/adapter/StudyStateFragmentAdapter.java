@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/5
  */
 public class StudyStateFragmentAdapter extends FragmentPagerAdapter {

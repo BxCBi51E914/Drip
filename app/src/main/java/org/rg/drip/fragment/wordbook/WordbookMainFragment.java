@@ -24,7 +24,7 @@ import butterknife.OnClick;
 import me.yokeyword.fragmentation.ISupportFragment;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 03/04/2018
  */
 public class WordbookMainFragment extends BaseMainFragment

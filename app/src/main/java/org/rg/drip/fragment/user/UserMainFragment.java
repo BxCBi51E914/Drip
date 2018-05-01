@@ -10,7 +10,7 @@ import org.rg.drip.base.BaseMainFragment;
 import butterknife.BindView;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class UserMainFragment extends BaseMainFragment

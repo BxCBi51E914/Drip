@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 16/6/5.
  */
 public class ReadingHomeAdapter extends RecyclerView.Adapter<ReadingHomeAdapter.VH> {

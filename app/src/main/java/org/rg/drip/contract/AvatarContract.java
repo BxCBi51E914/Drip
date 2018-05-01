@@ -7,7 +7,7 @@ import org.rg.drip.base.BaseView;
 import org.rg.drip.data.model.cache.User;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/30.
  */
 public interface AvatarContract {

@@ -39,7 +39,7 @@ import io.reactivex.schedulers.Schedulers;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class ReadingDetailFragment extends BaseSubFragment implements View.OnTouchListener,

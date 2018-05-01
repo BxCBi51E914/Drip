@@ -1,7 +1,7 @@
 package org.rg.drip.data.contract;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/17.
  */
 public interface ModelContract {

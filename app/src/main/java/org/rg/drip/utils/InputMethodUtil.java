@@ -7,7 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 import org.rg.drip.DripApplication;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/17
  */
 public class InputMethodUtil {

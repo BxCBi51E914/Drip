@@ -6,7 +6,7 @@ import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/17
  */
 public class RetryWhenProcess<E extends Exception> implements Function<Flowable<? extends Throwable>, Flowable<?>> {

@@ -29,7 +29,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/14
  */
 public class StartLearnPresenter implements StartLearnContract.Presenter {

@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import org.rg.drip.R;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public abstract class BaseSubFragment extends BaseFragment {

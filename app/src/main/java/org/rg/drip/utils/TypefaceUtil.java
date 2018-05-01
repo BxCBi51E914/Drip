@@ -5,7 +5,7 @@ import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/15
  */
 public class TypefaceUtil {

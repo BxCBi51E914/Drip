@@ -5,7 +5,7 @@ import org.rg.drip.data.model.local.LexicalItemL;
 import org.rg.drip.data.model.remote.LexicalItemR;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/16.
  */
 public class LexicalItem implements ModelContract.Local<LexicalItemL>, ModelContract.Remote<LexicalItemR> {

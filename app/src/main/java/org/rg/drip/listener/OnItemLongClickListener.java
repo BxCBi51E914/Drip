@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public interface OnItemLongClickListener {

@@ -8,7 +8,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import org.rg.drip.R;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/3.
  */
 public class LoadingTipDialogUtil {

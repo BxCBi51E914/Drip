@@ -4,7 +4,7 @@ import org.rg.drip.base.BasePresenter;
 import org.rg.drip.base.BaseView;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/13.
  */
 public interface StudyStateConstact {

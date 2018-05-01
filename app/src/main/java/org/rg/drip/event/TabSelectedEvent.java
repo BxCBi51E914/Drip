@@ -1,7 +1,7 @@
 package org.rg.drip.event;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class TabSelectedEvent {

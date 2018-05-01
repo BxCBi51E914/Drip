@@ -6,7 +6,7 @@ import org.rg.drip.data.model.cache.Lexical;
 import cn.bmob.v3.BmobObject;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/16.
  */
 public class LexicalR extends BmobObject implements ModelContract.Cache<Lexical> {

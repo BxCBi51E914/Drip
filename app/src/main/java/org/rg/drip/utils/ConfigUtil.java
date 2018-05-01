@@ -10,7 +10,7 @@ import org.rg.drip.data.model.cache.Wordbook;
 import org.rg.drip.event.MessageEvent;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/10.
  */
 public class ConfigUtil {

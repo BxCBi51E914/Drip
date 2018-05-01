@@ -7,7 +7,7 @@ import org.rg.drip.data.model.local.UserL;
 /**
  * 用户
  *
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class User implements ModelContract.Local<UserL>, ModelContract.Remote<UserR> {

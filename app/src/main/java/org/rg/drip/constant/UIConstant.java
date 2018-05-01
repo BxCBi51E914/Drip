@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/21.
  */
 public class UIConstant {

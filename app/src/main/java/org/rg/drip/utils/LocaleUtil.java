@@ -15,7 +15,7 @@ import org.rg.drip.event.MessageEvent;
 import java.util.Locale;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/13.
  */
 public class LocaleUtil {

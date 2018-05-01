@@ -9,7 +9,7 @@ import org.rg.drip.utils.CheckUtil;
 /**
  * 单词本
  * <p>
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class Wordbook implements ModelContract.Local<WordbookL>, ModelContract.Remote<WordbookR> {

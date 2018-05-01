@@ -7,7 +7,7 @@ import org.rg.drip.R;
 import org.rg.drip.base.BaseMainFragment;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class ReadingMainFragment extends BaseMainFragment

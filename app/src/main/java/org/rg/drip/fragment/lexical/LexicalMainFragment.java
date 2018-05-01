@@ -16,7 +16,7 @@ import org.rg.drip.event.MessageEvent;
 import org.rg.drip.fragment.wordbook.BrowseInCardFragment;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class LexicalMainFragment extends BaseMainFragment implements BaseMainFragment.OnBackToFirstListener {

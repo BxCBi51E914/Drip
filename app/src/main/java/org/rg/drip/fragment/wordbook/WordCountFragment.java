@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/5
  */
 public class WordCountFragment extends BaseSubFragment implements BaseFragment.OnEnterAnimator {

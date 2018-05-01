@@ -18,7 +18,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/14
  */
 public class BrowseInCardPresenter implements BrowseInCardContract.Presenter {

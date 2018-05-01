@@ -6,7 +6,7 @@ import org.rg.drip.base.BasePresenter;
 import org.rg.drip.base.BaseView;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 28/03/2018
  */
 public interface SignInContract {

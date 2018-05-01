@@ -33,7 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/27.
  */
 public class SignUpActivity extends BaseActivity implements SignUpContract.View {

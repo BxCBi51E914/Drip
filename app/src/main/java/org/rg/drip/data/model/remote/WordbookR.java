@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobObject;
 /**
  * 单词本
  *
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class WordbookR extends BmobObject implements ModelContract.Cache<Wordbook> {

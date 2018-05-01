@@ -16,7 +16,7 @@ import org.rg.drip.utils.StethoUtil;
 import org.rg.drip.utils.TypefaceUtil;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class DripApplication extends Application {

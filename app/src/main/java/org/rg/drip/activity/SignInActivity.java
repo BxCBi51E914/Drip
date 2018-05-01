@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/27.
  */
 public class SignInActivity extends BaseActivity implements SignInContract.View {

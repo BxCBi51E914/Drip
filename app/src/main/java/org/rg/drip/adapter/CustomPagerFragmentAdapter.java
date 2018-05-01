@@ -11,7 +11,7 @@ import org.rg.drip.fragment.lexical.LexicalItemListFragment;
 import java.util.List;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 16/6/5
  */
 public class CustomPagerFragmentAdapter extends FragmentStatePagerAdapter {

@@ -6,7 +6,7 @@ import org.rg.drip.data.model.cache.Word;
 import cn.bmob.v3.BmobObject;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class WordR extends BmobObject implements ModelContract.Cache<Word> {

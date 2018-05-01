@@ -12,7 +12,7 @@ import org.rg.drip.contract.StudyStateConstact;
 import butterknife.BindView;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 03/04/2018
  */
 public class StudyStateFragment extends BaseSubFragment implements StudyStateConstact.View {

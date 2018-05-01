@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class ChooseWordbookFragment extends BaseSubFragment implements CompoundButton.OnCheckedChangeListener {

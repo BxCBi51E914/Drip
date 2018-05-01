@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 03/04/2018
  */
 public class StudyActionFragment extends BaseSubFragment {

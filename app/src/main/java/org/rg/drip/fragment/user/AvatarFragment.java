@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class AvatarFragment extends BaseSubFragment implements AvatarContract.View {

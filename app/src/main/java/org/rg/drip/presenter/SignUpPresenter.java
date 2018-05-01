@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/29.
  */
 public class SignUpPresenter implements SignUpContract.Presenter {

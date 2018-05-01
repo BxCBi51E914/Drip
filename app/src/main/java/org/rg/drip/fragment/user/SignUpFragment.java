@@ -34,7 +34,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/3.
  */
 public class SignUpFragment extends BaseSubFragment implements SignUpContract.View {

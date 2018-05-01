@@ -3,7 +3,7 @@ package org.rg.drip.constant;
 import org.rg.drip.event.MessageEvent;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/13.
  */
 public class MessageEventConstant {

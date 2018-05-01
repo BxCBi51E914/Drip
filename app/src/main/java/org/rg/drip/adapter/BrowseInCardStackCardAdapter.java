@@ -17,7 +17,7 @@ import org.rg.drip.data.model.cache.Word;
 import org.rg.drip.utils.TypefaceUtil;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 2018/4/15
  */
 public class BrowseInCardStackCardAdapter extends StackAdapter<Word> {

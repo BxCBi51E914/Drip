@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 28/03/2018
  */
 public class SignInPresenter implements SignInContract.Presenter {

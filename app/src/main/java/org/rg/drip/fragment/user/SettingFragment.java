@@ -23,7 +23,7 @@ import org.rg.drip.utils.ToastUtil;
 import butterknife.BindView;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class SettingFragment extends BaseSubFragment implements View.OnClickListener, SettingContract.View {

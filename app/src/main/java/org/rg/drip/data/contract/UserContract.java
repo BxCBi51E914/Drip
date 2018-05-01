@@ -5,7 +5,7 @@ import org.rg.drip.data.model.cache.User;
 import io.reactivex.Flowable;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/22.
  */
 public interface UserContract {

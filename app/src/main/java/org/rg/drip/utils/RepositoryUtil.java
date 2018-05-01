@@ -17,7 +17,7 @@ import org.rg.drip.data.repository.WordRepository;
 import org.rg.drip.data.repository.WordbookRepository;
 
 /**
- * Author : TankGq
+ * Author : eee
  * Time : 29/03/2018
  */
 public class RepositoryUtil {

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/10.
  */
 public class GlobalData {

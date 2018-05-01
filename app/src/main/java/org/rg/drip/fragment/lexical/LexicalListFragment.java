@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/20.
  */
 public class LexicalListFragment extends BaseSubFragment implements QMUITabSegment.OnTabSelectedListener {

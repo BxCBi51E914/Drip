@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/16.
  */
 public class LexicalL extends RealmObject implements ModelContract.Cache<Lexical> {

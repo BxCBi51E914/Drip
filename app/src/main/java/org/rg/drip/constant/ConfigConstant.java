@@ -3,7 +3,7 @@ package org.rg.drip.constant;
 import java.util.Locale;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/10.
  */
 public class ConfigConstant {

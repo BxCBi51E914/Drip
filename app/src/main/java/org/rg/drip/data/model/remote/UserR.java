@@ -6,7 +6,7 @@ import org.rg.drip.data.model.cache.User;
 import cn.bmob.v3.BmobUser;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/3/16.
  */
 public class UserR extends BmobUser implements ModelContract.Cache<User> {

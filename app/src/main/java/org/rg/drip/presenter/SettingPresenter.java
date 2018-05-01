@@ -13,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/13.
  */
 public class SettingPresenter implements SettingContract.Presenter {

@@ -12,7 +12,7 @@ import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/10.
  */
 public interface WordbookContract {

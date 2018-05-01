@@ -1,7 +1,7 @@
 package org.rg.drip.constant;
 
 /**
- * Created by TankGq
+ * Created by eee
  * on 2018/4/16.
  */
 public class LexicalConstant {
